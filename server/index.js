@@ -49,11 +49,8 @@ const authenticateToken = (req, res, next) => {
 
 app.post('/api/register', async (req, res) => {
     try {
-        const hashedPassword = await bcrypt.hash(req.body.password, 10);
-        const user = new User({
-            username: req.body.username,
-            password: hashedPassword
-        });
+        const { email, password } = req.body;
+        const user = new User({ email, password });
         await user.save();
         res.status(201).send('User registered successfully');
     } catch (error) {
@@ -62,14 +59,15 @@ app.post('/api/register', async (req, res) => {
 });
 
 app.post('/api/login', async (req, res) => {
-    const user = await User.findOne({ username: req.body.username });
-    if (user == null) {
+    const user = await User.findOne({ email: req.body.email });
+    if (!user) {
         return res.status(400).send('Cannot find user');
     }
     try {
-        if (await bcrypt.compare(req.body.password, user.password)) {
-            const accessToken = jwt.sign({ username: user.username }, process.env.JWT_SECRET);
-            res.json({ accessToken: accessToken, user: { username: user.username } });
+        if (await user.comparePassword(req.body.password)) {
+            const accessToken = jwt.sign({ email: user.email }, process.env.JWT_SECRET);
+            await user.updateLastLogin();
+            res.json({ accessToken: accessToken, user: { email: user.email } });
         } else {
             res.status(401).send('Not Allowed');
         }
@@ -147,7 +145,7 @@ app.delete('/api/tiles/:x/:y', authenticateToken, async (req, res) => {
     }
 });
 
-app.post('/api/generate-tile', authenticateToken, async (req, res) => {
+app.post('/api/tiles/generate', authenticateToken, async (req, res) => {
     try {
         const { x, y } = req.body;
         const generatedTile = await Tile.generateAIContent(x, y);

@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 import { useState, useEffect, useCallback, useRef } from 'react';
 import axios from 'axios';
 import io from 'socket.io-client';
@@ -21,7 +23,8 @@ import {
     Flex,
     Heading,
     FormControl,
-    FormLabel
+    FormLabel,
+    Image
 } from '@chakra-ui/react';
 
 const App = () => {
@@ -53,7 +56,6 @@ const App = () => {
     useEffect(() => {
         fetchInitialMap();
         checkUserAuth();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
@@ -79,7 +81,6 @@ const App = () => {
                 params: { startX: 0, startY: 0, size: 10 }
             });
             setMap(response.data);
-        // eslint-disable-next-line no-unused-vars
         } catch (error) {
             toast({
                 title: 'Error fetching initial map',
@@ -155,7 +156,7 @@ const App = () => {
         setIsGenerating(true);
         try {
             const response = await axios.post(
-                'http://localhost:3000/api/tiles/generate',
+                'http://localhost:3000/api/generate-tile',
                 {
                     x: mapPosition.x,
                     y: mapPosition.y
@@ -214,9 +215,17 @@ const App = () => {
                         top={`${(tile.y - mapPosition.y) * 50}px`}
                         width="50px"
                         height="50px"
-                        backgroundImage={`url(data:image/png;base64,${tile.content})`}
-                        backgroundSize="cover"
-                    />
+                        transform="rotateX(60deg) rotateZ(45deg)"
+                        style={{ transformStyle: 'preserve-3d' }}
+                    >
+                        <Image
+                            src={`data:image/png;base64,${tile.content}`}
+                            alt={`Tile ${tile.x},${tile.y}`}
+                            width="100%"
+                            height="100%"
+                            objectFit="cover"
+                        />
+                    </Box>
                 ))}
             </Box>
         );
@@ -309,6 +318,7 @@ const App = () => {
                                 width="100%"
                                 height="60vh"
                                 overflow="hidden"
+                                perspective="1000px"
                             >
                                 {renderMap()}
                             </Box>
