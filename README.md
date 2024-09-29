@@ -4,6 +4,10 @@ IsoCraft.online is an innovative MMO game where users can create their own 1024x
 on a 3D isometric infinite map using AI-generated content. The game is browser-based, initially free
 to play, with monetization options planned for the future.
 
+## DEMO
+
+https://isocraft.online
+
 ## Key Features
 
 -   AI-powered property generation using Stable Diffusion SDXL
@@ -70,7 +74,3 @@ to play, with monetization options planned for the future.
 -   `src/`: React components and main application logic
 -   `server/`: Backend Express.js server and MongoDB integration
 -   `docs/`: Documentation and marketing materials
-
-## TODO
-
--   Implement proper login/register UI (email instead of username, + password)
