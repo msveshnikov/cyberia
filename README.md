@@ -14,7 +14,7 @@ to play, with monetization options planned for the future.
 
 ## Technology Stack
 
--   Frontend: React + Vite + Mantine UI
+-   Frontend: React + Vite + Chakra UI
 -   Backend: ExpressJS + MongoDB, ES6 modules
 -   AI Generation: Stable Diffusion SDXL
 

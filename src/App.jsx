@@ -1,6 +1,26 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import axios from 'axios';
 import io from 'socket.io-client';
+import {
+    ChakraProvider,
+    Box,
+    VStack,
+    HStack,
+    Text,
+    Button,
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalBody,
+    ModalCloseButton,
+    Input,
+    useDisclosure,
+    Spinner,
+    useToast,
+    Flex,
+    Heading
+} from '@chakra-ui/react';
 
 const App = () => {
     const [map, setMap] = useState([]);
@@ -10,8 +30,17 @@ const App = () => {
     const [isGenerating, setIsGenerating] = useState(false);
     const [socket, setSocket] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
     const mapRef = useRef(null);
+    const toast = useToast();
+
+    const { isOpen: isLoginOpen, onOpen: openLogin, onClose: closeLogin } = useDisclosure();
+    const {
+        isOpen: isRegisterOpen,
+        onOpen: openRegister,
+        onClose: closeRegister
+    } = useDisclosure();
 
     useEffect(() => {
         const newSocket = io('http://localhost:3000');
@@ -48,8 +77,12 @@ const App = () => {
             });
             setMap(response.data);
         } catch (error) {
-            setError('Error fetching initial map');
-            console.error('Error fetching initial map:', error);
+            toast({
+                title: 'Error fetching initial map',
+                status: 'error',
+                duration: 3000,
+                isClosable: true
+            });
         } finally {
             setIsLoading(false);
         }
@@ -111,7 +144,7 @@ const App = () => {
 
     const generateProperty = async () => {
         if (!user) {
-            alert('Please log in to generate a property');
+            openLogin();
             return;
         }
 
@@ -166,24 +199,26 @@ const App = () => {
 
     const renderMap = () => {
         return (
-            <div className="isometric-map" ref={mapRef}>
+            <Box className="isometric-map" ref={mapRef}>
                 {map?.map((tile) => (
-                    <div
+                    <Box
                         key={`${tile.x}-${tile.y}`}
                         className="tile"
                         onClick={() => placeTile(tile.x, tile.y)}
-                        style={{
-                            left: `${(tile.x - mapPosition.x) * 50}px`,
-                            top: `${(tile.y - mapPosition.y) * 50}px`,
-                            backgroundImage: `url(data:image/png;base64,${tile.content})`
-                        }}
+                        position="absolute"
+                        left={`${(tile.x - mapPosition.x) * 50}px`}
+                        top={`${(tile.y - mapPosition.y) * 50}px`}
+                        width="50px"
+                        height="50px"
+                        backgroundImage={`url(data:image/png;base64,${tile.content})`}
+                        backgroundSize="cover"
                     />
                 ))}
-            </div>
+            </Box>
         );
     };
 
-    const handleLogin = async (username, password) => {
+    const handleLogin = async () => {
         try {
             const response = await axios.post('http://localhost:3000/api/login', {
                 username,
@@ -191,6 +226,9 @@ const App = () => {
             });
             localStorage.setItem('token', response.data.accessToken);
             setUser(response.data.user);
+            closeLogin();
+            setUsername('');
+            setPassword('');
         } catch (error) {
             console.error('Error logging in:', error);
         }
@@ -201,10 +239,11 @@ const App = () => {
         setUser(null);
     };
 
-    const handleRegister = async (username, password) => {
+    const handleRegister = async () => {
         try {
             await axios.post('http://localhost:3000/api/register', { username, password });
-            handleLogin(username, password);
+            handleLogin();
+            closeRegister();
         } catch (error) {
             console.error('Error registering:', error);
         }
@@ -228,47 +267,118 @@ const App = () => {
         }
     }, [handleMapDrag]);
 
-    if (isLoading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error}</div>;
-
     return (
-        <div className="app">
-            <header>
-                <h1>IsoCraft.online</h1>
-                {user ? (
-                    <div className="user-info">
-                        <span>Welcome, {user.username}</span>
-                        <button onClick={handleLogout}>Logout</button>
-                    </div>
-                ) : (
-                    <div className="auth-buttons">
-                        <button onClick={() => handleLogin('TestUser', 'password')}>Login</button>
-                        <button onClick={() => handleRegister('NewUser', 'password')}>
-                            Register
-                        </button>
-                    </div>
-                )}
-            </header>
-            <main>
-                <div className="map-container">
-                    {renderMap()}
-                    <div className="map-controls">
-                        <button onClick={() => handleMapScroll('up')}>Up</button>
-                        <button onClick={() => handleMapScroll('down')}>Down</button>
-                        <button onClick={() => handleMapScroll('left')}>Left</button>
-                        <button onClick={() => handleMapScroll('right')}>Right</button>
-                    </div>
-                </div>
-                <div className="controls">
-                    <button onClick={generateProperty} disabled={isGenerating || !user}>
-                        {isGenerating ? 'Generating...' : 'Generate Property'}
-                    </button>
-                </div>
-            </main>
-            <footer>
-                <p>&copy; 2024 IsoCraft.online</p>
-            </footer>
-        </div>
+        <ChakraProvider>
+            <Box minHeight="100vh">
+                <Flex
+                    as="header"
+                    align="center"
+                    justify="space-between"
+                    wrap="wrap"
+                    padding="1.5rem"
+                    bg="gray.100"
+                >
+                    <Heading as="h1" size="lg">
+                        IsoCraft.online
+                    </Heading>
+                    {user ? (
+                        <HStack>
+                            <Text>Welcome, {user.username}</Text>
+                            <Button onClick={handleLogout}>Logout</Button>
+                        </HStack>
+                    ) : (
+                        <HStack>
+                            <Button onClick={openLogin}>Login</Button>
+                            <Button onClick={openRegister}>Register</Button>
+                        </HStack>
+                    )}
+                </Flex>
+
+                <VStack spacing={4} align="stretch" p={4}>
+                    {isLoading ? (
+                        <Spinner />
+                    ) : (
+                        <Box>
+                            <Box
+                                className="map-container"
+                                position="relative"
+                                width="100%"
+                                height="60vh"
+                                overflow="hidden"
+                            >
+                                {renderMap()}
+                            </Box>
+                            <HStack justify="center" mt={4}>
+                                <Button onClick={() => handleMapScroll('up')}>Up</Button>
+                                <Button onClick={() => handleMapScroll('down')}>Down</Button>
+                                <Button onClick={() => handleMapScroll('left')}>Left</Button>
+                                <Button onClick={() => handleMapScroll('right')}>Right</Button>
+                            </HStack>
+                        </Box>
+                    )}
+                    <Button
+                        onClick={generateProperty}
+                        isLoading={isGenerating}
+                        loadingText="Generating..."
+                        isDisabled={!user}
+                    >
+                        Generate Property
+                    </Button>
+                </VStack>
+
+                <Modal isOpen={isLoginOpen} onClose={closeLogin}>
+                    <ModalOverlay />
+                    <ModalContent>
+                        <ModalHeader>Login</ModalHeader>
+                        <ModalCloseButton />
+                        <ModalBody>
+                            <VStack spacing={4}>
+                                <Input
+                                    placeholder="Username"
+                                    value={username}
+                                    onChange={(e) => setUsername(e.target.value)}
+                                />
+                                <Input
+                                    type="password"
+                                    placeholder="Password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                />
+                                <Button onClick={handleLogin} width="100%">
+                                    Login
+                                </Button>
+                            </VStack>
+                        </ModalBody>
+                    </ModalContent>
+                </Modal>
+
+                <Modal isOpen={isRegisterOpen} onClose={closeRegister}>
+                    <ModalOverlay />
+                    <ModalContent>
+                        <ModalHeader>Register</ModalHeader>
+                        <ModalCloseButton />
+                        <ModalBody>
+                            <VStack spacing={4}>
+                                <Input
+                                    placeholder="Username"
+                                    value={username}
+                                    onChange={(e) => setUsername(e.target.value)}
+                                />
+                                <Input
+                                    type="password"
+                                    placeholder="Password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                />
+                                <Button onClick={handleRegister} width="100%">
+                                    Register
+                                </Button>
+                            </VStack>
+                        </ModalBody>
+                    </ModalContent>
+                </Modal>
+            </Box>
+        </ChakraProvider>
     );
 };
 
