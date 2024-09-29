@@ -19,7 +19,9 @@ import {
     Spinner,
     useToast,
     Flex,
-    Heading
+    Heading,
+    FormControl,
+    FormLabel
 } from '@chakra-ui/react';
 
 const App = () => {
@@ -30,7 +32,7 @@ const App = () => {
     const [isGenerating, setIsGenerating] = useState(false);
     const [socket, setSocket] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const mapRef = useRef(null);
     const toast = useToast();
@@ -51,6 +53,7 @@ const App = () => {
     useEffect(() => {
         fetchInitialMap();
         checkUserAuth();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
@@ -76,6 +79,7 @@ const App = () => {
                 params: { startX: 0, startY: 0, size: 10 }
             });
             setMap(response.data);
+        // eslint-disable-next-line no-unused-vars
         } catch (error) {
             toast({
                 title: 'Error fetching initial map',
@@ -221,13 +225,13 @@ const App = () => {
     const handleLogin = async () => {
         try {
             const response = await axios.post('http://localhost:3000/api/login', {
-                username,
+                email,
                 password
             });
             localStorage.setItem('token', response.data.accessToken);
             setUser(response.data.user);
             closeLogin();
-            setUsername('');
+            setEmail('');
             setPassword('');
         } catch (error) {
             console.error('Error logging in:', error);
@@ -241,7 +245,7 @@ const App = () => {
 
     const handleRegister = async () => {
         try {
-            await axios.post('http://localhost:3000/api/register', { username, password });
+            await axios.post('http://localhost:3000/api/register', { email, password });
             handleLogin();
             closeRegister();
         } catch (error) {
@@ -283,7 +287,7 @@ const App = () => {
                     </Heading>
                     {user ? (
                         <HStack>
-                            <Text>Welcome, {user.username}</Text>
+                            <Text>Welcome, {user.email}</Text>
                             <Button onClick={handleLogout}>Logout</Button>
                         </HStack>
                     ) : (
@@ -333,17 +337,22 @@ const App = () => {
                         <ModalCloseButton />
                         <ModalBody>
                             <VStack spacing={4}>
-                                <Input
-                                    placeholder="Username"
-                                    value={username}
-                                    onChange={(e) => setUsername(e.target.value)}
-                                />
-                                <Input
-                                    type="password"
-                                    placeholder="Password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                />
+                                <FormControl>
+                                    <FormLabel>Email</FormLabel>
+                                    <Input
+                                        type="email"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                    />
+                                </FormControl>
+                                <FormControl>
+                                    <FormLabel>Password</FormLabel>
+                                    <Input
+                                        type="password"
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                    />
+                                </FormControl>
                                 <Button onClick={handleLogin} width="100%">
                                     Login
                                 </Button>
@@ -359,17 +368,22 @@ const App = () => {
                         <ModalCloseButton />
                         <ModalBody>
                             <VStack spacing={4}>
-                                <Input
-                                    placeholder="Username"
-                                    value={username}
-                                    onChange={(e) => setUsername(e.target.value)}
-                                />
-                                <Input
-                                    type="password"
-                                    placeholder="Password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                />
+                                <FormControl>
+                                    <FormLabel>Email</FormLabel>
+                                    <Input
+                                        type="email"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                    />
+                                </FormControl>
+                                <FormControl>
+                                    <FormLabel>Password</FormLabel>
+                                    <Input
+                                        type="password"
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                    />
+                                </FormControl>
                                 <Button onClick={handleRegister} width="100%">
                                     Register
                                 </Button>

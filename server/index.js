@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import morgan from 'morgan';
 import Tile from './model/Tile.js';
 import User from './model/User.js';
 import { fileURLToPath } from 'url';
@@ -30,6 +31,7 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 app.use(express.static(join(__dirname, '../dist')));
+app.use(morgan('dev'));
 
 mongoose.connect(process.env.MONGODB_URI, {});
 

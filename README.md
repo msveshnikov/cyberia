@@ -73,4 +73,4 @@ to play, with monetization options planned for the future.
 
 ## TODO
 
--   Implement proper login/register UI
+-   Implement proper login/register UI (email instead of username, + password)
