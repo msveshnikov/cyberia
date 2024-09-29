@@ -10,7 +10,6 @@ import { dirname, join } from 'path';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcryptjs';
 
 dotenv.config();
 

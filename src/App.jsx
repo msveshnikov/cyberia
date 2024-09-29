@@ -156,7 +156,7 @@ const App = () => {
         setIsGenerating(true);
         try {
             const response = await axios.post(
-                'http://localhost:3000/api/generate-tile',
+                'http://localhost:3000/api/tiles/generate',
                 {
                     x: mapPosition.x,
                     y: mapPosition.y

@@ -2,51 +2,51 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 
 const userSchema = new mongoose.Schema({
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true,
-    lowercase: true,
-  },
-  password: {
-    type: String,
-    required: true,
-    minlength: 6,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-  lastLogin: {
-    type: Date,
-  },
-  isAdmin: {
-    type: Boolean,
-    default: false,
-  },
-  ownedTiles: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Tile',
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+        trim: true,
+        lowercase: true
     },
-  ],
+    password: {
+        type: String,
+        required: true,
+        minlength: 6
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
+    },
+    lastLogin: {
+        type: Date
+    },
+    isAdmin: {
+        type: Boolean,
+        default: false
+    },
+    ownedTiles: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Tile'
+        }
+    ]
 });
 
 userSchema.pre('save', async function (next) {
-  if (this.isModified('password')) {
-    this.password = await bcrypt.hash(this.password, 10);
-  }
-  next();
+    if (this.isModified('password')) {
+        this.password = await bcrypt.hash(this.password, 10);
+    }
+    next();
 });
 
 userSchema.methods.comparePassword = async function (candidatePassword) {
-  return bcrypt.compare(candidatePassword, this.password);
+    return bcrypt.compare(candidatePassword, this.password);
 };
 
 userSchema.methods.updateLastLogin = function () {
-  this.lastLogin = Date.now();
-  return this.save();
+    this.lastLogin = Date.now();
+    return this.save();
 };
 
 const User = mongoose.model('User', userSchema);
