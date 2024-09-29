@@ -1,6 +1,8 @@
 # IsoCraft.online
 
-IsoCraft.online is an innovative MMO game where users can create their own 1024x1024 tiles property on a 3D isometric infinite map using AI-generated content. The game is browser-based, initially free to play, with monetization options planned for the future.
+IsoCraft.online is an innovative MMO game where users can create their own 1024x1024 tiles property
+on a 3D isometric infinite map using AI-generated content. The game is browser-based, initially free
+to play, with monetization options planned for the future.
 
 ## Key Features
 
@@ -23,6 +25,11 @@ IsoCraft.online is an innovative MMO game where users can create their own 1024x
 3. Efficient property data storage and retrieval
 4. Real-time multiplayer synchronization
 5. Scalable backend architecture for growing user base
+6. Isometric rendering optimization for performance
+7. Caching strategies for frequently accessed tiles
+8. Progressive loading of map areas
+9. WebGL integration for improved graphics rendering
+10. Accessibility features for diverse user base
 
 ## Planned Features
 
@@ -31,6 +38,10 @@ IsoCraft.online is an innovative MMO game where users can create their own 1024x
 -   Economy system for in-game transactions
 -   Achievements and progression system
 -   Seasonal events and special limited-time properties
+-   Collaborative building modes
+-   User-generated content marketplace
+-   Dynamic weather and day/night cycle
+-   API for third-party integrations
 
 ## Development Roadmap
 
@@ -42,22 +53,37 @@ IsoCraft.online is an innovative MMO game where users can create their own 1024x
 6. Monetization features and premium content
 7. Community tools and social features
 8. Mobile responsiveness and cross-platform support
+9. Performance optimization and scalability improvements
+10. Advanced AI features for dynamic world generation
 
 ## Getting Started
 
 1. Clone the repository
 2. Install dependencies: `npm install`
-3. Run the development server: `npm run dev`
-4. Open `http://localhost:3000` in your browser
+3. Set up environment variables (including STABILITY_KEY)
+4. Run the development server: `npm run dev`
+5. Open `http://localhost:3000` in your browser
+
+## Project Structure
+
+-   `index.html` & `landing.html`: Entry points for the application and landing page
+-   `src/`: React components and main application logic
+-   `server/`: Backend Express.js server and MongoDB integration
+-   `docs/`: Documentation and marketing materials
 
 ## Contributing
 
-We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for more information.
+We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for more
+information.
 
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
 
-# TODO
+## TODO
 
--   add AI tile generation with isometric style and smart prompt, using STABILITY_KEY
+-   Implement AI tile generation with isometric style using STABILITY_KEY
+-   Optimize Tile model in `server/model/Tile.js` for efficient data storage
+-   Implement WebSocket for real-time updates in `server/index.js`
+-   Enhance `src/App.jsx` with responsive design for various devices
+-   Set up CI/CD pipeline for automated testing and deployment

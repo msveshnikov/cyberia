@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const App = () => {
     const [map, setMap] = useState([]);
@@ -19,34 +19,34 @@ const App = () => {
 
     const fetchInitialMap = async () => {
         try {
-            const response = await axios.get("/api/tiles", {
-                params: { startX: 0, startY: 0, size: 10 },
+            const response = await axios.get('/api/tiles', {
+                params: { startX: 0, startY: 0, size: 10 }
             });
             setMap(response.data);
         } catch (error) {
-            console.error("Error fetching initial map:", error);
+            console.error('Error fetching initial map:', error);
         }
     };
 
     const checkUserAuth = async () => {
         try {
-            const response = await axios.get("/api/user");
+            const response = await axios.get('/api/user');
             setUser(response.data);
         } catch (error) {
-            console.error("Error checking user auth:", error);
+            console.error('Error checking user auth:', error);
         }
     };
 
     const handleMapScroll = (direction) => {
         setMapPosition((prev) => {
             switch (direction) {
-                case "up":
+                case 'up':
                     return { ...prev, y: prev.y - 1 };
-                case "down":
+                case 'down':
                     return { ...prev, y: prev.y + 1 };
-                case "left":
+                case 'left':
                     return { ...prev, x: prev.x - 1 };
-                case "right":
+                case 'right':
                     return { ...prev, x: prev.x + 1 };
                 default:
                     return prev;
@@ -56,33 +56,35 @@ const App = () => {
 
     const fetchMapChunk = async (startX, startY) => {
         try {
-            const response = await axios.get("/api/tiles", {
-                params: { startX, startY, size: 10 },
+            const response = await axios.get('/api/tiles', {
+                params: { startX, startY, size: 10 }
             });
             setMap((prevMap) => [...prevMap, ...response.data]);
         } catch (error) {
-            console.error("Error fetching map chunk:", error);
+            console.error('Error fetching map chunk:', error);
         }
     };
 
     const generateProperty = async () => {
         if (!user) {
-            alert("Please log in to generate a property");
+            alert('Please log in to generate a property');
             return;
         }
 
         setIsGenerating(true);
         try {
-            const response = await axios.post("/api/tiles/generate", {
+            const response = await axios.post('/api/tiles/generate', {
                 x: mapPosition.x,
-                y: mapPosition.y,
+                y: mapPosition.y
             });
             setCurrentTile(response.data);
             setMap((prevMap) =>
-                prevMap.map((tile) => (tile.x === response.data.x && tile.y === response.data.y ? response.data : tile))
+                prevMap.map((tile) =>
+                    tile.x === response.data.x && tile.y === response.data.y ? response.data : tile
+                )
             );
         } catch (error) {
-            console.error("Error generating property:", error);
+            console.error('Error generating property:', error);
         } finally {
             setIsGenerating(false);
         }
@@ -93,12 +95,14 @@ const App = () => {
 
         try {
             const response = await axios.put(`/api/tiles/${x}/${y}`, {
-                content: currentTile.content,
+                content: currentTile.content
             });
-            setMap((prevMap) => prevMap.map((tile) => (tile.x === x && tile.y === y ? response.data : tile)));
+            setMap((prevMap) =>
+                prevMap.map((tile) => (tile.x === x && tile.y === y ? response.data : tile))
+            );
             setCurrentTile(null);
         } catch (error) {
-            console.error("Error placing tile:", error);
+            console.error('Error placing tile:', error);
         }
     };
 
@@ -112,7 +116,7 @@ const App = () => {
                         onClick={() => placeTile(tile.x, tile.y)}
                         style={{
                             left: `${(tile.x - mapPosition.x) * 50}px`,
-                            top: `${(tile.y - mapPosition.y) * 50}px`,
+                            top: `${(tile.y - mapPosition.y) * 50}px`
                         }}
                     >
                         {tile.content}
@@ -124,22 +128,22 @@ const App = () => {
 
     const handleLogin = async () => {
         try {
-            const response = await axios.post("/api/login", {
-                username: "TestUser",
-                password: "password",
+            const response = await axios.post('/api/login', {
+                username: 'TestUser',
+                password: 'password'
             });
             setUser(response.data);
         } catch (error) {
-            console.error("Error logging in:", error);
+            console.error('Error logging in:', error);
         }
     };
 
     const handleLogout = async () => {
         try {
-            await axios.post("/api/logout");
+            await axios.post('/api/logout');
             setUser(null);
         } catch (error) {
-            console.error("Error logging out:", error);
+            console.error('Error logging out:', error);
         }
     };
 
@@ -160,15 +164,15 @@ const App = () => {
                 <div className="map-container">
                     {renderMap()}
                     <div className="map-controls">
-                        <button onClick={() => handleMapScroll("up")}>Up</button>
-                        <button onClick={() => handleMapScroll("down")}>Down</button>
-                        <button onClick={() => handleMapScroll("left")}>Left</button>
-                        <button onClick={() => handleMapScroll("right")}>Right</button>
+                        <button onClick={() => handleMapScroll('up')}>Up</button>
+                        <button onClick={() => handleMapScroll('down')}>Down</button>
+                        <button onClick={() => handleMapScroll('left')}>Left</button>
+                        <button onClick={() => handleMapScroll('right')}>Right</button>
                     </div>
                 </div>
                 <div className="controls">
                     <button onClick={generateProperty} disabled={isGenerating}>
-                        {isGenerating ? "Generating..." : "Generate Property"}
+                        {isGenerating ? 'Generating...' : 'Generate Property'}
                     </button>
                 </div>
             </main>

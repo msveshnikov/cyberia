@@ -5,8 +5,7 @@
     "main": "index.js",
     "type": "module",
     "scripts": {
-        "dev": "nodemon index.js",
-        "format": "prettier --write ."
+        "dev": "nodemon index.js"
     },
     "author": "",
     "license": "MIT",
