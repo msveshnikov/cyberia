@@ -10,11 +10,11 @@
         />
         <style>
             :root {
-                --primary-color: #6e8efb;
-                --secondary-color: #a777e3;
-                --accent-color: #4caf50;
-                --text-color: #333;
-                --bg-color: #f4f4f4;
+                --primary-color: #2c3e50;
+                --secondary-color: #34495e;
+                --accent-color: #3498db;
+                --text-color: #ecf0f1;
+                --bg-color: #1a1a1a;
                 --white: #ffffff;
             }
             * {
@@ -40,7 +40,7 @@
                 position: fixed;
                 width: 100%;
                 z-index: 1000;
-                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
             }
             nav {
                 display: flex;
@@ -66,8 +66,7 @@
             .hero {
                 text-align: center;
                 padding: 180px 0 100px;
-                background: url('https://source.unsplash.com/random/1600x900/?isometric,3d')
-                    no-repeat center center/cover;
+                background: url('/hero.png') no-repeat center center/cover;
                 position: relative;
             }
             .hero::before {
@@ -77,7 +76,7 @@
                 left: 0;
                 right: 0;
                 bottom: 0;
-                background: rgba(0, 0, 0, 0.5);
+                background: rgba(0, 0, 0, 0.6);
             }
             .hero-content {
                 position: relative;
@@ -110,18 +109,19 @@
                 letter-spacing: 1px;
             }
             .btn:hover {
-                background: #45a049;
+                background: #2980b9;
                 transform: translateY(-3px);
                 box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
             }
             .features {
                 padding: 100px 0;
+                background-color: #222;
             }
             .section-title {
                 text-align: center;
                 font-size: 2.5rem;
                 margin-bottom: 50px;
-                color: var(--primary-color);
+                color: var(--accent-color);
             }
             .feature-grid {
                 display: grid;
@@ -129,22 +129,22 @@
                 gap: 40px;
             }
             .feature {
-                background: var(--white);
+                background: var(--secondary-color);
                 padding: 30px;
                 border-radius: 10px;
-                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
                 transition: transform 0.3s;
             }
             .feature:hover {
                 transform: translateY(-10px);
             }
             .feature h3 {
-                color: var(--secondary-color);
+                color: var(--accent-color);
                 margin-bottom: 15px;
             }
             .roadmap {
                 padding: 100px 0;
-                background: linear-gradient(135deg, #f6f9fc, #f1f4f8);
+                background: linear-gradient(135deg, #2c3e50, #34495e);
             }
             .roadmap-grid {
                 display: grid;
@@ -152,17 +152,17 @@
                 gap: 30px;
             }
             .roadmap-item {
-                background: var(--white);
+                background: var(--primary-color);
                 padding: 30px;
                 border-radius: 10px;
-                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             }
             .roadmap-item h3 {
-                color: var(--primary-color);
+                color: var(--accent-color);
                 margin-bottom: 15px;
             }
             footer {
-                background: #333;
+                background: #111;
                 color: var(--white);
                 text-align: center;
                 padding: 30px 0;
@@ -189,7 +189,6 @@
                     <ul>
                         <li><a href="#features">Features</a></li>
                         <li><a href="#roadmap">Roadmap</a></li>
-                        <li><a href="#about">About</a></li>
                     </ul>
                 </nav>
             </div>
@@ -200,8 +199,7 @@
                 <div class="container hero-content">
                     <h1>Create Your Own 3D Isometric World</h1>
                     <p>
-                        Design, build, and explore an infinite AI-generated landscape with
-                        IsoCraft
+                        Design, build, and explore an infinite AI-generated landscape with IsoCraft
                     </p>
                     <a href="#" class="btn">Get Started</a>
                 </div>
