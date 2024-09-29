@@ -82,6 +82,7 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## TODO
 
+-   Call localhost:3000 for API
 -   Implement AI tile generation with isometric style using STABILITY_KEY
 -   Optimize Tile model in `server/model/Tile.js` for efficient data storage
 -   Implement WebSocket for real-time updates in `server/index.js`

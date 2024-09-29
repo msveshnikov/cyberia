@@ -30,10 +30,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(join(__dirname, '../dist')));
 
-mongoose.connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-});
+mongoose.connect(process.env.MONGODB_URI, {});
 
 const User = mongoose.model('User', {
     username: String,
@@ -81,6 +78,14 @@ app.post('/api/login', async (req, res) => {
     } catch (error) {
         res.status(500).send(error.message);
     }
+});
+
+app.get('/api/user', authenticateToken, (req, res) => {
+    res.json(req.user);
+});
+
+app.post('/api/logout', (req, res) => {
+    res.sendStatus(200);
 });
 
 app.get('/api/tiles', authenticateToken, async (req, res) => {
@@ -144,7 +149,7 @@ app.delete('/api/tiles/:x/:y', authenticateToken, async (req, res) => {
     }
 });
 
-app.post('/api/generate-tile', authenticateToken, async (req, res) => {
+app.post('/api/tiles/generate', authenticateToken, async (req, res) => {
     try {
         const { x, y } = req.body;
         const generatedTile = await Tile.generateAIContent(x, y);

@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
+import io from 'socket.io-client';
 
 const App = () => {
     const [map, setMap] = useState([]);
@@ -7,6 +8,13 @@ const App = () => {
     const [user, setUser] = useState(null);
     const [mapPosition, setMapPosition] = useState({ x: 0, y: 0 });
     const [isGenerating, setIsGenerating] = useState(false);
+    const [socket, setSocket] = useState(null);
+
+    useEffect(() => {
+        const newSocket = io();
+        setSocket(newSocket);
+        return () => newSocket.close();
+    }, []);
 
     useEffect(() => {
         fetchInitialMap();
@@ -16,6 +24,18 @@ const App = () => {
     useEffect(() => {
         fetchMapChunk(mapPosition.x, mapPosition.y);
     }, [mapPosition]);
+
+    useEffect(() => {
+        if (socket) {
+            socket.on('tileUpdated', (updatedTile) => {
+                setMap((prevMap) =>
+                    prevMap.map((tile) =>
+                        tile.x === updatedTile.x && tile.y === updatedTile.y ? updatedTile : tile
+                    )
+                );
+            });
+        }
+    }, [socket]);
 
     const fetchInitialMap = async () => {
         try {
@@ -30,14 +50,19 @@ const App = () => {
 
     const checkUserAuth = async () => {
         try {
-            const response = await axios.get('/api/user');
-            setUser(response.data);
+            const token = localStorage.getItem('token');
+            if (token) {
+                const response = await axios.get('/api/user', {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                setUser(response.data);
+            }
         } catch (error) {
             console.error('Error checking user auth:', error);
         }
     };
 
-    const handleMapScroll = (direction) => {
+    const handleMapScroll = useCallback((direction) => {
         setMapPosition((prev) => {
             switch (direction) {
                 case 'up':
@@ -52,14 +77,26 @@ const App = () => {
                     return prev;
             }
         });
-    };
+    }, []);
 
     const fetchMapChunk = async (startX, startY) => {
         try {
             const response = await axios.get('/api/tiles', {
-                params: { startX, startY, size: 10 }
+                params: { startX, startY, size: 10 },
+                headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
             });
-            setMap((prevMap) => [...prevMap, ...response.data]);
+            setMap((prevMap) => {
+                const newMap = [...prevMap];
+                response?.data?.forEach((tile) => {
+                    const index = newMap.findIndex((t) => t.x === tile.x && t.y === tile.y);
+                    if (index !== -1) {
+                        newMap[index] = tile;
+                    } else {
+                        newMap.push(tile);
+                    }
+                });
+                return newMap;
+            });
         } catch (error) {
             console.error('Error fetching map chunk:', error);
         }
@@ -73,16 +110,23 @@ const App = () => {
 
         setIsGenerating(true);
         try {
-            const response = await axios.post('/api/tiles/generate', {
-                x: mapPosition.x,
-                y: mapPosition.y
-            });
+            const response = await axios.post(
+                '/api/generate-tile',
+                {
+                    x: mapPosition.x,
+                    y: mapPosition.y
+                },
+                {
+                    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+                }
+            );
             setCurrentTile(response.data);
             setMap((prevMap) =>
-                prevMap.map((tile) =>
+                prevMap?.map((tile) =>
                     tile.x === response.data.x && tile.y === response.data.y ? response.data : tile
                 )
             );
+            socket.emit('updateTile', response.data);
         } catch (error) {
             console.error('Error generating property:', error);
         } finally {
@@ -94,13 +138,20 @@ const App = () => {
         if (!currentTile) return;
 
         try {
-            const response = await axios.put(`/api/tiles/${x}/${y}`, {
-                content: currentTile.content
-            });
+            const response = await axios.put(
+                `/api/tiles/${x}/${y}`,
+                {
+                    content: currentTile.content
+                },
+                {
+                    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+                }
+            );
             setMap((prevMap) =>
-                prevMap.map((tile) => (tile.x === x && tile.y === y ? response.data : tile))
+                prevMap?.map((tile) => (tile.x === x && tile.y === y ? response.data : tile))
             );
             setCurrentTile(null);
+            socket.emit('updateTile', response.data);
         } catch (error) {
             console.error('Error placing tile:', error);
         }
@@ -109,41 +160,43 @@ const App = () => {
     const renderMap = () => {
         return (
             <div className="isometric-map">
-                {map.map((tile) => (
+                {map?.map((tile) => (
                     <div
                         key={`${tile.x}-${tile.y}`}
                         className="tile"
                         onClick={() => placeTile(tile.x, tile.y)}
                         style={{
                             left: `${(tile.x - mapPosition.x) * 50}px`,
-                            top: `${(tile.y - mapPosition.y) * 50}px`
+                            top: `${(tile.y - mapPosition.y) * 50}px`,
+                            backgroundImage: `url(data:image/png;base64,${tile.content})`
                         }}
-                    >
-                        {tile.content}
-                    </div>
+                    />
                 ))}
             </div>
         );
     };
 
-    const handleLogin = async () => {
+    const handleLogin = async (username, password) => {
         try {
-            const response = await axios.post('/api/login', {
-                username: 'TestUser',
-                password: 'password'
-            });
-            setUser(response.data);
+            const response = await axios.post('/api/login', { username, password });
+            localStorage.setItem('token', response.data.accessToken);
+            setUser(response.data.user);
         } catch (error) {
             console.error('Error logging in:', error);
         }
     };
 
-    const handleLogout = async () => {
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        setUser(null);
+    };
+
+    const handleRegister = async (username, password) => {
         try {
-            await axios.post('/api/logout');
-            setUser(null);
+            await axios.post('/api/register', { username, password });
+            handleLogin(username, password);
         } catch (error) {
-            console.error('Error logging out:', error);
+            console.error('Error registering:', error);
         }
     };
 
@@ -157,7 +210,12 @@ const App = () => {
                         <button onClick={handleLogout}>Logout</button>
                     </div>
                 ) : (
-                    <button onClick={handleLogin}>Login</button>
+                    <div className="auth-buttons">
+                        <button onClick={() => handleLogin('TestUser', 'password')}>Login</button>
+                        <button onClick={() => handleRegister('NewUser', 'password')}>
+                            Register
+                        </button>
+                    </div>
                 )}
             </header>
             <main>
@@ -171,7 +229,7 @@ const App = () => {
                     </div>
                 </div>
                 <div className="controls">
-                    <button onClick={generateProperty} disabled={isGenerating}>
+                    <button onClick={generateProperty} disabled={isGenerating || !user}>
                         {isGenerating ? 'Generating...' : 'Generate Property'}
                     </button>
                 </div>

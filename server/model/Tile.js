@@ -28,15 +28,23 @@ const tileSchema = new mongoose.Schema({
     isCustomized: {
         type: Boolean,
         default: false
+    },
+    aiPrompt: {
+        type: String
+    },
+    aiStyle: {
+        type: String
     }
 });
 
 tileSchema.index({ x: 1, y: 1 }, { unique: true });
 
-tileSchema.methods.updateContent = async function (newContent) {
+tileSchema.methods.updateContent = async function (newContent, aiPrompt, aiStyle) {
     this.content = newContent;
     this.lastModified = Date.now();
     this.isCustomized = true;
+    this.aiPrompt = aiPrompt;
+    this.aiStyle = aiStyle;
     return this.save();
 };
 
@@ -56,8 +64,9 @@ tileSchema.statics.getChunk = async function (startX, startY, size) {
     }).lean();
 };
 
-tileSchema.statics.generateAIContent = async function (x, y) {
-    const prompt = `Create an isometric tile for a game map at coordinates (${x}, ${y}). The tile should be a 1024x1024 pixel image with a cohesive style that fits into an infinite, scrollable game world.`;
+tileSchema.statics.generateAIContent = async function (x, y, customPrompt = '') {
+    const basePrompt = `Create an isometric tile for a game map at coordinates (${x}, ${y}). The tile should be a 1024x1024 pixel image with a cohesive style that fits into an infinite, scrollable game world.`;
+    const prompt = customPrompt ? `${basePrompt} ${customPrompt}` : basePrompt;
 
     const response = await fetch(
         'https://api.stability.ai/v1/generation/stable-diffusion-xl-1024-v1-0/text-to-image',
@@ -88,9 +97,17 @@ tileSchema.statics.generateAIContent = async function (x, y) {
 
     return this.findOneAndUpdate(
         { x, y },
-        { content: imageBase64, isCustomized: false },
+        { content: imageBase64, isCustomized: false, aiPrompt: prompt },
         { new: true, upsert: true }
     );
+};
+
+tileSchema.statics.updateTileOwnership = async function (x, y, userId) {
+    return this.findOneAndUpdate({ x, y }, { owner: userId }, { new: true, upsert: true });
+};
+
+tileSchema.statics.getOwnedTiles = async function (userId) {
+    return this.find({ owner: userId }).lean();
 };
 
 const Tile = mongoose.model('Tile', tileSchema);

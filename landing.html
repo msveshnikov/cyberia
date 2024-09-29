@@ -142,43 +142,24 @@
                 color: var(--secondary-color);
                 margin-bottom: 15px;
             }
-            .pricing {
+            .roadmap {
                 padding: 100px 0;
                 background: linear-gradient(135deg, #f6f9fc, #f1f4f8);
             }
-            .pricing-grid {
+            .roadmap-grid {
                 display: grid;
                 grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
                 gap: 30px;
             }
-            .price-card {
+            .roadmap-item {
                 background: var(--white);
-                padding: 40px;
+                padding: 30px;
                 border-radius: 10px;
                 box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-                text-align: center;
-                transition: transform 0.3s;
             }
-            .price-card:hover {
-                transform: scale(1.05);
-            }
-            .price-card h3 {
+            .roadmap-item h3 {
                 color: var(--primary-color);
-                font-size: 1.5rem;
-                margin-bottom: 20px;
-            }
-            .price {
-                font-size: 3rem;
-                font-weight: bold;
-                margin-bottom: 20px;
-                color: var(--secondary-color);
-            }
-            .price-card ul {
-                list-style: none;
-                margin-bottom: 30px;
-            }
-            .price-card ul li {
-                margin-bottom: 10px;
+                margin-bottom: 15px;
             }
             footer {
                 background: #333;
@@ -194,7 +175,7 @@
                     font-size: 1rem;
                 }
                 .feature-grid,
-                .pricing-grid {
+                .roadmap-grid {
                     grid-template-columns: 1fr;
                 }
             }
@@ -207,7 +188,7 @@
                     <h1>IsoCraft.online</h1>
                     <ul>
                         <li><a href="#features">Features</a></li>
-                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#roadmap">Roadmap</a></li>
                         <li><a href="#about">About</a></li>
                     </ul>
                 </nav>
@@ -250,39 +231,33 @@
                 </div>
             </section>
 
-            <section id="pricing" class="pricing">
+            <section id="roadmap" class="roadmap">
                 <div class="container">
-                    <h2 class="section-title">Pricing Plans</h2>
-                    <div class="pricing-grid">
-                        <div class="price-card">
-                            <h3>Free</h3>
-                            <div class="price">$0</div>
+                    <h2 class="section-title">Development Roadmap</h2>
+                    <div class="roadmap-grid">
+                        <div class="roadmap-item">
+                            <h3>Phase 1</h3>
                             <ul>
-                                <li>1 Basic Property</li>
-                                <li>Limited Customization</li>
-                                <li>Community Access</li>
+                                <li>Core game engine and map rendering</li>
+                                <li>AI integration for property generation</li>
+                                <li>User authentication and basic profile management</li>
                             </ul>
-                            <a href="#" class="btn">Start Free</a>
                         </div>
-                        <div class="price-card">
-                            <h3>Pro</h3>
-                            <div class="price">$9.99/mo</div>
+                        <div class="roadmap-item">
+                            <h3>Phase 2</h3>
                             <ul>
-                                <li>5 Premium Properties</li>
-                                <li>Advanced Customization</li>
-                                <li>Priority Support</li>
+                                <li>Property creation and placement system</li>
+                                <li>Multiplayer functionality and real-time updates</li>
+                                <li>Monetization features and premium content</li>
                             </ul>
-                            <a href="#" class="btn">Go Pro</a>
                         </div>
-                        <div class="price-card">
-                            <h3>Enterprise</h3>
-                            <div class="price">Contact Us</div>
+                        <div class="roadmap-item">
+                            <h3>Phase 3</h3>
                             <ul>
-                                <li>Unlimited Properties</li>
-                                <li>Custom Features</li>
-                                <li>Dedicated Support</li>
+                                <li>Community tools and social features</li>
+                                <li>Mobile responsiveness and cross-platform support</li>
+                                <li>Performance optimization and scalability improvements</li>
                             </ul>
-                            <a href="#" class="btn">Contact Sales</a>
                         </div>
                     </div>
                 </div>
