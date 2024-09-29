@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import Tile from './model/Tile.js';
+import User from './model/User.js';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { createServer } from 'http';
@@ -31,11 +32,6 @@ app.use(express.json());
 app.use(express.static(join(__dirname, '../dist')));
 
 mongoose.connect(process.env.MONGODB_URI, {});
-
-const User = mongoose.model('User', {
-    username: String,
-    password: String
-});
 
 const authenticateToken = (req, res, next) => {
     const authHeader = req.headers['authorization'];
@@ -71,9 +67,9 @@ app.post('/api/login', async (req, res) => {
     try {
         if (await bcrypt.compare(req.body.password, user.password)) {
             const accessToken = jwt.sign({ username: user.username }, process.env.JWT_SECRET);
-            res.json({ accessToken: accessToken });
+            res.json({ accessToken: accessToken, user: { username: user.username } });
         } else {
-            res.send('Not Allowed');
+            res.status(401).send('Not Allowed');
         }
     } catch (error) {
         res.status(500).send(error.message);
@@ -88,7 +84,7 @@ app.post('/api/logout', (req, res) => {
     res.sendStatus(200);
 });
 
-app.get('/api/tiles', authenticateToken, async (req, res) => {
+app.get('/api/tiles', async (req, res) => {
     try {
         const { startX, startY, size } = req.query;
         const tiles = await Tile.getChunk(Number(startX), Number(startY), Number(size));
@@ -109,7 +105,7 @@ app.post('/api/tiles', authenticateToken, async (req, res) => {
     }
 });
 
-app.get('/api/tiles/:x/:y', authenticateToken, async (req, res) => {
+app.get('/api/tiles/:x/:y', async (req, res) => {
     try {
         const tile = await Tile.findOne({ x: req.params.x, y: req.params.y });
         if (tile) {
@@ -149,7 +145,7 @@ app.delete('/api/tiles/:x/:y', authenticateToken, async (req, res) => {
     }
 });
 
-app.post('/api/tiles/generate', authenticateToken, async (req, res) => {
+app.post('/api/generate-tile', authenticateToken, async (req, res) => {
     try {
         const { x, y } = req.body;
         const generatedTile = await Tile.generateAIContent(x, y);

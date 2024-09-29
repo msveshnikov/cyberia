@@ -14,7 +14,7 @@ to play, with monetization options planned for the future.
 
 ## Technology Stack
 
--   Frontend: React + Vite
+-   Frontend: React + Vite + Mantine UI
 -   Backend: ExpressJS + MongoDB, ES6 modules
 -   AI Generation: Stable Diffusion SDXL
 
@@ -71,20 +71,6 @@ to play, with monetization options planned for the future.
 -   `server/`: Backend Express.js server and MongoDB integration
 -   `docs/`: Documentation and marketing materials
 
-## Contributing
-
-We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for more
-information.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
 ## TODO
 
--   Call localhost:3000 for API
--   Implement AI tile generation with isometric style using STABILITY_KEY
--   Optimize Tile model in `server/model/Tile.js` for efficient data storage
--   Implement WebSocket for real-time updates in `server/index.js`
--   Enhance `src/App.jsx` with responsive design for various devices
--   Set up CI/CD pipeline for automated testing and deployment
+-   Implement proper login/register UI

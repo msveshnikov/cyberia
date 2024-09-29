@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import axios from 'axios';
 import io from 'socket.io-client';
 
@@ -9,9 +9,12 @@ const App = () => {
     const [mapPosition, setMapPosition] = useState({ x: 0, y: 0 });
     const [isGenerating, setIsGenerating] = useState(false);
     const [socket, setSocket] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const mapRef = useRef(null);
 
     useEffect(() => {
-        const newSocket = io();
+        const newSocket = io('http://localhost:3000');
         setSocket(newSocket);
         return () => newSocket.close();
     }, []);
@@ -39,12 +42,16 @@ const App = () => {
 
     const fetchInitialMap = async () => {
         try {
-            const response = await axios.get('/api/tiles', {
+            setIsLoading(true);
+            const response = await axios.get('http://localhost:3000/api/tiles', {
                 params: { startX: 0, startY: 0, size: 10 }
             });
             setMap(response.data);
         } catch (error) {
+            setError('Error fetching initial map');
             console.error('Error fetching initial map:', error);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -52,7 +59,7 @@ const App = () => {
         try {
             const token = localStorage.getItem('token');
             if (token) {
-                const response = await axios.get('/api/user', {
+                const response = await axios.get('http://localhost:3000/api/user', {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setUser(response.data);
@@ -81,7 +88,7 @@ const App = () => {
 
     const fetchMapChunk = async (startX, startY) => {
         try {
-            const response = await axios.get('/api/tiles', {
+            const response = await axios.get('http://localhost:3000/api/tiles', {
                 params: { startX, startY, size: 10 },
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
             });
@@ -111,7 +118,7 @@ const App = () => {
         setIsGenerating(true);
         try {
             const response = await axios.post(
-                '/api/generate-tile',
+                'http://localhost:3000/api/tiles/generate',
                 {
                     x: mapPosition.x,
                     y: mapPosition.y
@@ -139,7 +146,7 @@ const App = () => {
 
         try {
             const response = await axios.put(
-                `/api/tiles/${x}/${y}`,
+                `http://localhost:3000/api/tiles/${x}/${y}`,
                 {
                     content: currentTile.content
                 },
@@ -159,7 +166,7 @@ const App = () => {
 
     const renderMap = () => {
         return (
-            <div className="isometric-map">
+            <div className="isometric-map" ref={mapRef}>
                 {map?.map((tile) => (
                     <div
                         key={`${tile.x}-${tile.y}`}
@@ -178,7 +185,10 @@ const App = () => {
 
     const handleLogin = async (username, password) => {
         try {
-            const response = await axios.post('/api/login', { username, password });
+            const response = await axios.post('http://localhost:3000/api/login', {
+                username,
+                password
+            });
             localStorage.setItem('token', response.data.accessToken);
             setUser(response.data.user);
         } catch (error) {
@@ -193,12 +203,33 @@ const App = () => {
 
     const handleRegister = async (username, password) => {
         try {
-            await axios.post('/api/register', { username, password });
+            await axios.post('http://localhost:3000/api/register', { username, password });
             handleLogin(username, password);
         } catch (error) {
             console.error('Error registering:', error);
         }
     };
+
+    const handleMapDrag = useCallback((e) => {
+        if (e.buttons !== 1) return;
+        const dx = e.movementX;
+        const dy = e.movementY;
+        setMapPosition((prev) => ({
+            x: prev.x - Math.round(dx / 50),
+            y: prev.y - Math.round(dy / 50)
+        }));
+    }, []);
+
+    useEffect(() => {
+        const mapElement = mapRef.current;
+        if (mapElement) {
+            mapElement.addEventListener('mousemove', handleMapDrag);
+            return () => mapElement.removeEventListener('mousemove', handleMapDrag);
+        }
+    }, [handleMapDrag]);
+
+    if (isLoading) return <div>Loading...</div>;
+    if (error) return <div>Error: {error}</div>;
 
     return (
         <div className="app">
