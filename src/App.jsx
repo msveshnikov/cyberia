@@ -292,7 +292,7 @@ const App = () => {
                     bg="gray.100"
                 >
                     <Heading as="h1" size="lg">
-                        IsoCraft.online
+                        IsoCraft
                     </Heading>
                     {user ? (
                         <HStack>
