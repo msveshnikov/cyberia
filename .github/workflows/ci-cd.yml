@@ -27,9 +27,9 @@ jobs:
                   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
                   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
               run: |
-                  docker build -t isocraft:arm64 .
+                  docker build -t ${{ secrets.DOCKER_USERNAME }}/isocraft:arm64 .
                   echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
-                  docker push isocraft:arm64
+                  docker push ${{ secrets.DOCKER_USERNAME }}/isocraft:arm64
 
     deploy:
         needs: build
@@ -41,4 +41,4 @@ jobs:
               env:
                   DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
               run: |
-                  ssh -i $DEPLOY_KEY ubuntu@allchat.online "cd isocraft && docker pull isocraft:arm64 && docker-compose up -d"
+                  ssh -i $DEPLOY_KEY ubuntu@allchat.online "cd isocraft && docker pull ${{ secrets.DOCKER_USERNAME }}/isocraft:arm64 && docker-compose up -d"
