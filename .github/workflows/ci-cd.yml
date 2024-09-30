@@ -51,8 +51,8 @@ jobs:
                   mkdir -p ~/.ssh/
                   echo "$SSH_KEY" > ~/.ssh/id_rsa
                   chmod 600 ~/.ssh/id_rsa
-                  ssh-keyscan -H allchat.online >> ~/.ssh/known_hosts
-                  ssh ubuntu@allchat.online '
+                  ssh-keyscan -H isocraft.online >> ~/.ssh/known_hosts
+                  ssh ubuntu@isocraft.online '
                     docker pull ${{ secrets.DOCKER_USERNAME }}/isocraft
                     cd isocraft
                     docker-compose down

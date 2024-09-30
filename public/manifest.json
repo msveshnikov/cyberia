@@ -1,0 +1,51 @@
+{
+    "name": "IsoCraft",
+    "short_name": "IsoCraft",
+    "description": "AI-powered MMO property game with infinite 3D isometric map",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#000000",
+    "icons": [
+        {
+            "src": "/favicon.ico",
+            "sizes": "64x64 32x32 24x24 16x16",
+            "type": "image/x-icon"
+        },
+        {
+            "src": "/logo192.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "/logo512.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ],
+    "orientation": "any",
+    "categories": ["games", "entertainment"],
+    "lang": "en-US",
+    "dir": "ltr",
+    "prefer_related_applications": false,
+    "related_applications": [],
+    "scope": "/",
+    "screenshots": [
+        {
+            "src": "/screenshot1.png",
+            "sizes": "1280x720",
+            "type": "image/png"
+        },
+        {
+            "src": "/screenshot2.png",
+            "sizes": "1280x720",
+            "type": "image/png"
+        }
+    ],
+    "features": [
+        "AI-powered property generation",
+        "Infinite map scrolling",
+        "User-owned properties",
+        "Multiplayer interaction"
+    ]
+}

@@ -76,7 +76,3 @@ https://isocraft.online
 -   `src/`: React components and main application logic
 -   `server/`: Backend Express.js server and MongoDB integration
 -   `docs/`: Documentation and marketing materials
-
-# TODO
-
--   make one container with FE built /dist folder and /server/index.js runs BE + serve /dist
