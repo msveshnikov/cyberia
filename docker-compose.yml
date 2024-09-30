@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+    app:
+        image: extender777/isocraft:arm64
+        ports:
+            - '8011:3000'
+        environment:
+            - NODE_ENV=production
+            - STABILITY_KEY=${STABILITY_KEY}
+            - JWT_SECRET=${JWT_SECRET}
+            - MONGODB_URI=mongodb://mongodb:27017/isocraft
+        depends_on:
+            - mongodb
+        restart: unless-stopped
+
+    mongodb:
+        image: mongo:latest
+        ports:
+            - '27017:27017'
+        volumes:
+            - mongodb_data:/data/db
+        restart: unless-stopped
+
+volumes:
+    mongodb_data:
