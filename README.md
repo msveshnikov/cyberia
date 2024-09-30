@@ -1,8 +1,8 @@
 # IsoCraft
 
-IsoCraft is an innovative MMO game where users can create their own 1024x1024 tiles property
-on a 3D isometric infinite map using AI-generated content. The game is browser-based, initially free
-to play, with monetization options planned for the future.
+IsoCraft is an innovative MMO game where users can create their own 1024x1024 tiles property on a 3D
+isometric infinite map using AI-generated content. The game is browser-based, initially free to
+play, with monetization options planned for the future.
 
 ![alt text](/public/hero.png)
 
@@ -76,3 +76,7 @@ https://isocraft.online
 -   `src/`: React components and main application logic
 -   `server/`: Backend Express.js server and MongoDB integration
 -   `docs/`: Documentation and marketing materials
+
+# TODO
+
+-   make one container with FE built /dist folder and /server/index.js runs BE + serve /dist
