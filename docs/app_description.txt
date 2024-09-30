@@ -1,0 +1,27 @@
+Welcome to IsoCraft, the groundbreaking MMO game that puts the power of creation in your hands! Dive into a vast, infinite 3D isometric world where you can claim your own 1024x1024 tile property and bring it to life using cutting-edge AI technology.
+
+Key Features:
+• AI-Powered Creation: Harness the power of Stable Diffusion SDXL to generate unique, stunning properties with ease.
+• Infinite Exploration: Scroll and discover an endless world filled with player-created wonders.
+• Your Personal Space: Own and customize your 1024x1024 tile, making it truly yours.
+• Multiplayer Interaction: Connect with players from around the globe in a shared, ever-expanding universe.
+• Seamless Browser Play: No downloads required – jump right into the action from your favorite browser.
+
+IsoCraft combines the best of creativity, technology, and social interaction:
+• Responsive Design: Enjoy smooth gameplay on any device or screen size.
+• Optimized Performance: Experience fluid scrolling and efficient property loading.
+• Real-Time Synchronization: Watch the world evolve as players build and interact.
+• Accessibility: Features designed to welcome players of all abilities.
+
+Coming Soon:
+• Advanced Property Customization Tools
+• Social Features: Chat, friends lists, and trading
+• In-Game Economy System
+• Achievements and Progression
+• Seasonal Events and Limited-Time Properties
+• Collaborative Building Modes
+• User-Generated Content Marketplace
+• Dynamic Weather and Day/Night Cycles
+• Third-Party API Integrations
+
+Join IsoCraft today and become part of a revolutionary gaming experience where imagination knows no bounds. Create, explore, and connect in ways you've never dreamed possible. Your slice of this infinite world awaits – what will you build?

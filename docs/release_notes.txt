@@ -1,0 +1,29 @@
+IsoCraft v1.0.0 Release Notes
+
+We're excited to launch the first version of IsoCraft! Here's what you can expect:
+
+New Features:
+• AI-powered property generation using Stable Diffusion SDXL
+• Infinite isometric map scrolling and exploration
+• User-owned 1024x1024 property tiles
+• Multiplayer interaction in a shared world
+• Browser-based gameplay with no downloads required
+
+Technical Improvements:
+• Responsive UI for various screen sizes
+• Optimized asset loading for smooth infinite scrolling
+• Efficient property data storage and retrieval
+• Real-time multiplayer synchronization
+• Scalable backend architecture
+
+Known Issues:
+• Some users may experience slight lag when generating new properties
+• Mobile performance is still being optimized
+
+Coming Soon:
+• Property customization tools
+• In-game chat and friends list
+• Economy system for transactions
+• Achievements and progression system
+
+Thank you for joining us on this exciting journey! Your feedback is crucial as we continue to improve and expand IsoCraft.

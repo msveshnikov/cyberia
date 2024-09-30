@@ -1,0 +1,1 @@
+mmo,isometric,ai,property,creation,infinite,world,multiplayer,browser-game,exploration
