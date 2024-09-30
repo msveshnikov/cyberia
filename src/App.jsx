@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-unused-vars */
 import { useState, useEffect, useCallback, useRef } from 'react';
 import axios from 'axios';
 import io from 'socket.io-client';
@@ -53,10 +51,29 @@ const App = () => {
         return () => newSocket.close();
     }, []);
 
+    const fetchInitialMap = useCallback(async () => {
+        try {
+            setIsLoading(true);
+            const response = await axios.get('http://localhost:3000/api/tiles', {
+                params: { startX: 0, startY: 0, size: 10 }
+            });
+            setMap(response.data);
+        } catch {
+            toast({
+                title: 'Error fetching initial map',
+                status: 'error',
+                duration: 3000,
+                isClosable: true
+            });
+        } finally {
+            setIsLoading(false);
+        }
+    }, [toast]);
+
     useEffect(() => {
         fetchInitialMap();
         checkUserAuth();
-    }, []);
+    }, [fetchInitialMap]);
 
     useEffect(() => {
         fetchMapChunk(mapPosition.x, mapPosition.y);
@@ -73,25 +90,6 @@ const App = () => {
             });
         }
     }, [socket]);
-
-    const fetchInitialMap = async () => {
-        try {
-            setIsLoading(true);
-            const response = await axios.get('http://localhost:3000/api/tiles', {
-                params: { startX: 0, startY: 0, size: 10 }
-            });
-            setMap(response.data);
-        } catch (error) {
-            toast({
-                title: 'Error fetching initial map',
-                status: 'error',
-                duration: 3000,
-                isClosable: true
-            });
-        } finally {
-            setIsLoading(false);
-        }
-    };
 
     const checkUserAuth = async () => {
         try {
@@ -211,10 +209,10 @@ const App = () => {
                         className="tile"
                         onClick={() => placeTile(tile.x, tile.y)}
                         position="absolute"
-                        left={`${(tile.x - mapPosition.x) * 50}px`}
-                        top={`${(tile.y - mapPosition.y) * 50}px`}
-                        width="50px"
-                        height="50px"
+                        left={`${(tile.x - mapPosition.x) * 250}px`}
+                        top={`${(tile.y - mapPosition.y) * 250}px`}
+                        width="250px"
+                        height="250px"
                         transform="rotateX(60deg) rotateZ(45deg)"
                         style={{ transformStyle: 'preserve-3d' }}
                     >
