@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>IsoCraft - Create Your 3D Isometric World</title>
+        <title>IsoCraft - Craft Your AI-Powered Isometric World</title>
         <link
             href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
             rel="stylesheet"
@@ -161,6 +161,55 @@
                 color: var(--accent-color);
                 margin-bottom: 15px;
             }
+            .benefits {
+                padding: 30px 0;
+                background-color: #3c2222;
+            }
+            .benefits-list {
+                list-style: none;
+                padding: 0;
+            }
+            .benefits-list li {
+                margin-bottom: 15px;
+                padding-left: 30px;
+                position: relative;
+            }
+            .benefits-list li::before {
+                content: '✓';
+                position: absolute;
+                left: 0;
+                color: var(--accent-color);
+                font-weight: bold;
+            }
+            .cta {
+                text-align: center;
+                padding: 50px 0;
+                background: url('/cta-bg.jpg') no-repeat center center/cover;
+                position: relative;
+            }
+            .cta::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(44, 26, 26, 0.7);
+            }
+            .cta-content {
+                position: relative;
+                z-index: 1;
+            }
+            .cta h2 {
+                font-size: 2.5rem;
+                margin-bottom: 20px;
+                color: var(--white);
+            }
+            .cta p {
+                font-size: 1.2rem;
+                margin-bottom: 30px;
+                color: var(--white);
+            }
             footer {
                 background: #1a0f0f;
                 color: var(--white);
@@ -188,6 +237,7 @@
                     <h1>IsoCraft</h1>
                     <ul>
                         <li><a href="#features">Features</a></li>
+                        <li><a href="#benefits">Benefits</a></li>
                         <li><a href="#roadmap">Roadmap</a></li>
                     </ul>
                 </nav>
@@ -197,11 +247,9 @@
         <main>
             <section class="hero">
                 <div class="container hero-content">
-                    <h1>Create Your Own 3D Isometric World</h1>
-                    <p>
-                        Design, build, and explore an infinite AI-generated landscape with IsoCraft
-                    </p>
-                    <a href="#" class="btn">Get Started</a>
+                    <h1>Craft Your AI-Powered Isometric World</h1>
+                    <p>Explore, Create, and Connect in an Infinite 3D Universe</p>
+                    <a href="https://isocraft.online" class="btn">Start Your Adventure</a>
                 </div>
             </section>
 
@@ -210,22 +258,39 @@
                     <h2 class="section-title">Key Features</h2>
                     <div class="feature-grid">
                         <div class="feature">
-                            <h3>AI-Powered Generation</h3>
-                            <p>Create unique properties using Stable Diffusion SDXL</p>
+                            <h3>AI-Generated Landscapes</h3>
+                            <p>Create unique 1024x1024 property tiles using cutting-edge AI technology</p>
                         </div>
                         <div class="feature">
-                            <h3>Infinite Map</h3>
-                            <p>Explore an endless isometric world</p>
+                            <h3>Infinite Exploration</h3>
+                            <p>Scroll through an endless isometric world filled with player creations</p>
                         </div>
                         <div class="feature">
-                            <h3>User-Owned Properties</h3>
-                            <p>Claim and customize your 1024x1024 tile</p>
+                            <h3>Browser-Based Gameplay</h3>
+                            <p>No downloads required – play instantly from any device</p>
                         </div>
                         <div class="feature">
-                            <h3>Multiplayer Interaction</h3>
-                            <p>Connect and collaborate in a shared world</p>
+                            <h3>Real-Time Multiplayer</h3>
+                            <p>Interact with players from around the globe in a shared, dynamic environment</p>
+                        </div>
+                        <div class="feature">
+                            <h3>Own Your Digital Space</h3>
+                            <p>Claim and customize your personal property in this vast digital realm</p>
                         </div>
                     </div>
+                </div>
+            </section>
+
+            <section id="benefits" class="benefits">
+                <div class="container">
+                    <h2 class="section-title">Why Join IsoCraft?</h2>
+                    <ul class="benefits-list">
+                        <li>Unleash Your Creativity: Let AI assist you in bringing your wildest ideas to life</li>
+                        <li>Connect with a Global Community: Make friends, trade, and collaborate with players worldwide</li>
+                        <li>Accessible Anywhere: Play on your computer, tablet, or phone – your world is always at your fingertips</li>
+                        <li>Constantly Evolving: Regular updates, seasonal events, and new features keep the game fresh and exciting</li>
+                        <li>Free to Start: Begin your adventure without spending a dime, with optional premium features for enhanced gameplay</li>
+                    </ul>
                 </div>
             </section>
 
@@ -258,6 +323,18 @@
                             </ul>
                         </div>
                     </div>
+                </div>
+            </section>
+
+            <section class="cta">
+                <div class="container cta-content">
+                    <h2>Ready to Shape Your Digital Destiny?</h2>
+                    <p>Join thousands of players already crafting their unique worlds in IsoCraft!</p>
+                    <br/>
+                    <a href="https://isocraft.online" class="btn">Create Your World Now</a>
+                    <br/>
+                    <br/>
+                    <p class="subtext">No download required. Start playing in seconds!</p>
                 </div>
             </section>
         </main>
