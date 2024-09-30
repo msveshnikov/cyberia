@@ -20,7 +20,7 @@ https://isocraft.online
 
 ## Technology Stack
 
--   Frontend: React + Vite + Chakra UI
+-   Frontend: React + Vite + Chakra UI + Router v6
 -   Backend: ExpressJS + MongoDB, ES6 modules
 -   AI Generation: Stable Diffusion SDXL
 

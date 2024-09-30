@@ -22,7 +22,8 @@ import {
     Heading,
     FormControl,
     FormLabel,
-    Image
+    Image,
+    Container
 } from '@chakra-ui/react';
 
 const App = () => {
@@ -305,38 +306,40 @@ const App = () => {
                     )}
                 </Flex>
 
-                <VStack spacing={4} align="stretch" p={4}>
-                    {isLoading ? (
-                        <Spinner />
-                    ) : (
-                        <Box>
-                            <Box
-                                className="map-container"
-                                position="relative"
-                                width="100%"
-                                height="60vh"
-                                overflow="hidden"
-                                perspective="1000px"
-                            >
-                                {renderMap()}
+                <Container maxW="container.xl" py={8}>
+                    <VStack spacing={8} align="stretch">
+                        {isLoading ? (
+                            <Spinner />
+                        ) : (
+                            <Box>
+                                <Box
+                                    className="map-container"
+                                    position="relative"
+                                    width="100%"
+                                    height="60vh"
+                                    overflow="hidden"
+                                    perspective="1000px"
+                                >
+                                    {renderMap()}
+                                </Box>
+                                <HStack justify="center" mt={4}>
+                                    <Button onClick={() => handleMapScroll('up')}>Up</Button>
+                                    <Button onClick={() => handleMapScroll('down')}>Down</Button>
+                                    <Button onClick={() => handleMapScroll('left')}>Left</Button>
+                                    <Button onClick={() => handleMapScroll('right')}>Right</Button>
+                                </HStack>
                             </Box>
-                            <HStack justify="center" mt={4}>
-                                <Button onClick={() => handleMapScroll('up')}>Up</Button>
-                                <Button onClick={() => handleMapScroll('down')}>Down</Button>
-                                <Button onClick={() => handleMapScroll('left')}>Left</Button>
-                                <Button onClick={() => handleMapScroll('right')}>Right</Button>
-                            </HStack>
-                        </Box>
-                    )}
-                    <Button
-                        onClick={generateProperty}
-                        isLoading={isGenerating}
-                        loadingText="Generating..."
-                        isDisabled={!user}
-                    >
-                        Generate Property
-                    </Button>
-                </VStack>
+                        )}
+                        <Button
+                            onClick={generateProperty}
+                            isLoading={isGenerating}
+                            loadingText="Generating..."
+                            isDisabled={!user}
+                        >
+                            Generate Property
+                        </Button>
+                    </VStack>
+                </Container>
 
                 <Modal isOpen={isLoginOpen} onClose={closeLogin}>
                     <ModalOverlay />
