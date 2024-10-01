@@ -11,7 +11,7 @@ const tileSchema = new mongoose.Schema({
     },
     owner: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
     },
     content: {
         type: String,
@@ -32,13 +32,19 @@ const tileSchema = new mongoose.Schema({
     aiPrompt: {
         type: String
     },
-    aiStyle: {
+    style: {
         type: String
     },
     propertyType: {
         type: String
     },
     color: {
+        type: String
+    },
+    size: {
+        type: String
+    },
+    material: {
         type: String
     }
 });
@@ -48,24 +54,28 @@ tileSchema.index({ x: 1, y: 1 }, { unique: true });
 tileSchema.methods.updateContent = async function (
     newContent,
     aiPrompt,
-    aiStyle,
+    style,
     propertyType,
-    color
+    color,
+    size,
+    material
 ) {
     this.content = newContent;
     this.lastModified = Date.now();
     this.isCustomized = true;
     this.aiPrompt = aiPrompt;
-    this.aiStyle = aiStyle;
+    this.style = style;
     this.propertyType = propertyType;
     this.color = color;
+    this.size = size;
+    this.material = material;
     return this.save();
 };
 
-tileSchema.statics.findOrCreate = async function (x, y) {
+tileSchema.statics.findOrCreate = async function (x, y, owner) {
     let tile = await this.findOne({ x, y });
     if (!tile) {
-        tile = new this({ x, y, content: 'default' });
+        tile = new this({ x, y, content: 'default', owner });
         await tile.save();
     }
     return tile;
@@ -81,11 +91,15 @@ tileSchema.statics.getChunk = async function (startX, startY, size) {
 tileSchema.statics.generateAIContent = async function (
     x,
     y,
+    owner,
     propertyType,
+    style,
     color,
+    size,
+    material,
     customPrompt = ''
 ) {
-    const basePrompt = `Create an isometric tile for a game map at coordinates (${x}, ${y}). The tile should be a 1024x1024 pixel image with a cohesive style that fits into an infinite, scrollable game world. Property type: ${propertyType}, Color: ${color}.`;
+    const basePrompt = `Create an isometric tile for a game map. The tile should be a 1024x1024 pixel image with a cohesive style that fits into an infinite, scrollable game world. Property type: ${propertyType}, Style:${style}, Color: ${color}, Size: ${size}, Material: ${material}.`;
     const prompt = customPrompt ? `${basePrompt} ${customPrompt}` : basePrompt;
 
     const response = await fetch(
@@ -122,7 +136,11 @@ tileSchema.statics.generateAIContent = async function (
             isCustomized: false,
             aiPrompt: prompt,
             propertyType,
-            color
+            color,
+            style,
+            size,
+            material,
+            owner
         },
         { new: true, upsert: true }
     );
@@ -134,6 +152,11 @@ tileSchema.statics.updateTileOwnership = async function (x, y, userId) {
 
 tileSchema.statics.getOwnedTiles = async function (userId) {
     return this.find({ owner: userId }).lean();
+};
+
+tileSchema.statics.isSpaceEmpty = async function (x, y) {
+    const tile = await this.findOne({ x, y });
+    return !tile || tile.content === 'default';
 };
 
 const Tile = mongoose.model('Tile', tileSchema);

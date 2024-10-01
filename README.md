@@ -80,6 +80,4 @@ https://isocraft.online
 # TODO
 
 -   only allow put tile to empty space
--   store ownner of tile always!
--   allow cursor key movement and mouse panning (on map) with progressive loading of tiles in viewport
--   add more property attributes (style, size, type, material, etc)
+-   allow mouse panning (on map) with progressive loading of tiles in viewport

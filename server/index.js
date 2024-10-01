@@ -18,7 +18,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const app = express();
-app.set("trust proxy", 1);
+app.set('trust proxy', 1);
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
     cors: {
@@ -31,7 +31,7 @@ const PORT = process.env.PORT || 3000;
 
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000,
-    max: 100
+    max: 500
 });
 
 app.use(limiter);
@@ -154,9 +154,28 @@ app.delete('/api/tiles/:x/:y', authenticateToken, async (req, res) => {
 
 app.post('/api/tiles/generate', authenticateToken, async (req, res) => {
     try {
-        const { x, y, propertyType, color, otherParams } = req.body;
-        const customPrompt = `Create a ${propertyType} property with ${color} color. ${otherParams}`;
-        const generatedTile = await Tile.generateAIContent(x, y, customPrompt);
+        const {
+            x,
+            y,
+            owner,
+            propertyType,
+            color,
+            style,
+            size,
+            material,
+            additionalDetails
+        } = req.body;
+        const generatedTile = await Tile.generateAIContent(
+            x,
+            y,
+            owner,
+            propertyType,
+            style,
+            color,
+            size,
+            material,
+            additionalDetails
+        );
         res.status(201).json(generatedTile);
     } catch (error) {
         res.status(500).json({ message: error.message });

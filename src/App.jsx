@@ -23,9 +23,9 @@ import {
     FormControl,
     FormLabel,
     Image,
-    Container,
-    Select
+    Container
 } from '@chakra-ui/react';
+import PropertySelector from './PropertySelector';
 
 const API_URL = import.meta.env.DEV ? 'http://localhost:3000' : 'https://isocraft.online';
 
@@ -39,8 +39,6 @@ const App = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [propertyType, setPropertyType] = useState('house');
-    const [propertyColor, setPropertyColor] = useState('white');
     const mapRef = useRef(null);
     const toast = useToast();
 
@@ -164,7 +162,7 @@ const App = () => {
         openPropertySelector();
     };
 
-    const handleGenerateProperty = async () => {
+    const handleGenerateProperty = async (propertyDetails) => {
         setIsGenerating(true);
         closePropertySelector();
         try {
@@ -173,8 +171,8 @@ const App = () => {
                 {
                     x: mapPosition.x,
                     y: mapPosition.y,
-                    propertyType,
-                    propertyColor
+                    owner: user._id,
+                    ...propertyDetails
                 },
                 {
                     headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
@@ -202,12 +200,22 @@ const App = () => {
 
     const placeTile = async (x, y) => {
         if (!currentTile) return;
+        if (map.find((tile) => tile.x === x && tile.y === y && tile.content !== 'default')) {
+            toast({
+                title: 'Cannot place tile on occupied space',
+                status: 'warning',
+                duration: 3000,
+                isClosable: true
+            });
+            return;
+        }
 
         try {
             const response = await axios.put(
                 `${API_URL}/api/tiles/${x}/${y}`,
                 {
-                    content: currentTile.content
+                    content: currentTile.content,
+                    owner: user._id
                 },
                 {
                     headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
@@ -236,7 +244,7 @@ const App = () => {
                         top={`${(tile.y - mapPosition.y) * 250}px`}
                         width="250px"
                         height="250px"
-                        transform="rotateX(60deg) rotateZ(45deg)"
+                        transform="rotateX(60deg) rotateZ(-45deg)"
                         style={{ transformStyle: 'preserve-3d' }}
                     >
                         <Image
@@ -300,6 +308,30 @@ const App = () => {
             return () => mapElement.removeEventListener('mousemove', handleMapDrag);
         }
     }, [handleMapDrag]);
+
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            switch (e.key) {
+                case 'ArrowUp':
+                    handleMapScroll('up');
+                    break;
+                case 'ArrowDown':
+                    handleMapScroll('down');
+                    break;
+                case 'ArrowLeft':
+                    handleMapScroll('left');
+                    break;
+                case 'ArrowRight':
+                    handleMapScroll('right');
+                    break;
+                default:
+                    break;
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [handleMapScroll]);
 
     return (
         <ChakraProvider>
@@ -425,45 +457,11 @@ const App = () => {
                     </ModalContent>
                 </Modal>
 
-                <Modal isOpen={isPropertySelectorOpen} onClose={closePropertySelector}>
-                    <ModalOverlay />
-                    <ModalContent>
-                        <ModalHeader>Property Selector</ModalHeader>
-                        <ModalCloseButton />
-                        <ModalBody>
-                            <VStack spacing={4}>
-                                <FormControl>
-                                    <FormLabel>Property Type</FormLabel>
-                                    <Select
-                                        value={propertyType}
-                                        onChange={(e) => setPropertyType(e.target.value)}
-                                    >
-                                        <option value="house">House</option>
-                                        <option value="apartment">Apartment</option>
-                                        <option value="office">Office</option>
-                                        <option value="shop">Shop</option>
-                                    </Select>
-                                </FormControl>
-                                <FormControl>
-                                    <FormLabel>Property Color</FormLabel>
-                                    <Select
-                                        value={propertyColor}
-                                        onChange={(e) => setPropertyColor(e.target.value)}
-                                    >
-                                        <option value="white">White</option>
-                                        <option value="red">Red</option>
-                                        <option value="blue">Blue</option>
-                                        <option value="green">Green</option>
-                                        <option value="yellow">Yellow</option>
-                                    </Select>
-                                </FormControl>
-                                <Button onClick={handleGenerateProperty} width="100%">
-                                    Generate Property
-                                </Button>
-                            </VStack>
-                        </ModalBody>
-                    </ModalContent>
-                </Modal>
+                <PropertySelector
+                    isOpen={isPropertySelectorOpen}
+                    onClose={closePropertySelector}
+                    onGenerate={handleGenerateProperty}
+                />
             </Box>
         </ChakraProvider>
     );
