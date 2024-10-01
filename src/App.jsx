@@ -31,7 +31,6 @@ const API_URL = import.meta.env.DEV ? 'http://localhost:3000' : 'https://isocraf
 
 const App = () => {
     const [map, setMap] = useState([]);
-    const [currentTile, setCurrentTile] = useState(null);
     const [user, setUser] = useState(null);
     const [mapPosition, setMapPosition] = useState({ x: 0, y: 0 });
     const [isGenerating, setIsGenerating] = useState(false);
@@ -134,7 +133,7 @@ const App = () => {
     const fetchMapChunk = async (startX, startY) => {
         try {
             const response = await axios.get(`${API_URL}/api/tiles`, {
-                params: { startX, startY, size: 10 },
+                params: { startX, startY, size: 5 },
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
             });
             setMap((prevMap) => {
@@ -178,7 +177,6 @@ const App = () => {
                     headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
                 }
             );
-            setCurrentTile(response.data);
             setMap((prevMap) =>
                 prevMap?.map((tile) =>
                     tile.x === response.data.x && tile.y === response.data.y ? response.data : tile
@@ -198,39 +196,6 @@ const App = () => {
         }
     };
 
-    const placeTile = async (x, y) => {
-        if (!currentTile) return;
-        if (map.find((tile) => tile.x === x && tile.y === y && tile.content !== 'default')) {
-            toast({
-                title: 'Cannot place tile on occupied space',
-                status: 'warning',
-                duration: 3000,
-                isClosable: true
-            });
-            return;
-        }
-
-        try {
-            const response = await axios.put(
-                `${API_URL}/api/tiles/${x}/${y}`,
-                {
-                    content: currentTile.content,
-                    owner: user._id
-                },
-                {
-                    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-                }
-            );
-            setMap((prevMap) =>
-                prevMap?.map((tile) => (tile.x === x && tile.y === y ? response.data : tile))
-            );
-            setCurrentTile(null);
-            socket.emit('updateTile', response.data);
-        } catch (error) {
-            console.error('Error placing tile:', error);
-        }
-    };
-
     const renderMap = () => {
         return (
             <Box className="isometric-map" ref={mapRef}>
@@ -238,7 +203,6 @@ const App = () => {
                     <Box
                         key={`${tile.x}-${tile.y}`}
                         className="tile"
-                        onClick={() => placeTile(tile.x, tile.y)}
                         position="absolute"
                         left={`${(tile.x - mapPosition.x) * 250}px`}
                         top={`${(tile.y - mapPosition.y) * 250}px`}
