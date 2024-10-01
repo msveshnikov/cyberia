@@ -4,7 +4,7 @@ IsoCraft is an innovative MMO game where users can create their own 1024x1024 ti
 isometric infinite map using AI-generated content. The game is browser-based, initially free to
 play, with monetization options planned for the future.
 
-![alt text](/public/hero.png)
+![alt text](/public/hero.jpg)
 
 ## DEMO
 
@@ -79,3 +79,7 @@ https://isocraft.online
 
 # TODO
 
+-   only allow put tile to empty space
+-   store ownner of tile always!
+-   allow cursor key movement and mouse panning (on map) with progressive loading of tiles in viewport
+-   add more property attributes (style, size, type, material, etc)
