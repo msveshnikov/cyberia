@@ -23,8 +23,11 @@ import {
     FormControl,
     FormLabel,
     Image,
-    Container
+    Container,
+    Select
 } from '@chakra-ui/react';
+
+const API_URL = import.meta.env.DEV ? 'http://localhost:3000' : 'https://isocraft.online';
 
 const App = () => {
     const [map, setMap] = useState([]);
@@ -36,6 +39,8 @@ const App = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [propertyType, setPropertyType] = useState('house');
+    const [propertyColor, setPropertyColor] = useState('white');
     const mapRef = useRef(null);
     const toast = useToast();
 
@@ -45,9 +50,14 @@ const App = () => {
         onOpen: openRegister,
         onClose: closeRegister
     } = useDisclosure();
+    const {
+        isOpen: isPropertySelectorOpen,
+        onOpen: openPropertySelector,
+        onClose: closePropertySelector
+    } = useDisclosure();
 
     useEffect(() => {
-        const newSocket = io('http://localhost:3000');
+        const newSocket = io(API_URL);
         setSocket(newSocket);
         return () => newSocket.close();
     }, []);
@@ -55,7 +65,7 @@ const App = () => {
     const fetchInitialMap = useCallback(async () => {
         try {
             setIsLoading(true);
-            const response = await axios.get('http://localhost:3000/api/tiles', {
+            const response = await axios.get(`${API_URL}/api/tiles`, {
                 params: { startX: 0, startY: 0, size: 10 }
             });
             setMap(response.data);
@@ -96,7 +106,7 @@ const App = () => {
         try {
             const token = localStorage.getItem('token');
             if (token) {
-                const response = await axios.get('http://localhost:3000/api/user', {
+                const response = await axios.get(`${API_URL}/api/user`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setUser(response.data);
@@ -125,7 +135,7 @@ const App = () => {
 
     const fetchMapChunk = async (startX, startY) => {
         try {
-            const response = await axios.get('http://localhost:3000/api/tiles', {
+            const response = await axios.get(`${API_URL}/api/tiles`, {
                 params: { startX, startY, size: 10 },
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
             });
@@ -151,14 +161,20 @@ const App = () => {
             openLogin();
             return;
         }
+        openPropertySelector();
+    };
 
+    const handleGenerateProperty = async () => {
         setIsGenerating(true);
+        closePropertySelector();
         try {
             const response = await axios.post(
-                'http://localhost:3000/api/tiles/generate',
+                `${API_URL}/api/tiles/generate`,
                 {
                     x: mapPosition.x,
-                    y: mapPosition.y
+                    y: mapPosition.y,
+                    propertyType,
+                    propertyColor
                 },
                 {
                     headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
@@ -173,6 +189,12 @@ const App = () => {
             socket.emit('updateTile', response.data);
         } catch (error) {
             console.error('Error generating property:', error);
+            toast({
+                title: 'Error generating property',
+                status: 'error',
+                duration: 3000,
+                isClosable: true
+            });
         } finally {
             setIsGenerating(false);
         }
@@ -183,7 +205,7 @@ const App = () => {
 
         try {
             const response = await axios.put(
-                `http://localhost:3000/api/tiles/${x}/${y}`,
+                `${API_URL}/api/tiles/${x}/${y}`,
                 {
                     content: currentTile.content
                 },
@@ -232,7 +254,7 @@ const App = () => {
 
     const handleLogin = async () => {
         try {
-            const response = await axios.post('http://localhost:3000/api/login', {
+            const response = await axios.post(`${API_URL}/api/login`, {
                 email,
                 password
             });
@@ -253,7 +275,7 @@ const App = () => {
 
     const handleRegister = async () => {
         try {
-            await axios.post('http://localhost:3000/api/register', { email, password });
+            await axios.post(`${API_URL}/api/register`, { email, password });
             handleLogin();
             closeRegister();
         } catch (error) {
@@ -397,6 +419,46 @@ const App = () => {
                                 </FormControl>
                                 <Button onClick={handleRegister} width="100%">
                                     Register
+                                </Button>
+                            </VStack>
+                        </ModalBody>
+                    </ModalContent>
+                </Modal>
+
+                <Modal isOpen={isPropertySelectorOpen} onClose={closePropertySelector}>
+                    <ModalOverlay />
+                    <ModalContent>
+                        <ModalHeader>Property Selector</ModalHeader>
+                        <ModalCloseButton />
+                        <ModalBody>
+                            <VStack spacing={4}>
+                                <FormControl>
+                                    <FormLabel>Property Type</FormLabel>
+                                    <Select
+                                        value={propertyType}
+                                        onChange={(e) => setPropertyType(e.target.value)}
+                                    >
+                                        <option value="house">House</option>
+                                        <option value="apartment">Apartment</option>
+                                        <option value="office">Office</option>
+                                        <option value="shop">Shop</option>
+                                    </Select>
+                                </FormControl>
+                                <FormControl>
+                                    <FormLabel>Property Color</FormLabel>
+                                    <Select
+                                        value={propertyColor}
+                                        onChange={(e) => setPropertyColor(e.target.value)}
+                                    >
+                                        <option value="white">White</option>
+                                        <option value="red">Red</option>
+                                        <option value="blue">Blue</option>
+                                        <option value="green">Green</option>
+                                        <option value="yellow">Yellow</option>
+                                    </Select>
+                                </FormControl>
+                                <Button onClick={handleGenerateProperty} width="100%">
+                                    Generate Property
                                 </Button>
                             </VStack>
                         </ModalBody>

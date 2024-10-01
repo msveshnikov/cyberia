@@ -10,6 +10,7 @@ import { dirname, join } from 'path';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import jwt from 'jsonwebtoken';
+import rateLimit from 'express-rate-limit';
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const app = express();
+app.set("trust proxy", 1);
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
     cors: {
@@ -27,6 +29,12 @@ const io = new Server(httpServer, {
 
 const PORT = process.env.PORT || 3000;
 
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 100
+});
+
+app.use(limiter);
 app.use(cors());
 app.use(express.json());
 app.use(express.static(join(__dirname, '../dist')));
@@ -121,7 +129,7 @@ app.put('/api/tiles/:x/:y', authenticateToken, async (req, res) => {
     try {
         const tile = await Tile.findOne({ x: req.params.x, y: req.params.y });
         if (tile) {
-            await tile.updateContent(req.body.content);
+            await tile.updateContent(req.body.content, req.body.aiPrompt, req.body.aiStyle);
             res.json(tile);
         } else {
             res.status(404).json({ message: 'Tile not found' });
@@ -146,8 +154,9 @@ app.delete('/api/tiles/:x/:y', authenticateToken, async (req, res) => {
 
 app.post('/api/tiles/generate', authenticateToken, async (req, res) => {
     try {
-        const { x, y } = req.body;
-        const generatedTile = await Tile.generateAIContent(x, y);
+        const { x, y, propertyType, color, otherParams } = req.body;
+        const customPrompt = `Create a ${propertyType} property with ${color} color. ${otherParams}`;
+        const generatedTile = await Tile.generateAIContent(x, y, customPrompt);
         res.status(201).json(generatedTile);
     } catch (error) {
         res.status(500).json({ message: error.message });

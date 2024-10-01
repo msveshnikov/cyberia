@@ -34,17 +34,31 @@ const tileSchema = new mongoose.Schema({
     },
     aiStyle: {
         type: String
+    },
+    propertyType: {
+        type: String
+    },
+    color: {
+        type: String
     }
 });
 
 tileSchema.index({ x: 1, y: 1 }, { unique: true });
 
-tileSchema.methods.updateContent = async function (newContent, aiPrompt, aiStyle) {
+tileSchema.methods.updateContent = async function (
+    newContent,
+    aiPrompt,
+    aiStyle,
+    propertyType,
+    color
+) {
     this.content = newContent;
     this.lastModified = Date.now();
     this.isCustomized = true;
     this.aiPrompt = aiPrompt;
     this.aiStyle = aiStyle;
+    this.propertyType = propertyType;
+    this.color = color;
     return this.save();
 };
 
@@ -64,8 +78,14 @@ tileSchema.statics.getChunk = async function (startX, startY, size) {
     }).lean();
 };
 
-tileSchema.statics.generateAIContent = async function (x, y, customPrompt = '') {
-    const basePrompt = `Create an isometric tile for a game map at coordinates (${x}, ${y}). The tile should be a 1024x1024 pixel image with a cohesive style that fits into an infinite, scrollable game world.`;
+tileSchema.statics.generateAIContent = async function (
+    x,
+    y,
+    propertyType,
+    color,
+    customPrompt = ''
+) {
+    const basePrompt = `Create an isometric tile for a game map at coordinates (${x}, ${y}). The tile should be a 1024x1024 pixel image with a cohesive style that fits into an infinite, scrollable game world. Property type: ${propertyType}, Color: ${color}.`;
     const prompt = customPrompt ? `${basePrompt} ${customPrompt}` : basePrompt;
 
     const response = await fetch(
@@ -97,7 +117,13 @@ tileSchema.statics.generateAIContent = async function (x, y, customPrompt = '') 
 
     return this.findOneAndUpdate(
         { x, y },
-        { content: imageBase64, isCustomized: false, aiPrompt: prompt },
+        {
+            content: imageBase64,
+            isCustomized: false,
+            aiPrompt: prompt,
+            propertyType,
+            color
+        },
         { new: true, upsert: true }
     );
 };

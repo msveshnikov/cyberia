@@ -79,6 +79,3 @@ https://isocraft.online
 
 # TODO
 
--   show PropertySelector modal when click Generate property, where user selects type of house,
-    color, all other params + send this to API and generate property image accordingly on backend
--   parametrize API_URL (call localhost when dev run, and isocraft.online when in docker/production)
