@@ -76,3 +76,7 @@ https://isocraft.online
 -   `src/`: React components and main application logic
 -   `server/`: Backend Express.js server and MongoDB integration
 -   `docs/`: Documentation and marketing materials
+
+# TODO
+
+-   show PropertySelector modal when click Generate property, where user selects type of house, color, all other params + send this to API and generate property image accordingly on backend
