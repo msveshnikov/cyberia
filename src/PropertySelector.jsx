@@ -65,18 +65,15 @@ const PropertySelector = ({ isOpen, onClose, onGenerate }) => {
                             </Select>
                         </FormControl>
                         <FormControl>
-                                    <FormLabel>Property Color</FormLabel>
-                                    <Select
-                                        value={color}
-                                        onChange={(e) => setColor(e.target.value)}
-                                    >
-                                        <option value="white">White</option>
-                                        <option value="red">Red</option>
-                                        <option value="blue">Blue</option>
-                                        <option value="green">Green</option>
-                                        <option value="yellow">Yellow</option>
-                                    </Select>
-                                </FormControl>
+                            <FormLabel>Property Color</FormLabel>
+                            <Select value={color} onChange={(e) => setColor(e.target.value)}>
+                                <option value="white">White</option>
+                                <option value="red">Red</option>
+                                <option value="blue">Blue</option>
+                                <option value="green">Green</option>
+                                <option value="yellow">Yellow</option>
+                            </Select>
+                        </FormControl>
                         <FormControl>
                             <FormLabel>Style</FormLabel>
                             <Select value={style} onChange={(e) => setStyle(e.target.value)}>

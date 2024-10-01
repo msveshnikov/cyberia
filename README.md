@@ -79,5 +79,5 @@ https://isocraft.online
 
 # TODO
 
--   only allow put tile to empty space
+-   only allow generate tile to empty space
 -   allow mouse panning (on map) with progressive loading of tiles in viewport

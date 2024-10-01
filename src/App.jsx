@@ -244,7 +244,7 @@ const App = () => {
                         top={`${(tile.y - mapPosition.y) * 250}px`}
                         width="250px"
                         height="250px"
-                        transform="rotateX(60deg) rotateZ(-45deg)"
+                        transform="rotateX(30deg) rotateZ(-25deg)"
                         style={{ transformStyle: 'preserve-3d' }}
                     >
                         <Image

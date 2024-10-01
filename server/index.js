@@ -83,8 +83,13 @@ app.post('/api/login', async (req, res) => {
     }
 });
 
-app.get('/api/user', authenticateToken, (req, res) => {
-    res.json(req.user);
+app.get('/api/user', authenticateToken, async (req, res) => {
+    try {
+        const user = await User.findOne({ email: req.user.email }).select('-password');
+        res.json(user);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
 });
 
 app.post('/api/logout', (req, res) => {
@@ -104,8 +109,12 @@ app.get('/api/tiles', async (req, res) => {
 app.post('/api/tiles', authenticateToken, async (req, res) => {
     try {
         const { x, y, content } = req.body;
-        const tile = await Tile.findOrCreate(x, y);
-        await tile.updateContent(content);
+        const existingTile = await Tile.findOne({ x, y });
+        if (existingTile) {
+            return res.status(400).json({ message: 'Tile already exists' });
+        }
+        const tile = new Tile({ x, y, content });
+        await tile.save();
         res.status(201).json(tile);
     } catch (error) {
         res.status(400).json({ message: error.message });
@@ -154,17 +163,8 @@ app.delete('/api/tiles/:x/:y', authenticateToken, async (req, res) => {
 
 app.post('/api/tiles/generate', authenticateToken, async (req, res) => {
     try {
-        const {
-            x,
-            y,
-            owner,
-            propertyType,
-            color,
-            style,
-            size,
-            material,
-            additionalDetails
-        } = req.body;
+        const { x, y, owner, propertyType, color, style, size, material, additionalDetails } =
+            req.body;
         const generatedTile = await Tile.generateAIContent(
             x,
             y,

@@ -11,7 +11,7 @@ const tileSchema = new mongoose.Schema({
     },
     owner: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        ref: 'User'
     },
     content: {
         type: String,
