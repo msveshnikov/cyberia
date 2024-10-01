@@ -51,27 +51,6 @@ const tileSchema = new mongoose.Schema({
 
 tileSchema.index({ x: 1, y: 1 }, { unique: true });
 
-tileSchema.methods.updateContent = async function (
-    newContent,
-    aiPrompt,
-    style,
-    propertyType,
-    color,
-    size,
-    material
-) {
-    this.content = newContent;
-    this.lastModified = Date.now();
-    this.isCustomized = true;
-    this.aiPrompt = aiPrompt;
-    this.style = style;
-    this.propertyType = propertyType;
-    this.color = color;
-    this.size = size;
-    this.material = material;
-    return this.save();
-};
-
 tileSchema.statics.findOrCreate = async function (x, y, owner) {
     let tile = await this.findOne({ x, y });
     if (!tile) {
@@ -113,6 +92,7 @@ tileSchema.statics.generateAIContent = async function (
             },
             body: JSON.stringify({
                 text_prompts: [{ text: prompt }],
+                style_preset: 'isometric',
                 cfg_scale: 7,
                 height: 1024,
                 width: 1024,

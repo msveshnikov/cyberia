@@ -106,21 +106,6 @@ app.get('/api/tiles', async (req, res) => {
     }
 });
 
-app.post('/api/tiles', authenticateToken, async (req, res) => {
-    try {
-        const { x, y, content } = req.body;
-        const existingTile = await Tile.findOne({ x, y });
-        if (existingTile) {
-            return res.status(400).json({ message: 'Tile already exists' });
-        }
-        const tile = new Tile({ x, y, content });
-        await tile.save();
-        res.status(201).json(tile);
-    } catch (error) {
-        res.status(400).json({ message: error.message });
-    }
-});
-
 app.get('/api/tiles/:x/:y', async (req, res) => {
     try {
         const tile = await Tile.findOne({ x: req.params.x, y: req.params.y });
@@ -134,37 +119,14 @@ app.get('/api/tiles/:x/:y', async (req, res) => {
     }
 });
 
-app.put('/api/tiles/:x/:y', authenticateToken, async (req, res) => {
-    try {
-        const tile = await Tile.findOne({ x: req.params.x, y: req.params.y });
-        if (tile) {
-            await tile.updateContent(req.body.content, req.body.aiPrompt, req.body.aiStyle);
-            res.json(tile);
-        } else {
-            res.status(404).json({ message: 'Tile not found' });
-        }
-    } catch (error) {
-        res.status(400).json({ message: error.message });
-    }
-});
-
-app.delete('/api/tiles/:x/:y', authenticateToken, async (req, res) => {
-    try {
-        const tile = await Tile.findOneAndDelete({ x: req.params.x, y: req.params.y });
-        if (tile) {
-            res.json({ message: 'Tile deleted' });
-        } else {
-            res.status(404).json({ message: 'Tile not found' });
-        }
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-});
-
 app.post('/api/tiles/generate', authenticateToken, async (req, res) => {
     try {
         const { x, y, owner, propertyType, color, style, size, material, additionalDetails } =
             req.body;
+        const existingTile = await Tile.findOne({ x, y });
+        if (existingTile) {
+            return res.status(400).json({ message: 'Tile already exists' });
+        }
         const generatedTile = await Tile.generateAIContent(
             x,
             y,

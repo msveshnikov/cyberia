@@ -79,5 +79,5 @@ https://isocraft.online
 
 # TODO
 
--   only allow generate tile to empty space
--   allow mouse panning (on map) with progressive loading of tiles in viewport
+-   allow mouse panning (on map) with progressive loading of tiles in viewport, similar to keys,
+    also long touch and move touch events on mobile
