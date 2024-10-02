@@ -122,8 +122,52 @@ tileSchema.statics.isSpaceEmpty = async function (x, y) {
 };
 
 tileSchema.statics.takeFractalLandscapeTile = async function (x, y) {
-    // first calculate landscapeType based on (x,y) and fractal algo
-    // then return random tile of this type
+    const scale = 0.005;
+    const persistence = 0.5;
+    const octaves = 6;
+
+    const noise = (x, y) => {
+        const X = Math.floor(x) & 255;
+        const Y = Math.floor(y) & 255;
+        x -= Math.floor(x);
+        y -= Math.floor(y);
+        const u = fade(x);
+        const v = fade(y);
+        const A = p[X] + Y,
+            B = p[X + 1] + Y;
+        return lerp(
+            v,
+            lerp(u, grad(p[A], x, y), grad(p[B], x - 1, y)),
+            lerp(u, grad(p[A + 1], x, y - 1), grad(p[B + 1], x - 1, y - 1))
+        );
+    };
+
+    const fade = (t) => t * t * t * (t * (t * 6 - 15) + 10);
+    const lerp = (t, a, b) => a + t * (b - a);
+    const grad = (hash, x, y) => {
+        const h = hash & 15;
+        const grad = 1 + (h & 7);
+        return (h & 8 ? -grad : grad) * x + (h & 4 ? -grad : grad) * y;
+    };
+
+    const p = new Array(512);
+    for (let i = 0; i < 256; i++) p[i] = p[i + 256] = Math.floor(Math.random() * 256);
+
+    let value = 0;
+    let amplitude = 1;
+    let frequency = scale;
+    for (let i = 0; i < octaves; i++) {
+        value += amplitude * noise(x * frequency, y * frequency);
+        amplitude *= persistence;
+        frequency *= 2;
+    }
+
+    const normalizedValue = (value + 1) / 2;
+    const landscapeTypeIndex = Math.floor(normalizedValue * landscapeTypes.length);
+    const landscapeType = landscapeTypes[landscapeTypeIndex];
+
+    //  fix pseudo code
+    return Tile.findByType(landscapeType)
 };
 
 const Tile = mongoose.model('Tile', tileSchema);

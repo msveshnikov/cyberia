@@ -190,8 +190,8 @@ const generateLandscapeElements = async () => {
     const startCoord = -10000000;
     const elements = [];
 
-    for (let i = 0; i < 20; i++) {
-        const type = landscapeTypes[i % landscapeTypes.length];
+    for (let i = 0; i < landscapeTypes.length; i++) {
+        const type = landscapeTypes[i];
         const x = startCoord - i;
         const y = 0;
 
