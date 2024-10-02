@@ -32,10 +32,9 @@ https://isocraft.online
 4. Real-time multiplayer synchronization
 5. Scalable backend architecture for growing user base
 6. Isometric rendering optimization for performance
-7. Caching strategies for frequently accessed tiles
+7. Caching strategies for frequently accessed tiles (redis)
 8. Progressive loading of map areas
 9. WebGL integration for improved graphics rendering
-10. Accessibility features for diverse user base
 
 ## Planned Features
 
@@ -66,8 +65,8 @@ https://isocraft.online
 
 1. Clone the repository
 2. Install dependencies: `npm install`
-3. Set up environment variables (including STABILITY_KEY)
-4. Run the development server: `npm run dev`
+3. Set up environment variables in server/.env (including STABILITY_KEY, MONGODB_URI, JWT_SECRET)
+4. Run the development server: `npm run dev` in server folder
 5. Open `http://localhost:3000` in your browser
 
 ## Project Structure
@@ -81,3 +80,10 @@ https://isocraft.online
 
 -   allow mouse panning (on map) with progressive loading of tiles in viewport, similar to keys,
     also long touch and move touch events on mobile
+-   show tiles isometric, without margins, but rotate image inside tile back to normal orientation
+    (+45 degrees)
+-   highlight frame of MapPosition, and MapPosition(0,0) should be in the center of screen
+-   auto generate in server.js (one time) outside world (coords -10000000 or so) 20 different grass,
+    stones, ground, whatever landscape elements and show them instead of empty tiles by some fractal
+    algo
+-   user profile screen with all owned tiles view
