@@ -136,9 +136,9 @@ tileSchema.statics.isSpaceEmpty = async function (x, y) {
 };
 
 tileSchema.statics.takeFractalLandscapeTile = async function (x, y) {
-    const scale = 0.005;
-    const persistence = 0.5;
-    const octaves = 6;
+    const scale = 0.002;
+    const persistence = 0.4;
+    const octaves = 4;
 
     const noise = (x, y) => {
         const X = Math.floor(x) & 255;
