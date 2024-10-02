@@ -25,6 +25,7 @@ import {
     Image,
     Container
 } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 import PropertySelector from './PropertySelector';
 
 const API_URL = import.meta.env.DEV ? 'http://localhost:3000' : 'https://isocraft.online';
@@ -334,6 +335,9 @@ const App = () => {
                     {user ? (
                         <HStack>
                             <Text>Welcome, {user.email}</Text>
+                            <Link to="/profile">
+                                <Button>Profile</Button>
+                            </Link>
                             <Button onClick={handleLogout}>Logout</Button>
                         </HStack>
                     ) : (

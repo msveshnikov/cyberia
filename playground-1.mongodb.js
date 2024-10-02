@@ -11,18 +11,17 @@ db.createCollection('tiles');
 // Insert sample users
 db.users.insertMany([
     {
-        username: 'john_doe',
-        email: 'john@example.com',
-        password: 'hashed_password',
-        createdAt: new Date(),
-        updatedAt: new Date()
-    },
-    {
-        username: 'jane_smith',
-        email: 'jane@example.com',
-        password: 'hashed_password',
-        createdAt: new Date(),
-        updatedAt: new Date()
+        email: 'msveshnikov@gmail.com',
+        password: '$2a$10$V04G4jteyonJmhq/paUY2.V.wFwQVMDjZy5ZM0pDrn2uhngT/Ff76',
+        isAdmin: false,
+        ownedTiles: [],
+        createdAt: {
+            $date: '2024-09-29T18:18:39.582Z'
+        },
+        __v: 0,
+        lastLogin: {
+            $date: '2024-09-29T18:19:17.931Z'
+        }
     }
 ]);
 
