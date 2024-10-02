@@ -1,6 +1,30 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Box, VStack, Heading, Text, SimpleGrid, Image, Spinner, useToast } from '@chakra-ui/react';
+import {
+    Box,
+    VStack,
+    Heading,
+    Text,
+    SimpleGrid,
+    Image,
+    Spinner,
+    useToast,
+    Container,
+    Stat,
+    StatLabel,
+    StatNumber,
+    StatGroup,
+    Badge,
+    Flex,
+    Button,
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalBody,
+    ModalCloseButton,
+    useDisclosure
+} from '@chakra-ui/react';
 
 const API_URL = import.meta.env.DEV ? 'http://localhost:3000' : 'https://isocraft.online';
 
@@ -8,25 +32,27 @@ const Profile = () => {
     const [user, setUser] = useState(null);
     const [ownedTiles, setOwnedTiles] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [selectedTile, setSelectedTile] = useState(null);
+    const { isOpen, onOpen, onClose } = useDisclosure();
     const toast = useToast();
 
     useEffect(() => {
         const fetchUserData = async () => {
             try {
                 const token = localStorage.getItem('token');
-                if (!token) {
-                    throw new Error('No token found');
-                }
+                if (!token) throw new Error('No token found');
 
-                const userResponse = await axios.get(`${API_URL}/api/user`, {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
+                const [userResponse, tilesResponse] = await Promise.all([
+                    axios.get(`${API_URL}/api/user`, {
+                        headers: { Authorization: `Bearer ${token}` }
+                    }),
+                    axios.get(`${API_URL}/api/tiles`, {
+                        params: { owner: userResponse.data._id },
+                        headers: { Authorization: `Bearer ${token}` }
+                    })
+                ]);
+
                 setUser(userResponse.data);
-
-                const tilesResponse = await axios.get(`${API_URL}/api/tiles`, {
-                    params: { owner: userResponse.data._id },
-                    headers: { Authorization: `Bearer ${token}` }
-                });
                 setOwnedTiles(tilesResponse.data);
             } catch (error) {
                 console.error('Error fetching user data:', error);
@@ -45,39 +71,50 @@ const Profile = () => {
         fetchUserData();
     }, [toast]);
 
+    const handleTileClick = (tile) => {
+        setSelectedTile(tile);
+        onOpen();
+    };
+
     if (isLoading) {
         return (
-            <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+            <Flex justifyContent="center" alignItems="center" height="100vh">
                 <Spinner size="xl" />
-            </Box>
+            </Flex>
         );
     }
 
     if (!user) {
         return (
-            <Box textAlign="center" p={5}>
+            <Container textAlign="center" p={5}>
                 <Heading>User not found</Heading>
                 <Text>Please log in to view your profile.</Text>
-            </Box>
+            </Container>
         );
     }
 
     return (
-        <Box maxWidth="1200px" margin="auto" p={5}>
+        <Container maxW="container.xl" py={10}>
             <VStack spacing={8} align="stretch">
                 <Heading as="h1" size="2xl">
                     User Profile
                 </Heading>
-                <Box>
-                    <Text fontSize="xl">Email: {user.email}</Text>
-                    <Text fontSize="xl">
-                        Joined: {new Date(user.createdAt).toLocaleDateString()}
-                    </Text>
-                    <Text fontSize="xl">
-                        Last Login:{' '}
-                        {user.lastLogin ? new Date(user.lastLogin).toLocaleString() : 'N/A'}
-                    </Text>
-                </Box>
+                <StatGroup>
+                    <Stat>
+                        <StatLabel>Email</StatLabel>
+                        <StatNumber>{user.email}</StatNumber>
+                    </Stat>
+                    <Stat>
+                        <StatLabel>Joined</StatLabel>
+                        <StatNumber>{new Date(user.createdAt).toLocaleDateString()}</StatNumber>
+                    </Stat>
+                    <Stat>
+                        <StatLabel>Last Login</StatLabel>
+                        <StatNumber>
+                            {user.lastLogin ? new Date(user.lastLogin).toLocaleString() : 'N/A'}
+                        </StatNumber>
+                    </Stat>
+                </StatGroup>
                 <Box>
                     <Heading as="h2" size="xl" mb={4}>
                         Owned Tiles
@@ -92,17 +129,23 @@ const Profile = () => {
                                     borderWidth={1}
                                     borderRadius="lg"
                                     overflow="hidden"
+                                    boxShadow="md"
+                                    transition="all 0.3s"
+                                    _hover={{ transform: 'scale(1.05)', cursor: 'pointer' }}
+                                    onClick={() => handleTileClick(tile)}
                                 >
                                     <Image
                                         src={`data:image/png;base64,${tile.content}`}
                                         alt={`Tile ${tile.x},${tile.y}`}
                                     />
                                     <Box p={3}>
-                                        <Text fontWeight="bold">
-                                            Coordinates: ({tile.x}, {tile.y})
-                                        </Text>
-                                        <Text>Type: {tile.propertyType}</Text>
-                                        <Text>Style: {tile.style}</Text>
+                                        <Flex justifyContent="space-between" alignItems="center">
+                                            <Text fontWeight="bold">
+                                                ({tile.x}, {tile.y})
+                                            </Text>
+                                            <Badge colorScheme="green">{tile.propertyType}</Badge>
+                                        </Flex>
+                                        <Text mt={2}>Style: {tile.style}</Text>
                                     </Box>
                                 </Box>
                             ))}
@@ -110,7 +153,41 @@ const Profile = () => {
                     )}
                 </Box>
             </VStack>
-        </Box>
+
+            <Modal isOpen={isOpen} onClose={onClose} size="xl">
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader>Tile Details</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                        {selectedTile && (
+                            <VStack spacing={4} align="stretch">
+                                <Image
+                                    src={`data:image/png;base64,${selectedTile.content}`}
+                                    alt={`Tile ${selectedTile.x},${selectedTile.y}`}
+                                    borderRadius="md"
+                                />
+                                <Stat>
+                                    <StatLabel>Coordinates</StatLabel>
+                                    <StatNumber>
+                                        ({selectedTile.x}, {selectedTile.y})
+                                    </StatNumber>
+                                </Stat>
+                                <Stat>
+                                    <StatLabel>Property Type</StatLabel>
+                                    <StatNumber>{selectedTile.propertyType}</StatNumber>
+                                </Stat>
+                                <Stat>
+                                    <StatLabel>Style</StatLabel>
+                                    <StatNumber>{selectedTile.style}</StatNumber>
+                                </Stat>
+                                <Button colorScheme="blue">Edit Tile</Button>
+                            </VStack>
+                        )}
+                    </ModalBody>
+                </ModalContent>
+            </Modal>
+        </Container>
     );
 };
 
