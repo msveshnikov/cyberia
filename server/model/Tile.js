@@ -1,6 +1,17 @@
 import mongoose from 'mongoose';
-import fetch from 'node-fetch';
-import { landscapeTypes } from '../index';
+
+export const landscapeTypes = [
+    'grass',
+    'stones',
+    'ground',
+    'sand',
+    'snow',
+    'mud',
+    'water',
+    'lava',
+    'moss',
+    'ice'
+];
 
 const tileSchema = new mongoose.Schema({
     x: { type: Number, required: true },
@@ -42,7 +53,10 @@ tileSchema.statics.getChunk = async function (startX, startY, size) {
             if (tile) {
                 chunk.push(tile);
             } else {
-                chunk.push(await this.takeFractalLandscapeTile(x, y));
+                let tile = await this.takeFractalLandscapeTile(x, y);
+                tile.x = x;
+                tile.y = y;
+                chunk.push(tile);
             }
         }
     }
@@ -166,8 +180,7 @@ tileSchema.statics.takeFractalLandscapeTile = async function (x, y) {
     const landscapeTypeIndex = Math.floor(normalizedValue * landscapeTypes.length);
     const landscapeType = landscapeTypes[landscapeTypeIndex];
 
-    //  fix pseudo code
-    return Tile.findByType(landscapeType)
+    return Tile.findOne({ propertyType: landscapeType });
 };
 
 const Tile = mongoose.model('Tile', tileSchema);

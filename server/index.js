@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
-import Tile from './model/Tile.js';
+import Tile, { landscapeTypes } from './model/Tile.js';
 import User from './model/User.js';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
@@ -172,19 +172,6 @@ app.get('/api/user/tiles', authenticateToken, async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
-
-export const landscapeTypes = [
-    'grass',
-    'stones',
-    'ground',
-    'sand',
-    'snow',
-    'mud',
-    'water',
-    'lava',
-    'moss',
-    'ice'
-];
 
 const generateLandscapeElements = async () => {
     const startCoord = -10000000;

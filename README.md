@@ -81,6 +81,4 @@ https://isocraft.online
 -   allow mouse panning (on map) with progressive loading of tiles in viewport, similar to keys,
     also long touch and move touch events on mobile
 -   MapPosition(0,0) should be in the center of screen (whatever screen size is)
--   redis caching of tiles content
--   in Tile.getChunk() if tile in some position is absent, use random pre-generated landscape
-    element by some nice fractal algorithm
+
