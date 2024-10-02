@@ -144,6 +144,66 @@ app.post('/api/tiles/generate', authenticateToken, async (req, res) => {
     }
 });
 
+app.get('/api/user/tiles', authenticateToken, async (req, res) => {
+    try {
+        const userTiles = await Tile.getOwnedTiles(req.user._id);
+        res.json(userTiles);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+const landscapeTypes = [
+    'grass',
+    'stones',
+    'ground',
+    'sand',
+    'snow',
+    'mud',
+    'water',
+    'lava',
+    'moss',
+    'ice'
+];
+
+const generateLandscapeElements = async () => {
+    const startCoord = -10000000;
+    const elements = [];
+
+    for (let i = 0; i < 20; i++) {
+        const type = landscapeTypes[i % landscapeTypes.length];
+        const x = startCoord - i;
+        const y = 0;
+
+        const element = await Tile.generateAIContent(
+            x,
+            y,
+            null,
+            type,
+            'natural',
+            'earth tones',
+            'large',
+            'organic',
+            `Create a natural ${type} landscape element for an isometric game world.`
+        );
+
+        elements.push(element);
+    }
+
+    return elements;
+};
+
+const initializeLandscapeElements = async () => {
+    const existingElements = await Tile.countDocuments({ x: { $lte: -9000000 } });
+    if (existingElements === 0) {
+        console.log('Generating landscape elements...');
+        await generateLandscapeElements();
+        console.log('Landscape elements generated.');
+    }
+};
+
+initializeLandscapeElements();
+
 io.on('connection', (socket) => {
     socket.on('joinGame', (data) => {
         socket.join(data.gameId);
