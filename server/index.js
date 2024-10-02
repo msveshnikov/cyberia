@@ -11,6 +11,7 @@ import { createServer } from 'http';
 import { Server } from 'socket.io';
 import jwt from 'jsonwebtoken';
 import rateLimit from 'express-rate-limit';
+import Redis from 'ioredis';
 
 dotenv.config();
 
@@ -28,6 +29,7 @@ const io = new Server(httpServer, {
 });
 
 const PORT = process.env.PORT || 3000;
+const redis = new Redis(process.env.REDIS_URL);
 
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000,
@@ -99,7 +101,15 @@ app.post('/api/logout', (req, res) => {
 app.get('/api/tiles', async (req, res) => {
     try {
         const { startX, startY, size } = req.query;
+        const cacheKey = `tiles:${startX}:${startY}:${size}`;
+        const cachedTiles = await redis.get(cacheKey);
+
+        if (cachedTiles) {
+            return res.json(JSON.parse(cachedTiles));
+        }
+
         const tiles = await Tile.getChunk(Number(startX), Number(startY), Number(size));
+        await redis.set(cacheKey, JSON.stringify(tiles), 'EX', 3600);
         res.json(tiles);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -108,8 +118,16 @@ app.get('/api/tiles', async (req, res) => {
 
 app.get('/api/tiles/:x/:y', async (req, res) => {
     try {
+        const cacheKey = `tile:${req.params.x}:${req.params.y}`;
+        const cachedTile = await redis.get(cacheKey);
+
+        if (cachedTile) {
+            return res.json(JSON.parse(cachedTile));
+        }
+
         const tile = await Tile.findOne({ x: req.params.x, y: req.params.y });
         if (tile) {
+            await redis.set(cacheKey, JSON.stringify(tile), 'EX', 3600);
             res.json(tile);
         } else {
             res.status(404).json({ message: 'Tile not found' });
@@ -138,6 +156,8 @@ app.post('/api/tiles/generate', authenticateToken, async (req, res) => {
             material,
             additionalDetails
         );
+        const cacheKey = `tile:${x}:${y}`;
+        await redis.set(cacheKey, JSON.stringify(generatedTile), 'EX', 3600);
         res.status(201).json(generatedTile);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -153,7 +173,7 @@ app.get('/api/user/tiles', authenticateToken, async (req, res) => {
     }
 });
 
-const landscapeTypes = [
+export const landscapeTypes = [
     'grass',
     'stones',
     'ground',
@@ -211,6 +231,12 @@ io.on('connection', (socket) => {
 
     socket.on('updateTile', (data) => {
         socket.to(data.gameId).emit('tileUpdated', data);
+    });
+
+    socket.on('panMap', async (data) => {
+        const { startX, startY, endX, endY } = data;
+        const tiles = await Tile.getChunk(startX, startY, endX - startX, endY - startY);
+        socket.emit('mapUpdated', tiles);
     });
 });
 

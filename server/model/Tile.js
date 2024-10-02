@@ -1,52 +1,21 @@
 import mongoose from 'mongoose';
+import fetch from 'node-fetch';
+import { landscapeTypes } from '../index';
 
 const tileSchema = new mongoose.Schema({
-    x: {
-        type: Number,
-        required: true
-    },
-    y: {
-        type: Number,
-        required: true
-    },
-    owner: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    },
-    content: {
-        type: String,
-        required: true
-    },
-    generatedAt: {
-        type: Date,
-        default: Date.now
-    },
-    lastModified: {
-        type: Date,
-        default: Date.now
-    },
-    isCustomized: {
-        type: Boolean,
-        default: false
-    },
-    aiPrompt: {
-        type: String
-    },
-    style: {
-        type: String
-    },
-    propertyType: {
-        type: String
-    },
-    color: {
-        type: String
-    },
-    size: {
-        type: String
-    },
-    material: {
-        type: String
-    }
+    x: { type: Number, required: true },
+    y: { type: Number, required: true },
+    owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    content: { type: String, required: true },
+    generatedAt: { type: Date, default: Date.now },
+    lastModified: { type: Date, default: Date.now },
+    isCustomized: { type: Boolean, default: false },
+    aiPrompt: { type: String },
+    style: { type: String },
+    propertyType: { type: String },
+    color: { type: String },
+    size: { type: String },
+    material: { type: String }
 });
 
 tileSchema.index({ x: 1, y: 1 }, { unique: true });
@@ -61,10 +30,23 @@ tileSchema.statics.findOrCreate = async function (x, y, owner) {
 };
 
 tileSchema.statics.getChunk = async function (startX, startY, size) {
-    return this.find({
+    const tiles = await this.find({
         x: { $gte: startX, $lt: startX + size },
         y: { $gte: startY, $lt: startY + size }
     }).lean();
+
+    const chunk = [];
+    for (let y = startY; y < startY + size; y++) {
+        for (let x = startX; x < startX + size; x++) {
+            const tile = tiles.find((t) => t.x === x && t.y === y);
+            if (tile) {
+                chunk.push(tile);
+            } else {
+                chunk.push(await this.takeFractalLandscapeTile(x, y));
+            }
+        }
+    }
+    return chunk;
 };
 
 tileSchema.statics.generateAIContent = async function (
@@ -137,6 +119,11 @@ tileSchema.statics.getOwnedTiles = async function (userId) {
 tileSchema.statics.isSpaceEmpty = async function (x, y) {
     const tile = await this.findOne({ x, y });
     return !tile || tile.content === 'default';
+};
+
+tileSchema.statics.takeFractalLandscapeTile = async function (x, y) {
+    // first calculate landscapeType based on (x,y) and fractal algo
+    // then return random tile of this type
 };
 
 const Tile = mongoose.model('Tile', tileSchema);
