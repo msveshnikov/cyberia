@@ -63,7 +63,7 @@ const App = () => {
         try {
             setIsLoading(true);
             const response = await axios.get(`${API_URL}/api/tiles`, {
-                params: { startX: 0, startY: 0, size: 10 }
+                params: { startX: -2, startY: -2, size: 5 }
             });
             setMap(response.data);
         } catch {
@@ -133,7 +133,7 @@ const App = () => {
     const fetchMapChunk = async (startX, startY) => {
         try {
             const response = await axios.get(`${API_URL}/api/tiles`, {
-                params: { startX, startY, size: 5 },
+                params: { startX: startX - 2, startY: startY - 2, size: 5 },
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
             });
             setMap((prevMap) => {
@@ -205,8 +205,8 @@ const App = () => {
                         key={`${tile.x}-${tile.y}`}
                         className="tile"
                         position="absolute"
-                        left={`${(tile.x - mapPosition.x) * 350}px`}
-                        top={`${(tile.y - mapPosition.y) * 165}px`}
+                        left={`${(tile.x - mapPosition.x + 1.5) * 350}px`}
+                        top={`${(tile.y - mapPosition.y + 0.5) * 176}px`}
                         width="250px"
                         height="250px"
                         transform="rotateX(60deg) rotateZ(-45deg)"
@@ -232,11 +232,11 @@ const App = () => {
                 ))}
                 <Box
                     position="absolute"
-                    left="50%"
-                    top="50%"
+                    left="52.1%"
+                    top="48.6%"
                     width="250px"
                     height="250px"
-                    border="2px solid yellow"
+                    border="8px solid yellow"
                     transform="translate(-50%, -50%) rotateX(60deg) rotateZ(-45deg)"
                     pointerEvents="none"
                 />

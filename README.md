@@ -80,9 +80,7 @@ https://isocraft.online
 
 -   allow mouse panning (on map) with progressive loading of tiles in viewport, similar to keys,
     also long touch and move touch events on mobile
--   show tiles isometric, without margins, but rotate image inside tile back to normal orientation
-    (+45 degrees)
--   highlight frame of MapPosition, and MapPosition(0,0) should be in the center of screen
+-   MapPosition(0,0) should be in the center of screen (whatever screen size is)
 -   auto generate in server.js (one time) outside world (coords -10000000 or so) 20 different grass,
     stones, ground, whatever landscape elements and show them instead of empty tiles by some fractal
     algo
