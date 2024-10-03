@@ -301,8 +301,8 @@ const App = () => {
                     )}
                 </Flex>
 
-                <Container maxW="container.xl" py={8}>
-                    <VStack spacing={8} align="stretch">
+                <Container maxW="container.xl" py={4}>
+                    <VStack spacing={2} align="stretch">
                         {isLoading ? (
                             <Spinner />
                         ) : (
@@ -311,7 +311,7 @@ const App = () => {
                                     className="map-container"
                                     position="relative"
                                     width="100%"
-                                    height="60vh"
+                                    height="70vh"
                                     overflow="hidden"
                                     perspective="1000px"
                                 >
