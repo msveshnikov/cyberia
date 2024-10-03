@@ -52,7 +52,7 @@ jobs:
                   privateKey: ${{ secrets.DEPLOY_KEY }}
                   local: './docker-compose.yml'
                   remote: 'isocraft/docker-compose.yml'
-                  
+
             - name: Deploy to SSH Host
               env:
                   SSH_KEY: ${{ secrets.DEPLOY_KEY }}

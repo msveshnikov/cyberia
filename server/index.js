@@ -29,7 +29,7 @@ const io = new Server(httpServer, {
 });
 
 const PORT = process.env.PORT || 3000;
-const redis = new Redis(process.env.REDIS_URL);
+export const redis = new Redis(process.env.REDIS_URL);
 
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000,

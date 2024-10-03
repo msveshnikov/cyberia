@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
-import { createClient } from 'ioredis';
-
-const redis = createClient(process.env.REDIS_URL);
+import sharp from 'sharp';
+import { redis } from '../index.js';
 
 export const landscapeTypes = [
     'grass',
@@ -115,12 +114,16 @@ tileSchema.statics.generateAIContent = async function (
     }
 
     const result = await response.json();
-    const imageBase64 = result.artifacts[0].base64;
+    const imageBuffer = Buffer.from(result.artifacts[0].base64, 'base64');
+
+    const jpgBuffer = await sharp(imageBuffer).jpeg({ quality: 80 }).toBuffer();
+
+    const jpgBase64 = jpgBuffer.toString('base64');
 
     const tile = await this.findOneAndUpdate(
         { x, y },
         {
-            content: imageBase64,
+            content: jpgBase64,
             isCustomized: false,
             aiPrompt: prompt,
             propertyType,
