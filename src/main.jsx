@@ -1,16 +1,25 @@
+/* eslint-disable react-refresh/only-export-components */
+import React, { lazy, Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import App from './App';
-import Landing from './Landing';
-import Profile from './Profile';
+
+const Landing = lazy(() => import('./Landing'));
+const App = lazy(() => import('./App'));
+const Profile = lazy(() => import('./Profile'));
+
+const LoadingFallback = () => <div>Loading...</div>;
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-    <Router>
-        <Routes>
-            <Route path="/" element={<Navigate to="/landing" />} />
-            <Route path="/landing" element={<Landing />} />
-            <Route path="/app" element={<App />} />
-            <Route path="/profile" element={<Profile />} />
-        </Routes>
-    </Router>
+    <React.StrictMode>
+        <Router>
+            <Suspense fallback={<LoadingFallback />}>
+                <Routes>
+                    <Route path="/" element={<Navigate to="/landing" />} />
+                    <Route path="/landing" element={<Landing />} />
+                    <Route path="/app" element={<App />} />
+                    <Route path="/profile" element={<Profile />} />
+                </Routes>
+            </Suspense>
+        </Router>
+    </React.StrictMode>
 );
