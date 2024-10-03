@@ -201,7 +201,13 @@ tileSchema.statics.takeFractalLandscapeTile = async function (x, y) {
     }
 
     const normalizedValue = (value + 1) / 2;
-    const landscapeTypeIndex = Math.floor(normalizedValue * landscapeTypes.length);
+    let landscapeTypeIndex = Math.floor(normalizedValue * landscapeTypes.length);
+    if (landscapeTypeIndex < 0) {
+        landscapeTypeIndex = 0;
+    }
+    if (landscapeTypeIndex >= landscapeTypes.length) {
+        landscapeTypeIndex = landscapeTypes.length - 1;
+    }
     const landscapeType = landscapeTypes[landscapeTypeIndex];
 
     return this.findOne({ propertyType: landscapeType });

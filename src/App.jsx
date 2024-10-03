@@ -134,7 +134,7 @@ const App = () => {
     const fetchMapChunk = async (startX, startY) => {
         try {
             const response = await axios.get(`${API_URL}/api/tiles`, {
-                params: { startX: startX - 2, startY: startY - 2, size: 5 },
+                params: { startX: startX - 5, startY: startY - 5, size: 10 },
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
             });
             setMap((prevMap) => {
