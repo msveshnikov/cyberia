@@ -1,4 +1,7 @@
 import mongoose from 'mongoose';
+import { createClient } from 'ioredis';
+
+const redis = createClient(process.env.REDIS_URL);
 
 export const landscapeTypes = [
     'grass',
@@ -41,6 +44,13 @@ tileSchema.statics.findOrCreate = async function (x, y, owner) {
 };
 
 tileSchema.statics.getChunk = async function (startX, startY, size) {
+    const cacheKey = `chunk:${startX}:${startY}:${size}`;
+    const cachedChunk = await redis.get(cacheKey);
+
+    if (cachedChunk) {
+        return JSON.parse(cachedChunk);
+    }
+
     const tiles = await this.find({
         x: { $gte: startX, $lt: startX + size },
         y: { $gte: startY, $lt: startY + size }
@@ -53,13 +63,15 @@ tileSchema.statics.getChunk = async function (startX, startY, size) {
             if (tile) {
                 chunk.push(tile);
             } else {
-                let tile = await this.takeFractalLandscapeTile(x, y);
-                tile.x = x;
-                tile.y = y;
-                chunk.push(tile);
+                const newTile = await this.takeFractalLandscapeTile(x, y);
+                newTile.x = x;
+                newTile.y = y;
+                chunk.push(newTile);
             }
         }
     }
+
+    await redis.set(cacheKey, JSON.stringify(chunk), 'EX', 3600);
     return chunk;
 };
 
@@ -105,7 +117,7 @@ tileSchema.statics.generateAIContent = async function (
     const result = await response.json();
     const imageBase64 = result.artifacts[0].base64;
 
-    return this.findOneAndUpdate(
+    const tile = await this.findOneAndUpdate(
         { x, y },
         {
             content: imageBase64,
@@ -120,10 +132,19 @@ tileSchema.statics.generateAIContent = async function (
         },
         { new: true, upsert: true }
     );
+
+    await redis.set(`tile:${x}:${y}`, JSON.stringify(tile), 'EX', 3600);
+    return tile;
 };
 
 tileSchema.statics.updateTileOwnership = async function (x, y, userId) {
-    return this.findOneAndUpdate({ x, y }, { owner: userId }, { new: true, upsert: true });
+    const tile = await this.findOneAndUpdate(
+        { x, y },
+        { owner: userId },
+        { new: true, upsert: true }
+    );
+    await redis.set(`tile:${x}:${y}`, JSON.stringify(tile), 'EX', 3600);
+    return tile;
 };
 
 tileSchema.statics.getOwnedTiles = async function (userId) {
@@ -180,7 +201,7 @@ tileSchema.statics.takeFractalLandscapeTile = async function (x, y) {
     const landscapeTypeIndex = Math.floor(normalizedValue * landscapeTypes.length);
     const landscapeType = landscapeTypes[landscapeTypeIndex];
 
-    return Tile.findOne({ propertyType: landscapeType });
+    return this.findOne({ propertyType: landscapeType });
 };
 
 const Tile = mongoose.model('Tile', tileSchema);

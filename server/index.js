@@ -101,15 +101,7 @@ app.post('/api/logout', (req, res) => {
 app.get('/api/tiles', async (req, res) => {
     try {
         const { startX, startY, size } = req.query;
-        const cacheKey = `tiles:${startX}:${startY}:${size}`;
-        const cachedTiles = await redis.get(cacheKey);
-
-        if (cachedTiles) {
-            return res.json(JSON.parse(cachedTiles));
-        }
-
         const tiles = await Tile.getChunk(Number(startX), Number(startY), Number(size));
-        await redis.set(cacheKey, JSON.stringify(tiles), 'EX', 3600);
         res.json(tiles);
     } catch (error) {
         res.status(500).json({ message: error.message });

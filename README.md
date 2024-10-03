@@ -78,7 +78,6 @@ https://isocraft.online
 
 # TODO
 
--   allow mouse panning (on map) with progressive loading of tiles in viewport, similar to keys,
-    also long touch and move touch events on mobile
--   MapPosition(0,0) should be in the center of screen (whatever screen size is)
+-   convert PNG to JPG to save space
+-   only redis cache individual tiles, not chunks
 

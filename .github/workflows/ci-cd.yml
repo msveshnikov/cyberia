@@ -44,6 +44,15 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
+            - name: copy file via ssh
+              uses: garygrossgarten/github-action-scp@master
+              with:
+                  host: isocraft.online
+                  username: ubuntu
+                  privateKey: ${{ secrets.DEPLOY_KEY }}
+                  local: './docker-compose.yml'
+                  remote: 'isocraft/docker-compose.yml'
+                  
             - name: Deploy to SSH Host
               env:
                   SSH_KEY: ${{ secrets.DEPLOY_KEY }}
