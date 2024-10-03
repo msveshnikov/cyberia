@@ -160,9 +160,9 @@ tileSchema.statics.isSpaceEmpty = async function (x, y) {
 };
 
 tileSchema.statics.takeFractalLandscapeTile = async function (x, y) {
-    const scale = 0.002;
-    const persistence = 0.4;
-    const octaves = 4;
+    const scale = 0.005;
+    const persistence = 0.5;
+    const octaves = 6;
 
     const noise = (x, y) => {
         const X = Math.floor(x) & 255;
@@ -189,7 +189,7 @@ tileSchema.statics.takeFractalLandscapeTile = async function (x, y) {
     };
 
     const p = new Array(512);
-    for (let i = 0; i < 256; i++) p[i] = p[i + 256] = Math.floor(Math.random() * 256);
+    for (let i = 0; i < 256; i++) p[i] = p[i + 256] = Math.floor(0.8 * 256);
 
     let value = 0;
     let amplitude = 1;

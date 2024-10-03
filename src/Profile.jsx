@@ -135,7 +135,7 @@ const Profile = () => {
                                     onClick={() => handleTileClick(tile)}
                                 >
                                     <Image
-                                        src={`data:image/png;base64,${tile.content}`}
+                                        src={`data:image/jpeg;base64,${tile.content}`}
                                         alt={`Tile ${tile.x},${tile.y}`}
                                     />
                                     <Box p={3}>
@@ -163,7 +163,7 @@ const Profile = () => {
                         {selectedTile && (
                             <VStack spacing={4} align="stretch">
                                 <Image
-                                    src={`data:image/png;base64,${selectedTile.content}`}
+                                    src={`data:image/jpeg;base64,${selectedTile.content}`}
                                     alt={`Tile ${selectedTile.x},${selectedTile.y}`}
                                     borderRadius="md"
                                 />

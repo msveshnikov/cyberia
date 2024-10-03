@@ -64,7 +64,7 @@ const App = () => {
         try {
             setIsLoading(true);
             const response = await axios.get(`${API_URL}/api/tiles`, {
-                params: { startX: -2, startY: -2, size: 5 }
+                params: { startX: -5, startY: -5, size: 10 }
             });
             setMap(response.data);
         } catch {
