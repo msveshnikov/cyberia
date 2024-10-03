@@ -43,12 +43,12 @@ tileSchema.statics.findOrCreate = async function (x, y, owner) {
 };
 
 tileSchema.statics.getChunk = async function (startX, startY, size) {
-    const cacheKey = `chunk:${startX}:${startY}:${size}`;
-    const cachedChunk = await redis.get(cacheKey);
+    // const cacheKey = `chunk:${startX}:${startY}:${size}`;
+    // const cachedChunk = await redis.get(cacheKey);
 
-    if (cachedChunk) {
-        return JSON.parse(cachedChunk);
-    }
+    // if (cachedChunk) {
+    //     return JSON.parse(cachedChunk);
+    // }
 
     const tiles = await this.find({
         x: { $gte: startX, $lt: startX + size },
@@ -70,7 +70,7 @@ tileSchema.statics.getChunk = async function (startX, startY, size) {
         }
     }
 
-    await redis.set(cacheKey, JSON.stringify(chunk), 'EX', 3600);
+    // await redis.set(cacheKey, JSON.stringify(chunk), 'EX', 3600);
     return chunk;
 };
 
