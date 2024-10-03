@@ -1,7 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import React, { lazy, Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 const Landing = lazy(() => import('./Landing'));
 const App = lazy(() => import('./App'));
@@ -14,8 +14,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Router>
             <Suspense fallback={<LoadingFallback />}>
                 <Routes>
-                    <Route path="/" element={<Navigate to="/landing" />} />
-                    <Route path="/landing" element={<Landing />} />
+                    <Route path="/" element={<Landing />} />
                     <Route path="/app" element={<App />} />
                     <Route path="/profile" element={<Profile />} />
                 </Routes>

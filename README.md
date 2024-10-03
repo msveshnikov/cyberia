@@ -80,5 +80,4 @@ https://isocraft.online
 
 -   allow mouse panning (on map) with progressive loading of tiles in viewport, similar to keys,
     also long touch and move touch events on mobile
--   MapPosition(0,0) should be in the center of screen (whatever screen size is)
--   populate full space of rhomboids (shift each odd map row to half height and half width)
+-   MapPosition(0,0) and yellow frame should be in the center of screen initially (whatever screen size is)
