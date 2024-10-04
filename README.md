@@ -76,5 +76,3 @@ https://cyberia.fun
 -   `docs/`: Documentation and marketing materials
 
 # TODO
-
--   Optimize perf and render only tiles in the viewport, skip outside
