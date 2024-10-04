@@ -281,11 +281,12 @@ const App = () => {
                 bg="gray.100"
             >
                 <Heading as="h1" size="lg">
-                    Cyberia {mapPosition.x} {mapPosition.y}
+                    Cyberia 
+                    {/* {mapPosition.x} {mapPosition.y} */}
                 </Heading>
                 {user ? (
                     <HStack>
-                        <Text>Welcome, {user.email}</Text>
+                        <Text>{user.email}</Text>
                         <Link to="/profile">
                             <Button>Profile</Button>
                         </Link>
@@ -309,7 +310,7 @@ const App = () => {
                                 className="map-container"
                                 position="relative"
                                 width="100%"
-                                height="70vh"
+                                height="69vh"
                                 overflow="hidden"
                                 perspective="1000px"
                             >

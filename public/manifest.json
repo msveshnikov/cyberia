@@ -30,18 +30,6 @@
     "prefer_related_applications": false,
     "related_applications": [],
     "scope": "/",
-    "screenshots": [
-        {
-            "src": "/screenshot1.png",
-            "sizes": "1280x720",
-            "type": "image/png"
-        },
-        {
-            "src": "/screenshot2.png",
-            "sizes": "1280x720",
-            "type": "image/png"
-        }
-    ],
     "features": [
         "AI-powered property generation",
         "Infinite map scrolling",

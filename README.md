@@ -77,4 +77,4 @@ https://cyberia.fun
 
 # TODO
 
--   Stick to integer MapPositions during dragging (map.round)
+-   Optimize perf and render only tiles in the viewport, skip otside
