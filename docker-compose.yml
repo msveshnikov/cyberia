@@ -9,20 +9,16 @@ services:
             - STABILITY_KEY=${STABILITY_KEY}
             - JWT_SECRET=${JWT_SECRET}
             - MONGODB_URI=mongodb://mongodb:27017/isocraft
-            - REDIS_URL=redis://redis:6379
         depends_on:
             - mongodb
-            - redis
         restart: unless-stopped
+        volumes:
+            - ./content:/app/content
 
     mongodb:
         image: mongo:latest
         volumes:
             - mongodb_data:/data/db
-        restart: unless-stopped
-
-    redis:
-        image: redis:alpine
         restart: unless-stopped
 
 volumes:

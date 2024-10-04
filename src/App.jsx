@@ -313,7 +313,12 @@ const App = () => {
                                 overflow="hidden"
                                 perspective="1000px"
                             >
-                                <IsometricMap mapRef={mapRef} map={map} mapPosition={mapPosition} />
+                                <IsometricMap
+                                    mapRef={mapRef}
+                                    map={map}
+                                    mapPosition={mapPosition}
+                                    setMapPosition={setMapPosition}
+                                />
                             </Box>
                             <HStack justify="center" mt={4}>
                                 <Button onClick={() => handleMapScroll('up')}>Up</Button>

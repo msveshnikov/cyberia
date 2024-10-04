@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import sharp from 'sharp';
-import { redis } from '../index.js';
+import path from 'path';
+import { promises as fs } from 'fs';
 
 export const landscapeTypes = [
     'grass',
@@ -43,13 +44,6 @@ tileSchema.statics.findOrCreate = async function (x, y, owner) {
 };
 
 tileSchema.statics.getChunk = async function (startX, startY, size) {
-    // const cacheKey = `chunk:${startX}:${startY}:${size}`;
-    // const cachedChunk = await redis.get(cacheKey);
-
-    // if (cachedChunk) {
-    //     return JSON.parse(cachedChunk);
-    // }
-
     const tiles = await this.find({
         x: { $gte: startX, $lt: startX + size },
         y: { $gte: startY, $lt: startY + size }
@@ -70,7 +64,6 @@ tileSchema.statics.getChunk = async function (startX, startY, size) {
         }
     }
 
-    // await redis.set(cacheKey, JSON.stringify(chunk), 'EX', 3600);
     return chunk;
 };
 
@@ -118,12 +111,20 @@ tileSchema.statics.generateAIContent = async function (
 
     const jpgBuffer = await sharp(imageBuffer).jpeg({ quality: 80 }).toBuffer();
 
-    const jpgBase64 = jpgBuffer.toString('base64');
+    const fileName = `${x}_${y}.jpg`;
+    const dirPath = path.join(process.cwd(), 'content');
+    const filePath = path.join(dirPath, fileName);
+
+    // Ensure the directory exists
+    await fs.mkdir(dirPath, { recursive: true });
+
+    // Write the file
+    await fs.writeFile(filePath, jpgBuffer);
 
     const tile = await this.findOneAndUpdate(
         { x, y },
         {
-            content: jpgBase64,
+            content: `/content/${fileName}`,
             isCustomized: false,
             aiPrompt: prompt,
             propertyType,
@@ -136,18 +137,11 @@ tileSchema.statics.generateAIContent = async function (
         { new: true, upsert: true }
     );
 
-    await redis.set(`tile:${x}:${y}`, JSON.stringify(tile), 'EX', 3600);
     return tile;
 };
 
 tileSchema.statics.updateTileOwnership = async function (x, y, userId) {
-    const tile = await this.findOneAndUpdate(
-        { x, y },
-        { owner: userId },
-        { new: true, upsert: true }
-    );
-    await redis.set(`tile:${x}:${y}`, JSON.stringify(tile), 'EX', 3600);
-    return tile;
+    return this.findOneAndUpdate({ x, y }, { owner: userId }, { new: true, upsert: true });
 };
 
 tileSchema.statics.getOwnedTiles = async function (userId) {
@@ -202,12 +196,7 @@ tileSchema.statics.takeFractalLandscapeTile = async function (x, y) {
 
     const normalizedValue = (value + 1) / 2;
     let landscapeTypeIndex = Math.floor(normalizedValue * landscapeTypes.length);
-    if (landscapeTypeIndex < 0) {
-        landscapeTypeIndex = 0;
-    }
-    if (landscapeTypeIndex >= landscapeTypes.length) {
-        landscapeTypeIndex = landscapeTypes.length - 1;
-    }
+    landscapeTypeIndex = Math.max(0, Math.min(landscapeTypeIndex, landscapeTypes.length - 1));
     const landscapeType = landscapeTypes[landscapeTypeIndex];
 
     return this.findOne({ propertyType: landscapeType });

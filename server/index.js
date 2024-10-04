@@ -11,7 +11,6 @@ import { createServer } from 'http';
 import { Server } from 'socket.io';
 import jwt from 'jsonwebtoken';
 import rateLimit from 'express-rate-limit';
-import Redis from 'ioredis';
 
 dotenv.config();
 
@@ -29,7 +28,6 @@ const io = new Server(httpServer, {
 });
 
 const PORT = process.env.PORT || 3000;
-export const redis = new Redis(process.env.REDIS_URL);
 
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000,
@@ -39,6 +37,7 @@ const limiter = rateLimit({
 app.use(limiter);
 app.use(cors());
 app.use(express.json());
+app.use('/content', express.static(join(__dirname, '../content')));
 app.use(express.static(join(__dirname, '../dist')));
 app.use(morgan('dev'));
 
@@ -113,16 +112,8 @@ app.get('/api/tiles', async (req, res) => {
 
 app.get('/api/tiles/:x/:y', async (req, res) => {
     try {
-        const cacheKey = `tile:${req.params.x}:${req.params.y}`;
-        const cachedTile = await redis.get(cacheKey);
-
-        if (cachedTile) {
-            return res.json(JSON.parse(cachedTile));
-        }
-
         const tile = await Tile.findOne({ x: req.params.x, y: req.params.y });
         if (tile) {
-            await redis.set(cacheKey, JSON.stringify(tile), 'EX', 3600);
             res.json(tile);
         } else {
             res.status(404).json({ message: 'Tile not found' });
@@ -150,8 +141,7 @@ app.post('/api/tiles/generate', authenticateToken, async (req, res) => {
             material,
             additionalDetails
         );
-        const cacheKey = `tile:${x}:${y}`;
-        await redis.set(cacheKey, JSON.stringify(generatedTile), 'EX', 3600);
+
         await User.findByIdAndUpdate(req.user._id, { $push: { ownedTiles: generatedTile._id } });
         res.status(201).json(generatedTile);
     } catch (error) {

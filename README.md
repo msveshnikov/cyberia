@@ -77,5 +77,3 @@ https://isocraft.online
 -   `docs/`: Documentation and marketing materials
 
 # TODO
-
--   Fix Profile FE+BE

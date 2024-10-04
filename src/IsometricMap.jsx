@@ -1,9 +1,27 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Box, Image } from '@chakra-ui/react';
+
+const API_URL = import.meta.env.DEV ? 'http://localhost:3000' : 'https://isocraft.online';
 
 export function IsometricMap({ mapRef, map, mapPosition, setMapPosition }) {
     const isDragging = useRef(false);
     const lastPosition = useRef({ x: 0, y: 0 });
+    const [windowSize, setWindowSize] = useState({
+        width: window.innerWidth,
+        height: window.innerHeight
+    });
+
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowSize({
+                width: window.innerWidth,
+                height: window.innerHeight
+            });
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     useEffect(() => {
         const handleMouseDown = (e) => {
@@ -68,8 +86,8 @@ export function IsometricMap({ mapRef, map, mapPosition, setMapPosition }) {
         };
     }, [mapRef, setMapPosition]);
 
-    const centerX = window.innerWidth / 2;
-    const centerY = window.innerHeight / 2;
+    const centerX = windowSize.width / 2;
+    const centerY = windowSize.height / 2;
 
     return (
         <Box className="isometric-map" ref={mapRef} position="relative" width="100%" height="100%">
@@ -99,7 +117,7 @@ export function IsometricMap({ mapRef, map, mapPosition, setMapPosition }) {
                             transform="rotateX(-45deg) rotateZ(32deg) scale(1.65)"
                         >
                             <Image
-                                src={`data:image/jpeg;base64,${tile.content}`}
+                                src={API_URL + tile.content}
                                 alt={`Tile ${tile.x},${tile.y}`}
                                 width="100%"
                                 height="100%"
