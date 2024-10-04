@@ -184,8 +184,8 @@ best practices.
 4. Real-time multiplayer synchronization
 5. Scalable backend architecture for growing user base
 6. Isometric rendering optimization for performance
-8. Progressive loading of map areas
-9. WebGL integration for improved graphics rendering
+7. Progressive loading of map areas
+8. WebGL integration for improved graphics rendering
 
 ## Planned Features
 
