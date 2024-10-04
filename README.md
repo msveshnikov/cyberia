@@ -32,7 +32,6 @@ https://isocraft.online
 4. Real-time multiplayer synchronization
 5. Scalable backend architecture for growing user base
 6. Isometric rendering optimization for performance
-7. Caching strategies for frequently accessed tiles (redis)
 8. Progressive loading of map areas
 9. WebGL integration for improved graphics rendering
 
@@ -77,3 +76,5 @@ https://isocraft.online
 -   `docs/`: Documentation and marketing materials
 
 # TODO
+
+-   Fix 404 Cannot GET /content/1_0.jpg

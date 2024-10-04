@@ -42,7 +42,6 @@ best practices.
 
 -   Express.js server handling API requests and game logic
 -   MongoDB for persistent data storage of user information and tile data
--   Redis for caching frequently accessed data and improving performance
 -   Implements JWT (JSON Web Tokens) for user authentication
 
 ### AI Integration
@@ -68,7 +67,7 @@ best practices.
 ## Technology Stack
 
 -   Frontend: React, Vite, Chakra UI, React Router v6
--   Backend: Express.js, MongoDB, Redis
+-   Backend: Express.js, MongoDB
 -   AI Generation: Stable Diffusion SDXL
 -   Real-time Communication: Socket.io
 -   Authentication: JSON Web Tokens (JWT)
@@ -100,7 +99,6 @@ best practices.
     STABILITY_KEY=your_stability_ai_key
     MONGODB_URI=mongodb://localhost:27017/isocraft
     JWT_SECRET=your_jwt_secret
-    REDIS_URL=redis://localhost:6379
     ```
 
 4. Start the development servers: In the root directory:
@@ -186,7 +184,6 @@ best practices.
 4. Real-time multiplayer synchronization
 5. Scalable backend architecture for growing user base
 6. Isometric rendering optimization for performance
-7. Caching strategies for frequently accessed tiles (Redis)
 8. Progressive loading of map areas
 9. WebGL integration for improved graphics rendering
 

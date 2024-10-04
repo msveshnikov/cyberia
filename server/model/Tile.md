@@ -137,5 +137,5 @@ const updatedTile = await Tile.updateTileOwnership(5, 5, newOwnerId);
 const isEmpty = await Tile.isSpaceEmpty(30, 30);
 ```
 
-This model interacts with Redis for caching and uses the Stability AI API for content generation,
+This model interacts with Stability AI API for content generation,
 making it a central component in managing the game world's state and appearance.

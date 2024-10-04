@@ -17,14 +17,11 @@ updates using Socket.IO.
 -   socket.io: Real-time bidirectional event-based communication
 -   jsonwebtoken: JSON Web Token implementation
 -   express-rate-limit: Rate limiting middleware
--   ioredis: Redis client for Node.js
 
 ## Configuration
 
 -   The server uses environment variables loaded from a `.env` file.
 -   It connects to a MongoDB database specified by the `MONGODB_URI` environment variable.
--   Redis is used for caching, with the connection URL specified by the `REDIS_URL` environment
-    variable.
 -   The server listens on the port specified by the `PORT` environment variable (default: 3000).
 
 ## Middleware
@@ -80,7 +77,6 @@ information to the request object.
 2. **GET /api/tiles/:x/:y**
 
     - Retrieves a specific tile by coordinates
-    - Uses Redis caching
 
 3. **POST /api/tiles/generate**
 
