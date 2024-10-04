@@ -177,10 +177,7 @@ const App = () => {
 
     const handleLogin = async () => {
         try {
-            const response = await axios.post(`${API_URL}/api/login`, {
-                email,
-                password
-            });
+            const response = await axios.post(`${API_URL}/api/login`, { email, password });
             localStorage.setItem('token', response.data.accessToken);
             setUser(response.data.user);
             closeLogin();
@@ -188,6 +185,13 @@ const App = () => {
             setPassword('');
         } catch (error) {
             console.error('Error logging in:', error);
+            toast({
+                title: 'Login failed',
+                description: 'Please check your credentials and try again.',
+                status: 'error',
+                duration: 3000,
+                isClosable: true
+            });
         }
     };
 
@@ -203,26 +207,15 @@ const App = () => {
             closeRegister();
         } catch (error) {
             console.error('Error registering:', error);
+            toast({
+                title: 'Registration failed',
+                description: 'Please try again with a different email.',
+                status: 'error',
+                duration: 3000,
+                isClosable: true
+            });
         }
     };
-
-    const handleMapDrag = useCallback((e) => {
-        if (e.buttons !== 1) return;
-        const dx = e.movementX;
-        const dy = e.movementY;
-        setMapPosition((prev) => ({
-            x: prev.x - Math.round(dx / 50),
-            y: prev.y - Math.round(dy / 50)
-        }));
-    }, []);
-
-    useEffect(() => {
-        const mapElement = mapRef.current;
-        if (mapElement) {
-            mapElement.addEventListener('mousemove', handleMapDrag);
-            return () => mapElement.removeEventListener('mousemove', handleMapDrag);
-        }
-    }, [handleMapDrag]);
 
     useEffect(() => {
         const handleKeyDown = (e) => {
@@ -260,7 +253,6 @@ const App = () => {
             >
                 <Heading as="h1" size="lg">
                     Cyberia
-                    {/* {mapPosition.x} {mapPosition.y} */}
                 </Heading>
                 {user ? (
                     <HStack>
@@ -280,7 +272,6 @@ const App = () => {
 
             <Container maxW="container.xl" py={4}>
                 <VStack spacing={2} align="stretch">
-                    (
                     <Box>
                         <Box
                             className="map-container"
@@ -304,7 +295,6 @@ const App = () => {
                             <Button onClick={() => handleMapScroll('right')}>Right</Button>
                         </HStack>
                     </Box>
-                    )
                     <Button
                         onClick={generateProperty}
                         isLoading={isGenerating}
