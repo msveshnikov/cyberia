@@ -74,9 +74,12 @@ app.post('/api/login', async (req, res) => {
     }
     try {
         if (await user.comparePassword(req.body.password)) {
-            const accessToken = jwt.sign({ email: user.email }, process.env.JWT_SECRET);
+            const accessToken = jwt.sign(
+                { email: user.email, _id: user._id },
+                process.env.JWT_SECRET
+            );
             await user.updateLastLogin();
-            res.json({ accessToken: accessToken, user: { email: user.email } });
+            res.json({ accessToken: accessToken, user: { email: user.email, _id: user._id } });
         } else {
             res.status(401).send('Not Allowed');
         }
@@ -131,8 +134,7 @@ app.get('/api/tiles/:x/:y', async (req, res) => {
 
 app.post('/api/tiles/generate', authenticateToken, async (req, res) => {
     try {
-        const { x, y, owner, propertyType, color, style, size, material, additionalDetails } =
-            req.body;
+        const { x, y, propertyType, color, style, size, material, additionalDetails } = req.body;
         const existingTile = await Tile.findOne({ x, y });
         if (existingTile) {
             return res.status(400).json({ message: 'Tile already exists' });
@@ -140,7 +142,7 @@ app.post('/api/tiles/generate', authenticateToken, async (req, res) => {
         const generatedTile = await Tile.generateAIContent(
             x,
             y,
-            owner,
+            req.user._id,
             propertyType,
             style,
             color,
@@ -150,6 +152,7 @@ app.post('/api/tiles/generate', authenticateToken, async (req, res) => {
         );
         const cacheKey = `tile:${x}:${y}`;
         await redis.set(cacheKey, JSON.stringify(generatedTile), 'EX', 3600);
+        await User.findByIdAndUpdate(req.user._id, { $push: { ownedTiles: generatedTile._id } });
         res.status(201).json(generatedTile);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -158,8 +161,44 @@ app.post('/api/tiles/generate', authenticateToken, async (req, res) => {
 
 app.get('/api/user/tiles', authenticateToken, async (req, res) => {
     try {
-        const userTiles = await Tile.getOwnedTiles(req.user._id);
-        res.json(userTiles);
+        const user = await User.findById(req.user._id).populate('ownedTiles');
+        res.json(user?.ownedTiles);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+app.put('/api/user/profile', authenticateToken, async (req, res) => {
+    try {
+        const { profilePicture } = req.body;
+        const user = await User.findById(req.user._id);
+        if (profilePicture) {
+            user.profilePicture = profilePicture;
+        }
+        await user.save();
+        res.json(user);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+app.post('/api/user/friends', authenticateToken, async (req, res) => {
+    try {
+        const { friendId } = req.body;
+        const user = await User.findById(req.user._id);
+        await user.addFriend(friendId);
+        res.json(user);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+app.delete('/api/user/friends/:friendId', authenticateToken, async (req, res) => {
+    try {
+        const { friendId } = req.params;
+        const user = await User.findById(req.user._id);
+        await user.removeFriend(friendId);
+        res.json(user);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

@@ -2,7 +2,6 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import axios from 'axios';
 import io from 'socket.io-client';
 import {
-    ChakraProvider,
     Box,
     VStack,
     HStack,
@@ -272,143 +271,137 @@ const App = () => {
     }, [handleMapScroll]);
 
     return (
-        <ChakraProvider>
-            <Box minHeight="100vh">
-                <Flex
-                    as="header"
-                    align="center"
-                    justify="space-between"
-                    wrap="wrap"
-                    padding="1.5rem"
-                    bg="gray.100"
-                >
-                    <Heading as="h1" size="lg">
-                        IsoCraft {mapPosition.x} {mapPosition.y}
-                    </Heading>
-                    {user ? (
-                        <HStack>
-                            <Text>Welcome, {user.email}</Text>
-                            <Link to="/profile">
-                                <Button>Profile</Button>
-                            </Link>
-                            <Button onClick={handleLogout}>Logout</Button>
-                        </HStack>
+        <Box minHeight="100vh">
+            <Flex
+                as="header"
+                align="center"
+                justify="space-between"
+                wrap="wrap"
+                padding="1.5rem"
+                bg="gray.100"
+            >
+                <Heading as="h1" size="lg">
+                    IsoCraft {mapPosition.x} {mapPosition.y}
+                </Heading>
+                {user ? (
+                    <HStack>
+                        <Text>Welcome, {user.email}</Text>
+                        <Link to="/profile">
+                            <Button>Profile</Button>
+                        </Link>
+                        <Button onClick={handleLogout}>Logout</Button>
+                    </HStack>
+                ) : (
+                    <HStack>
+                        <Button onClick={openLogin}>Login</Button>
+                        <Button onClick={openRegister}>Register</Button>
+                    </HStack>
+                )}
+            </Flex>
+
+            <Container maxW="container.xl" py={4}>
+                <VStack spacing={2} align="stretch">
+                    {isLoading ? (
+                        <Spinner />
                     ) : (
-                        <HStack>
-                            <Button onClick={openLogin}>Login</Button>
-                            <Button onClick={openRegister}>Register</Button>
-                        </HStack>
-                    )}
-                </Flex>
-
-                <Container maxW="container.xl" py={4}>
-                    <VStack spacing={2} align="stretch">
-                        {isLoading ? (
-                            <Spinner />
-                        ) : (
-                            <Box>
-                                <Box
-                                    className="map-container"
-                                    position="relative"
-                                    width="100%"
-                                    height="70vh"
-                                    overflow="hidden"
-                                    perspective="1000px"
-                                >
-                                    <IsometricMap
-                                        mapRef={mapRef}
-                                        map={map}
-                                        mapPosition={mapPosition}
-                                    />
-                                </Box>
-                                <HStack justify="center" mt={4}>
-                                    <Button onClick={() => handleMapScroll('up')}>Up</Button>
-                                    <Button onClick={() => handleMapScroll('down')}>Down</Button>
-                                    <Button onClick={() => handleMapScroll('left')}>Left</Button>
-                                    <Button onClick={() => handleMapScroll('right')}>Right</Button>
-                                </HStack>
+                        <Box>
+                            <Box
+                                className="map-container"
+                                position="relative"
+                                width="100%"
+                                height="70vh"
+                                overflow="hidden"
+                                perspective="1000px"
+                            >
+                                <IsometricMap mapRef={mapRef} map={map} mapPosition={mapPosition} />
                             </Box>
-                        )}
-                        <Button
-                            onClick={generateProperty}
-                            isLoading={isGenerating}
-                            loadingText="Generating..."
-                            isDisabled={!user}
-                        >
-                            Generate Property
-                        </Button>
-                    </VStack>
-                </Container>
+                            <HStack justify="center" mt={4}>
+                                <Button onClick={() => handleMapScroll('up')}>Up</Button>
+                                <Button onClick={() => handleMapScroll('down')}>Down</Button>
+                                <Button onClick={() => handleMapScroll('left')}>Left</Button>
+                                <Button onClick={() => handleMapScroll('right')}>Right</Button>
+                            </HStack>
+                        </Box>
+                    )}
+                    <Button
+                        onClick={generateProperty}
+                        isLoading={isGenerating}
+                        loadingText="Generating..."
+                        isDisabled={!user}
+                    >
+                        Generate Property
+                    </Button>
+                </VStack>
+            </Container>
 
-                <Modal isOpen={isLoginOpen} onClose={closeLogin}>
-                    <ModalOverlay />
-                    <ModalContent>
-                        <ModalHeader>Login</ModalHeader>
-                        <ModalCloseButton />
-                        <ModalBody>
-                            <VStack spacing={4}>
-                                <FormControl>
-                                    <FormLabel>Email</FormLabel>
-                                    <Input
-                                        type="email"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                    />
-                                </FormControl>
-                                <FormControl>
-                                    <FormLabel>Password</FormLabel>
-                                    <Input
-                                        type="password"
-                                        value={password}
-                                        onChange={(e) => setPassword(e.target.value)}
-                                    />
-                                </FormControl>
-                                <Button onClick={handleLogin} width="100%">
-                                    Login
-                                </Button>
-                            </VStack>
-                        </ModalBody>
-                    </ModalContent>
-                </Modal>
+            <Modal isOpen={isLoginOpen} onClose={closeLogin}>
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader>Login</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                        <VStack spacing={4}>
+                            <FormControl>
+                                <FormLabel>Email</FormLabel>
+                                <Input
+                                    type="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                />
+                            </FormControl>
+                            <FormControl>
+                                <FormLabel>Password</FormLabel>
+                                <Input
+                                    type="password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                />
+                            </FormControl>
+                            <Button onClick={handleLogin} width="100%">
+                                Login
+                            </Button>
+                        </VStack>
+                    </ModalBody>
+                </ModalContent>
+            </Modal>
 
-                <Modal isOpen={isRegisterOpen} onClose={closeRegister}>
-                    <ModalOverlay />
-                    <ModalContent>
-                        <ModalHeader>Register</ModalHeader>
-                        <ModalCloseButton />
-                        <ModalBody>
-                            <VStack spacing={4}>
-                                <FormControl>
-                                    <FormLabel>Email</FormLabel>
-                                    <Input
-                                        type="email"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                    />
-                                </FormControl>
-                                <FormControl>
-                                    <FormLabel>Password</FormLabel>
-                                    <Input
-                                        type="password"
-                                        value={password}
-                                        onChange={(e) => setPassword(e.target.value)}
-                                    />
-                                </FormControl>
-                                <Button onClick={handleRegister} width="100%">
-                                    Register
-                                </Button>
-                            </VStack>
-                        </ModalBody>
-                    </ModalContent>
-                </Modal>
+            <Modal isOpen={isRegisterOpen} onClose={closeRegister}>
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader>Register</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                        <VStack spacing={4}>
+                            <FormControl>
+                                <FormLabel>Email</FormLabel>
+                                <Input
+                                    type="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                />
+                            </FormControl>
+                            <FormControl>
+                                <FormLabel>Password</FormLabel>
+                                <Input
+                                    type="password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                />
+                            </FormControl>
+                            <Button onClick={handleRegister} width="100%">
+                                Register
+                            </Button>
+                        </VStack>
+                    </ModalBody>
+                </ModalContent>
+            </Modal>
 
-                <PropertySelector
-                    isOpen={isPropertySelectorOpen}
-                    onClose={closePropertySelector}
-                    onGenerate={handleGenerateProperty}
-                />
-            </Box>
-        </ChakraProvider>
+            <PropertySelector
+                isOpen={isPropertySelectorOpen}
+                onClose={closePropertySelector}
+                onGenerate={handleGenerateProperty}
+            />
+        </Box>
     );
 };
 

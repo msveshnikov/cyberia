@@ -23,7 +23,10 @@ import {
     ModalHeader,
     ModalBody,
     ModalCloseButton,
-    useDisclosure
+    useDisclosure,
+    Avatar,
+    HStack,
+    Progress
 } from '@chakra-ui/react';
 
 const API_URL = import.meta.env.DEV ? 'http://localhost:3000' : 'https://isocraft.online';
@@ -46,8 +49,7 @@ const Profile = () => {
                     axios.get(`${API_URL}/api/user`, {
                         headers: { Authorization: `Bearer ${token}` }
                     }),
-                    axios.get(`${API_URL}/api/tiles`, {
-                        params: { owner: userResponse.data._id },
+                    axios.get(`${API_URL}/api/user/tiles`, {
                         headers: { Authorization: `Bearer ${token}` }
                     })
                 ]);
@@ -76,6 +78,17 @@ const Profile = () => {
         onOpen();
     };
 
+    const handleEditTile = () => {
+        // Implement tile editing functionality
+        toast({
+            title: 'Edit Tile',
+            description: 'Tile editing functionality not implemented yet.',
+            status: 'info',
+            duration: 3000,
+            isClosable: true
+        });
+    };
+
     if (isLoading) {
         return (
             <Flex justifyContent="center" alignItems="center" height="100vh">
@@ -96,14 +109,21 @@ const Profile = () => {
     return (
         <Container maxW="container.xl" py={10}>
             <VStack spacing={8} align="stretch">
-                <Heading as="h1" size="2xl">
-                    User Profile
-                </Heading>
+                <Flex alignItems="center" justifyContent="space-between">
+                    <HStack>
+                        <Avatar size="xl" name={user.email} src={user.profilePicture} />
+                        <VStack align="start" spacing={0}>
+                            <Heading as="h1" size="2xl">
+                                {user.email}
+                            </Heading>
+                            <Badge colorScheme={user.premium ? 'purple' : 'gray'}>
+                                {user.premium ? 'Premium' : 'Free'}
+                            </Badge>
+                        </VStack>
+                    </HStack>
+                    <Button colorScheme="blue">Edit Profile</Button>
+                </Flex>
                 <StatGroup>
-                    <Stat>
-                        <StatLabel>Email</StatLabel>
-                        <StatNumber>{user.email}</StatNumber>
-                    </Stat>
                     <Stat>
                         <StatLabel>Joined</StatLabel>
                         <StatNumber>{new Date(user.createdAt).toLocaleDateString()}</StatNumber>
@@ -114,9 +134,39 @@ const Profile = () => {
                             {user.lastLogin ? new Date(user.lastLogin).toLocaleString() : 'N/A'}
                         </StatNumber>
                     </Stat>
+                    <Stat>
+                        <StatLabel>Balance</StatLabel>
+                        <StatNumber>{user.balance} coins</StatNumber>
+                    </Stat>
+                    <Stat>
+                        <StatLabel>Owned Tiles</StatLabel>
+                        <StatNumber>{ownedTiles.length}</StatNumber>
+                    </Stat>
                 </StatGroup>
                 <Box>
-                    <Heading as="h2" size="xl" mb={4}>
+                    <Heading as="h2" size="lg" mb={2}>
+                        Achievements
+                    </Heading>
+                    <Progress value={(user.achievements.length / 3) * 100} mb={2} />
+                    <SimpleGrid columns={3} spacing={4}>
+                        {['first_property', 'ten_properties', 'customization_master'].map(
+                            (achievement) => (
+                                <Badge
+                                    key={achievement}
+                                    colorScheme={
+                                        user.achievements.includes(achievement) ? 'green' : 'gray'
+                                    }
+                                    p={2}
+                                    borderRadius="md"
+                                >
+                                    {achievement.replace(/_/g, ' ')}
+                                </Badge>
+                            )
+                        )}
+                    </SimpleGrid>
+                </Box>
+                <Box>
+                    <Heading as="h2" size="lg" mb={4}>
                         Owned Tiles
                     </Heading>
                     {ownedTiles.length === 0 ? (
@@ -181,7 +231,9 @@ const Profile = () => {
                                     <StatLabel>Style</StatLabel>
                                     <StatNumber>{selectedTile.style}</StatNumber>
                                 </Stat>
-                                <Button colorScheme="blue">Edit Tile</Button>
+                                <Button colorScheme="blue" onClick={handleEditTile}>
+                                    Edit Tile
+                                </Button>
                             </VStack>
                         )}
                     </ModalBody>

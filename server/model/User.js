@@ -54,6 +54,25 @@ const userSchema = new mongoose.Schema({
     profilePicture: {
         type: String,
         default: ''
+    },
+    customizationLevel: {
+        type: Number,
+        default: 0
+    },
+    lastActiveAt: {
+        type: Date,
+        default: Date.now
+    },
+    preferences: {
+        notifications: {
+            type: Boolean,
+            default: true
+        },
+        theme: {
+            type: String,
+            enum: ['light', 'dark'],
+            default: 'light'
+        }
     }
 });
 
@@ -117,6 +136,30 @@ userSchema.methods.setPremiumStatus = function (status) {
 userSchema.methods.setProfilePicture = function (pictureUrl) {
     this.profilePicture = pictureUrl;
     return this.save();
+};
+
+userSchema.methods.incrementCustomizationLevel = function () {
+    this.customizationLevel += 1;
+    return this.save();
+};
+
+userSchema.methods.updateLastActive = function () {
+    this.lastActiveAt = Date.now();
+    return this.save();
+};
+
+userSchema.methods.setPreferences = function (preferences) {
+    this.preferences = { ...this.preferences, ...preferences };
+    return this.save();
+};
+
+userSchema.statics.findActiveUsers = function (threshold) {
+    const thresholdDate = new Date(Date.now() - threshold);
+    return this.find({ lastActiveAt: { $gte: thresholdDate } });
+};
+
+userSchema.statics.findPremiumUsers = function () {
+    return this.find({ premium: true });
 };
 
 const User = mongoose.model('User', userSchema);
