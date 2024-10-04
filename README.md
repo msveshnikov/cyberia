@@ -76,3 +76,5 @@ https://cyberia.fun
 -   `docs/`: Documentation and marketing materials
 
 # TODO
+
+-   Optimize render performance

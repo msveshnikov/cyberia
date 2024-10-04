@@ -15,7 +15,6 @@ import {
     ModalCloseButton,
     Input,
     useDisclosure,
-    Spinner,
     useToast,
     Flex,
     Heading,
@@ -35,7 +34,6 @@ const App = () => {
     const [mapPosition, setMapPosition] = useState({ x: 0, y: 0 });
     const [isGenerating, setIsGenerating] = useState(false);
     const [socket, setSocket] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const mapRef = useRef(null);
@@ -59,29 +57,9 @@ const App = () => {
         return () => newSocket.close();
     }, []);
 
-    const fetchInitialMap = useCallback(async () => {
-        try {
-            setIsLoading(true);
-            const response = await axios.get(`${API_URL}/api/tiles`, {
-                params: { startX: -5, startY: -5, size: 10 }
-            });
-            setMap(response.data);
-        } catch {
-            toast({
-                title: 'Error fetching initial map',
-                status: 'error',
-                duration: 3000,
-                isClosable: true
-            });
-        } finally {
-            setIsLoading(false);
-        }
-    }, [toast]);
-
     useEffect(() => {
-        fetchInitialMap();
         checkUserAuth();
-    }, [fetchInitialMap]);
+    }, []);
 
     useEffect(() => {
         fetchMapChunk(mapPosition.x, mapPosition.y);
@@ -302,33 +280,31 @@ const App = () => {
 
             <Container maxW="container.xl" py={4}>
                 <VStack spacing={2} align="stretch">
-                    {isLoading ? (
-                        <Spinner />
-                    ) : (
-                        <Box>
-                            <Box
-                                className="map-container"
-                                position="relative"
-                                width="100%"
-                                height="69vh"
-                                overflow="hidden"
-                                perspective="1000px"
-                            >
-                                <IsometricMap
-                                    mapRef={mapRef}
-                                    map={map}
-                                    mapPosition={mapPosition}
-                                    setMapPosition={setMapPosition}
-                                />
-                            </Box>
-                            <HStack justify="center" mt={4}>
-                                <Button onClick={() => handleMapScroll('up')}>Up</Button>
-                                <Button onClick={() => handleMapScroll('down')}>Down</Button>
-                                <Button onClick={() => handleMapScroll('left')}>Left</Button>
-                                <Button onClick={() => handleMapScroll('right')}>Right</Button>
-                            </HStack>
+                    (
+                    <Box>
+                        <Box
+                            className="map-container"
+                            position="relative"
+                            width="100%"
+                            height="69vh"
+                            overflow="hidden"
+                            perspective="1000px"
+                        >
+                            <IsometricMap
+                                mapRef={mapRef}
+                                map={map}
+                                mapPosition={mapPosition}
+                                setMapPosition={setMapPosition}
+                            />
                         </Box>
-                    )}
+                        <HStack justify="center" mt={4}>
+                            <Button onClick={() => handleMapScroll('up')}>Up</Button>
+                            <Button onClick={() => handleMapScroll('down')}>Down</Button>
+                            <Button onClick={() => handleMapScroll('left')}>Left</Button>
+                            <Button onClick={() => handleMapScroll('right')}>Right</Button>
+                        </HStack>
+                    </Box>
+                    )
                     <Button
                         onClick={generateProperty}
                         isLoading={isGenerating}
