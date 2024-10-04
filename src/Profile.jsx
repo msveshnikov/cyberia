@@ -184,10 +184,7 @@ const Profile = () => {
                                     _hover={{ transform: 'scale(1.05)', cursor: 'pointer' }}
                                     onClick={() => handleTileClick(tile)}
                                 >
-                                    <Image
-                                        src={tile.content}
-                                        alt={`Tile ${tile.x},${tile.y}`}
-                                    />
+                                    <Image src={tile.content} alt={`Tile ${tile.x},${tile.y}`} />
                                     <Box p={3}>
                                         <Flex justifyContent="space-between" alignItems="center">
                                             <Text fontWeight="bold">

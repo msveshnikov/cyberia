@@ -34,8 +34,8 @@ export function IsometricMap({ mapRef, map, mapPosition, setMapPosition }) {
                 const deltaX = e.clientX - lastPosition.current.x;
                 const deltaY = e.clientY - lastPosition.current.y;
                 setMapPosition((prev) => ({
-                    x: prev.x - deltaX / 350,
-                    y: prev.y - deltaY / 176
+                    x: Math.round(prev.x - deltaX / 350),
+                    y: Math.round(prev.y - deltaY / 176)
                 }));
                 lastPosition.current = { x: e.clientX, y: e.clientY };
             }
@@ -57,8 +57,8 @@ export function IsometricMap({ mapRef, map, mapPosition, setMapPosition }) {
                 const deltaX = e.touches[0].clientX - lastPosition.current.x;
                 const deltaY = e.touches[0].clientY - lastPosition.current.y;
                 setMapPosition((prev) => ({
-                    x: prev.x - deltaX / 350,
-                    y: prev.y - deltaY / 176
+                    x: Math.round(prev.x - deltaX / 350),
+                    y: Math.round(prev.y - deltaY / 176)
                 }));
                 lastPosition.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
             }

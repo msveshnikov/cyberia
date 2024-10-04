@@ -119,8 +119,8 @@ tileSchema.statics.generateAIContent = async function (
     const jpgBuffer = await sharp(imageBuffer).jpeg({ quality: 80 }).toBuffer();
 
     const fileName = `${x}_${y}.jpg`;
-    
-    const dirPath = join(__dirname, '../../content')
+
+    const dirPath = join(__dirname, '../../content');
     const filePath = join(dirPath, fileName);
 
     // Ensure the directory exists

@@ -77,4 +77,4 @@ https://isocraft.online
 
 # TODO
 
--   Fix 404 Cannot GET /content/1_0.jpg
+-   Stick to integer MapPositions during dragging (map.round)
