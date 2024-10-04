@@ -114,7 +114,7 @@ export function IsometricMap({ mapRef, map, mapPosition, setMapPosition }) {
                             left="0"
                             width="100%"
                             height="100%"
-                            transform="rotateX(-45deg) rotateZ(32deg) scale(1.65)"
+                            transform="rotateX(-45deg) rotateZ(34deg) scale(1.65)"
                         >
                             <Image
                                 src={API_URL + tile.content}

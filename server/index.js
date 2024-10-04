@@ -37,7 +37,6 @@ const limiter = rateLimit({
 app.use(limiter);
 app.use(cors());
 app.use(express.json());
-app.use('/content', express.static(join(__dirname, '../content')));
 app.use(express.static(join(__dirname, '../dist')));
 app.use(morgan('dev'));
 
@@ -246,6 +245,11 @@ io.on('connection', (socket) => {
         const tiles = await Tile.getChunk(startX, startY, endX - startX, endY - startY);
         socket.emit('mapUpdated', tiles);
     });
+});
+
+app.get('/content/:filename', (req, res) => {
+    const { filename } = req.params;
+    res.sendFile(join(__dirname, './content', filename));
 });
 
 app.get('*', (req, res) => {
