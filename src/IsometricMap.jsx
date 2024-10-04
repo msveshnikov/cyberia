@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Box, Image } from '@chakra-ui/react';
 
-const API_URL = import.meta.env.DEV ? 'http://localhost:3000' : 'https://isocraft.online';
+const API_URL = import.meta.env.DEV ? 'http://localhost:3000' : 'https://cyberia.fun';
 
 export function IsometricMap({ mapRef, map, mapPosition, setMapPosition }) {
     const isDragging = useRef(false);

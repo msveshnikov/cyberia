@@ -1,6 +1,6 @@
 # Business Analysis Insights
 
-Based on the provided business requirements and project structure for IsoCraft, here are some
+Based on the provided business requirements and project structure for Cyberia, here are some
 business insights:
 
 1. Potential market opportunities:
@@ -54,7 +54,7 @@ Based on the project structure, some additional suggestions:
 -   Consider using TypeScript for improved type safety and developer experience.
 -   Implement a CI/CD pipeline for automated testing and deployment.
 
-Overall, IsoCraft has the potential to carve out a unique niche in the browser-based MMO market,
+Overall, Cyberia has the potential to carve out a unique niche in the browser-based MMO market,
 leveraging innovative technologies and user-driven content. However, careful planning and execution
 will be crucial to overcome the technical challenges and create a sustainable, engaging platform.
 

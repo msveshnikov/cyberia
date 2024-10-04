@@ -1,6 +1,6 @@
-IsoCraft v1.0.0 Release Notes
+Cyberia v1.0.0 Release Notes
 
-We're excited to launch the first version of IsoCraft! Here's what you can expect:
+We're excited to launch the first version of Cyberia! Here's what you can expect:
 
 New Features:
 • AI-powered property generation using Stable Diffusion SDXL
@@ -26,4 +26,4 @@ Coming Soon:
 • Economy system for transactions
 • Achievements and progression system
 
-Thank you for joining us on this exciting journey! Your feedback is crucial as we continue to improve and expand IsoCraft.
+Thank you for joining us on this exciting journey! Your feedback is crucial as we continue to improve and expand Cyberia.

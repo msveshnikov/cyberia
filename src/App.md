@@ -2,7 +2,7 @@
 
 ## Overview
 
-`App.jsx` is the main component of the IsoCraft application, a React-based isometric map generator.
+`App.jsx` is the main component of the Cyberia application, a React-based isometric map generator.
 It handles user authentication, map rendering, property generation, and user interactions. The
 component integrates with a backend API and uses WebSocket for real-time updates.
 
@@ -91,7 +91,7 @@ Enables dragging the map with the mouse.
 
 ## Usage in Project
 
-`App.jsx` serves as the main entry point for the IsoCraft application. It is rendered by `main.jsx`
+`App.jsx` serves as the main entry point for the Cyberia application. It is rendered by `main.jsx`
 and integrates with other components like `PropertySelector.jsx`. It communicates with the backend
 server defined in `server/index.js` for data fetching and user authentication.
 
@@ -111,4 +111,4 @@ ReactDOM.render(
 ```
 
 This component is designed to be the root component of the application, handling most of the core
-functionality and user interactions for the IsoCraft project.
+functionality and user interactions for the Cyberia project.

@@ -1,7 +1,7 @@
-Here's an analysis of potential competitors for IsoCraft.online, structured in a format suitable for
+Here's an analysis of potential competitors for Cyberia.fun, structured in a format suitable for
 a markdown file:
 
-# Competitor Analysis for IsoCraft.online
+# Competitor Analysis for Cyberia.fun
 
 ## 1. Minecraft
 
@@ -24,9 +24,9 @@ a markdown file:
 -   Less accessible for casual players
 -   No built-in AI generation features
 
-### Comparison to IsoCraft.online:
+### Comparison to Cyberia.fun:
 
-IsoCraft offers easier accessibility through browser-based play and AI-generated content, which
+Cyberia offers easier accessibility through browser-based play and AI-generated content, which
 could appeal to casual players looking for a quick, creative experience.
 
 ## 2. Townscaper
@@ -49,9 +49,9 @@ could appeal to casual players looking for a quick, creative experience.
 -   No multiplayer features
 -   Finite building space
 
-### Comparison to IsoCraft.online:
+### Comparison to Cyberia.fun:
 
-IsoCraft provides a more social, expansive experience with its MMO features and infinite map, while
+Cyberia provides a more social, expansive experience with its MMO features and infinite map, while
 potentially offering similar satisfaction in creation through AI generation.
 
 ## 3. Roblox
@@ -75,9 +75,9 @@ potentially offering similar satisfaction in creation through AI generation.
 -   Primarily targets a younger audience
 -   Requires download for optimal experience
 
-### Comparison to IsoCraft.online:
+### Comparison to Cyberia.fun:
 
-IsoCraft focuses on a specific type of gameplay (isometric property creation) with AI assistance,
+Cyberia focuses on a specific type of gameplay (isometric property creation) with AI assistance,
 potentially offering a more streamlined and adult-friendly experience compared to Roblox's diverse
 but sometimes chaotic ecosystem.
 
@@ -101,9 +101,9 @@ but sometimes chaotic ecosystem.
 -   Limited creative freedom compared to modern games
 -   Microtransaction-heavy model
 
-### Comparison to IsoCraft.online:
+### Comparison to Cyberia.fun:
 
-IsoCraft modernizes the isometric social game concept with AI generation and an infinite map,
+Cyberia modernizes the isometric social game concept with AI generation and an infinite map,
 potentially offering more creative freedom and a fresher experience than Habbo Hotel.
 
 ## 5. The Sandbox
@@ -126,8 +126,8 @@ potentially offering more creative freedom and a fresher experience than Habbo H
 -   Complex ecosystem can be overwhelming
 -   Performance issues in some areas
 
-### Comparison to IsoCraft.online:
+### Comparison to Cyberia.fun:
 
-IsoCraft offers a more accessible entry point for creative online world-building, without the
+Cyberia offers a more accessible entry point for creative online world-building, without the
 complexity of blockchain integration. However, it could potentially learn from The Sandbox's asset
 ownership and monetization models for future development.

@@ -1,6 +1,6 @@
-# IsoCraft (built by [AutoCode](https://autocode.work))
+# Cyberia (built by [AutoCode](https://autocode.work))
 
-IsoCraft is an innovative MMO game where users can create their own 1024x1024 tiles property on a 3D
+Cyberia is an innovative MMO game where users can create their own 1024x1024 tiles property on a 3D
 isometric infinite map using AI-generated content. The game is browser-based, initially free to
 play, with monetization options planned for the future.
 
@@ -8,7 +8,7 @@ play, with monetization options planned for the future.
 
 ## DEMO
 
-https://isocraft.online
+https://cyberia.fun
 
 ## Key Features
 

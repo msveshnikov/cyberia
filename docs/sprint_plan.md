@@ -6,7 +6,7 @@ Here's a sprint plan based on the current product backlog and project state:
 ## Sprint Goal
 
 Develop the core game engine with isometric map rendering and integrate AI-powered property
-generation to create a functional prototype of IsoCraft.online's main gameplay loop.
+generation to create a functional prototype of Cyberia.fun's main gameplay loop.
 
 ## Selected User Stories / Tasks
 
@@ -76,7 +76,7 @@ Total Story Points: 39
 ```
 
 This sprint plan focuses on developing the core game engine and integrating the AI-powered property
-generation, which are crucial for creating a functional prototype of IsoCraft.online. The selected
+generation, which are crucial for creating a functional prototype of Cyberia.fun. The selected
 tasks cover the highest priority items from the backlog, with a balance between frontend, backend,
 and AI integration work.
 

@@ -1,7 +1,7 @@
-Here's a comprehensive marketing strategy for IsoCraft.online, structured in a format suitable for a
+Here's a comprehensive marketing strategy for Cyberia.fun, structured in a format suitable for a
 markdown file:
 
-# IsoCraft.online Marketing Strategy
+# Cyberia.fun Marketing Strategy
 
 ## 1. Target Audience
 
@@ -73,17 +73,17 @@ markdown file:
 -   Weekly contests for the most creative AI-generated properties
 -   Community voting and featured showcases
 
-### 2. "Explore IsoCraft" Video Series
+### 2. "Explore Cyberia" Video Series
 
 -   Influencer-led tours of the most impressive user-created areas
 -   Behind-the-scenes looks at AI generation process
 
 ### 3. "Craft Your Story" UGC Campaign
 
--   Encourage users to share their IsoCraft journeys on social media
+-   Encourage users to share their Cyberia journeys on social media
 -   Hashtag: #MyCraftedWorld
 
-### 4. "IsoCraft Pioneers" Early Access
+### 4. "Cyberia Pioneers" Early Access
 
 -   Exclusive beta access for early adopters
 -   Special in-game badges and perks for founding members
@@ -93,7 +93,7 @@ markdown file:
 -   Partner with digital artists to create unique, limited-edition properties
 -   Auction these properties as collectibles
 
-### 6. "IsoCraft Academy" Webinar Series
+### 6. "Cyberia Academy" Webinar Series
 
 -   Educational content on AI in gaming, world-building techniques
 -   Guest speakers from tech and gaming industries
@@ -124,7 +124,7 @@ markdown file:
 
 ### Phase 2: Beta Launch (1 month)
 
--   Limited access to "IsoCraft Pioneers"
+-   Limited access to "Cyberia Pioneers"
 -   Bug fixing and feature refinement based on feedback
 
 ### Phase 3: Public Launch
@@ -154,7 +154,7 @@ markdown file:
 -   Gaming conventions and events for showcases
 -   Educational institutions for AI and gaming workshops
 
-This marketing strategy aims to leverage the unique AI-powered features of IsoCraft.online,
+This marketing strategy aims to leverage the unique AI-powered features of Cyberia.fun,
 targeting creative gamers and tech enthusiasts. By focusing on user-generated content, community
 engagement, and the innovative use of AI in gaming, we can create a strong brand presence and drive
 user acquisition and retention.

@@ -1,7 +1,7 @@
 # Prioritized Features
 
 Based on the business insights provided, here's a prioritized list of the top 5 features or
-improvements for IsoCraft:
+improvements for Cyberia:
 
 1. Robust User-Generated Content System: Implement a comprehensive system for users to create,
    share, and monetize their own designs and content. This should include a content moderation

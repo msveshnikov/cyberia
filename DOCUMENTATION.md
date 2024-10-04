@@ -1,4 +1,4 @@
-# IsoCraft Project Documentation
+# Cyberia Project Documentation
 
 ## Table of Contents
 
@@ -15,9 +15,9 @@
 
 ## Project Overview
 
-IsoCraft is an innovative MMO (Massively Multiplayer Online) game where users can create and explore
+Cyberia is an innovative MMO (Massively Multiplayer Online) game where users can create and explore
 their own 1024x1024 tile properties on a 3D isometric infinite map. The game leverages AI-generated
-content using Stable Diffusion SDXL to create unique and diverse properties. IsoCraft is designed as
+content using Stable Diffusion SDXL to create unique and diverse properties. Cyberia is designed as
 a browser-based game, making it easily accessible without the need for downloads or installations.
 
 The game combines elements of creativity, exploration, and social interaction in a shared virtual
@@ -27,7 +27,7 @@ creativity and community building.
 
 ## Architecture
 
-IsoCraft follows a client-server architecture with a React-based frontend and an Express.js backend.
+Cyberia follows a client-server architecture with a React-based frontend and an Express.js backend.
 The application is designed to be scalable and performant, utilizing modern web technologies and
 best practices.
 
@@ -79,8 +79,8 @@ best practices.
 1. Clone the repository:
 
     ```
-    git clone https://github.com/msveshnikov/isocraft-autocode.git
-    cd isocraft
+    git clone https://github.com/msveshnikov/cyberia-autocode.git
+    cd cyberia
     ```
 
 2. Install dependencies for both frontend and backend:
@@ -97,7 +97,7 @@ best practices.
 
     ```
     STABILITY_KEY=your_stability_ai_key
-    MONGODB_URI=mongodb://localhost:27017/isocraft
+    MONGODB_URI=mongodb://localhost:27017/cyberia
     JWT_SECRET=your_jwt_secret
     ```
 
@@ -199,6 +199,6 @@ best practices.
 -   Dynamic weather and day/night cycle
 -   API for third-party integrations
 
-This documentation provides a comprehensive overview of the IsoCraft project, including its
+This documentation provides a comprehensive overview of the Cyberia project, including its
 architecture, features, and setup instructions. As the project evolves, remember to keep this
 documentation updated to reflect any changes or new features.

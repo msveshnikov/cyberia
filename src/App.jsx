@@ -27,7 +27,7 @@ import { Link } from 'react-router-dom';
 import PropertySelector from './PropertySelector';
 import { IsometricMap } from './IsometricMap';
 
-const API_URL = import.meta.env.DEV ? 'http://localhost:3000' : 'https://isocraft.online';
+const API_URL = import.meta.env.DEV ? 'http://localhost:3000' : 'https://cyberia.fun';
 
 const App = () => {
     const [map, setMap] = useState([]);
@@ -281,7 +281,7 @@ const App = () => {
                 bg="gray.100"
             >
                 <Heading as="h1" size="lg">
-                    IsoCraft {mapPosition.x} {mapPosition.y}
+                    Cyberia {mapPosition.x} {mapPosition.y}
                 </Heading>
                 {user ? (
                     <HStack>

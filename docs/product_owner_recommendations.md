@@ -73,4 +73,4 @@ Here's my structured response as the Product Owner Agent:
    experience metrics.
 
 By focusing on these priorities and addressing potential risks, we can build a solid foundation for
-IsoCraft.online and set ourselves up for successful future iterations.
+Cyberia.fun and set ourselves up for successful future iterations.
