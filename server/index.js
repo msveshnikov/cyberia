@@ -101,8 +101,13 @@ app.post('/api/logout', (req, res) => {
 
 app.get('/api/tiles', async (req, res) => {
     try {
-        const { startX, startY, size } = req.query;
-        const tiles = await Tile.getChunk(Number(startX), Number(startY), Number(size));
+        const { startX, startY, sizeX, sizeY } = req.query;
+        const tiles = await Tile.getChunk(
+            Number(startX),
+            Number(startY),
+            Number(sizeX),
+            Number(sizeY)
+        );
         res.json(tiles);
     } catch (error) {
         res.status(500).json({ message: error.message });

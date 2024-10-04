@@ -50,15 +50,15 @@ tileSchema.statics.findOrCreate = async function (x, y, owner) {
     return tile;
 };
 
-tileSchema.statics.getChunk = async function (startX, startY, size) {
+tileSchema.statics.getChunk = async function (startX, startY, sizeX, sizeY) {
     const tiles = await this.find({
-        x: { $gte: startX, $lt: startX + size },
-        y: { $gte: startY, $lt: startY + size }
+        x: { $gte: startX, $lt: startX + sizeX },
+        y: { $gte: startY, $lt: startY + sizeY }
     }).lean();
 
     const chunk = [];
-    for (let y = startY; y < startY + size; y++) {
-        for (let x = startX; x < startX + size; x++) {
+    for (let y = startY; y < startY + sizeY; y++) {
+        for (let x = startX; x < startX + sizeX; x++) {
             const tile = tiles.find((t) => t.x === x && t.y === y);
             if (tile) {
                 chunk.push(tile);

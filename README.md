@@ -23,6 +23,7 @@ https://cyberia.fun
 -   Frontend: React + Vite + Chakra UI + Router v6
 -   Backend: ExpressJS + MongoDB, ES6 modules
 -   AI Generation: Stable Diffusion SDXL
+-   Containerization: Docker
 
 ## Design Considerations
 
@@ -34,6 +35,13 @@ https://cyberia.fun
 6. Isometric rendering optimization for performance
 7. Progressive loading of map areas
 8. WebGL integration for improved graphics rendering
+9. Microservices architecture for better scalability
+10. Caching strategies for frequently accessed data
+11. Serverless functions for specific AI-related tasks
+12. Websocket implementation for real-time updates
+13. Automated testing and continuous integration
+14. Localization support for multiple languages
+15. Accessibility features for inclusive gameplay
 
 ## Planned Features
 
@@ -46,6 +54,11 @@ https://cyberia.fun
 -   User-generated content marketplace
 -   Dynamic weather and day/night cycle
 -   API for third-party integrations
+-   Virtual reality (VR) support
+-   Augmented reality (AR) mobile companion app
+-   Cross-platform account linking
+-   In-game NFT integration
+-   AI-powered NPCs and quests
 
 ## Development Roadmap
 
@@ -59,6 +72,11 @@ https://cyberia.fun
 8. Mobile responsiveness and cross-platform support
 9. Performance optimization and scalability improvements
 10. Advanced AI features for dynamic world generation
+11. Integration of VR and AR technologies
+12. Blockchain and NFT implementation
+13. Expansion of AI-driven content and gameplay elements
+14. Launch of user-generated content marketplace
+15. Development of external API and developer tools
 
 ## Getting Started
 
@@ -68,13 +86,34 @@ https://cyberia.fun
 4. Run the development server: `npm run dev` in server folder
 5. Open `http://localhost:3000` in your browser
 
+## Docker Setup
+
+1. Ensure Docker and Docker Compose are installed on your system
+2. Build and run the containers: `docker-compose up --build`
+3. Access the application at `http://localhost:3000`
+
 ## Project Structure
 
--   `index.html` & `landing.html`: Entry points for the application and landing page
+-   `index.html` & `public/landing.html`: Entry points for the application and landing page
 -   `src/`: React components and main application logic
 -   `server/`: Backend Express.js server and MongoDB integration
 -   `docs/`: Documentation and marketing materials
+-   `Dockerfile` & `docker-compose.yml`: Docker configuration files
+-   `.prettierrc`: Code formatting configuration
 
-# TODO
+## Contributing
 
--   Optimize render performance
+We welcome contributions to Cyberia! Please read our contributing guidelines before submitting pull
+requests.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Contact
+
+For support or inquiries, please contact us at support@cyberia.fun
+
+Join our community on Discord: [Cyberia Discord Server](https://discord.gg/cyberia)
+
+Follow us on Twitter: [@CyberiaGame](https://twitter.com/CyberiaGame)

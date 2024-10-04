@@ -111,7 +111,7 @@ const App = () => {
     const fetchMapChunk = async (startX, startY) => {
         try {
             const response = await axios.get(`${API_URL}/api/tiles`, {
-                params: { startX: startX - 5, startY: startY - 5, size: 10 },
+                params: { startX: startX - 2, startY: startY - 5, sizeX: 5, sizeY: 9 },
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
             });
             setMap((prevMap) => {
@@ -252,7 +252,7 @@ const App = () => {
                 bg="gray.100"
             >
                 <Heading as="h1" size="lg">
-                    Cyberia
+                    Cyberia {mapPosition.x} {mapPosition.y}
                 </Heading>
                 {user ? (
                     <HStack>

@@ -119,13 +119,14 @@ export function IsometricMap({ mapRef, map, mapPosition, setMapPosition }) {
                 const x = (tile.x - mapPosition.x - 1) * 350 + centerX + 200;
                 const y = (tile.y - mapPosition.y - 3) * (176 / 2) + centerY;
                 const isOddRow = tile.y % 2 !== 0;
+                const isOddPosition = mapPosition.y % 2 !== 0;
 
                 return (
                     <Box
                         key={`${tile.x}-${tile.y}`}
                         className="tile"
                         position="absolute"
-                        left={`${x + (isOddRow ? 175 : 0)}px`}
+                        left={`${x + (isOddRow ? 175 : 0) - (isOddPosition ? 175 : 0)}px`}
                         top={`${y + (isOddRow ? 175 : 0)}px`}
                         width="250px"
                         height="250px"
