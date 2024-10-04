@@ -250,7 +250,7 @@ io.on('connection', (socket) => {
 app.get('/content/:filename', (req, res) => {
     const { filename } = req.params;
     res.setHeader('Cache-Control', 'public, max-age=2592000');
-    res.sendFile(join(__dirname, './content', filename));
+    res.sendFile(join(__dirname, '../content', filename));
 });
 
 app.get('*', (req, res) => {

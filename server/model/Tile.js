@@ -1,7 +1,14 @@
 import mongoose from 'mongoose';
 import sharp from 'sharp';
-import path from 'path';
+import dotenv from 'dotenv';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
 import { promises as fs } from 'fs';
+
+dotenv.config();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 export const landscapeTypes = [
     'grass',
@@ -112,8 +119,9 @@ tileSchema.statics.generateAIContent = async function (
     const jpgBuffer = await sharp(imageBuffer).jpeg({ quality: 80 }).toBuffer();
 
     const fileName = `${x}_${y}.jpg`;
-    const dirPath = path.join(process.cwd(), 'content');
-    const filePath = path.join(dirPath, fileName);
+    
+    const dirPath = join(__dirname, '../../content')
+    const filePath = join(dirPath, fileName);
 
     // Ensure the directory exists
     await fs.mkdir(dirPath, { recursive: true });
