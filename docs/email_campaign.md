@@ -10,8 +10,8 @@ markdown file:
 
 Dear [Name],
 
-We're excited to introduce you to Cyberia.fun, a groundbreaking MMO game where you can create
-and explore an infinite 3D isometric world powered by AI!
+We're excited to introduce you to Cyberia.fun, a groundbreaking MMO game where you can create and
+explore an infinite 3D isometric world powered by AI!
 
 Key features:
 
@@ -20,8 +20,8 @@ Key features:
 -   Play directly in your browser - no downloads required
 -   Interact with other players in real-time
 
-Cyberia.fun combines cutting-edge AI technology with classic isometric gameplay to offer a
-unique and immersive experience. Join us today and start shaping your corner of this ever-expanding
+Cyberia.fun combines cutting-edge AI technology with classic isometric gameplay to offer a unique
+and immersive experience. Join us today and start shaping your corner of this ever-expanding
 universe!
 
 Ready to dive in? Visit [Cyberia.fun](https://cyberia.fun) to get started!
@@ -34,8 +34,8 @@ Happy crafting, The Cyberia Team
 
 Hello [Name],
 
-We hope you're as excited about Cyberia.fun as we are! Today, we want to spotlight one of our
-most innovative features: AI-generated property creation.
+We hope you're as excited about Cyberia.fun as we are! Today, we want to spotlight one of our most
+innovative features: AI-generated property creation.
 
 With Cyberia.fun, you can:
 
@@ -58,8 +58,8 @@ Craft on, The Cyberia Team
 
 Dear [Name],
 
-The Cyberia.fun community is growing fast, and we don't want you to miss out! For a limited
-time, we're offering early adopters exclusive benefits:
+The Cyberia.fun community is growing fast, and we don't want you to miss out! For a limited time,
+we're offering early adopters exclusive benefits:
 
 🌟 VIP Status: Get a special badge and early access to new features 🎨 Bonus AI Credits: Extra
 AI-generation attempts for your properties 🏆 Founder's Trophy: A unique in-game item to showcase
@@ -75,8 +75,8 @@ Here's how to get started:
 3. Follow the tutorial to generate and place your first AI property
 4. Explore the world and connect with other players!
 
-Don't miss this chance to be part of something revolutionary. Join Cyberia.fun today and help
-shape the future of AI-powered gaming!
+Don't miss this chance to be part of something revolutionary. Join Cyberia.fun today and help shape
+the future of AI-powered gaming!
 
 See you in the game, The Cyberia Team
 

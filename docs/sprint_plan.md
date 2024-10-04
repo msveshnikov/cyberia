@@ -76,9 +76,9 @@ Total Story Points: 39
 ```
 
 This sprint plan focuses on developing the core game engine and integrating the AI-powered property
-generation, which are crucial for creating a functional prototype of Cyberia.fun. The selected
-tasks cover the highest priority items from the backlog, with a balance between frontend, backend,
-and AI integration work.
+generation, which are crucial for creating a functional prototype of Cyberia.fun. The selected tasks
+cover the highest priority items from the backlog, with a balance between frontend, backend, and AI
+integration work.
 
 The estimated effort uses story points, with a total of 39 points for the sprint. This is a
 moderately ambitious sprint, aiming to establish the foundational elements of the game.

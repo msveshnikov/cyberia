@@ -1,5 +1,5 @@
-Here's an analysis of potential competitors for Cyberia.fun, structured in a format suitable for
-a markdown file:
+Here's an analysis of potential competitors for Cyberia.fun, structured in a format suitable for a
+markdown file:
 
 # Competitor Analysis for Cyberia.fun
 
@@ -26,8 +26,8 @@ a markdown file:
 
 ### Comparison to Cyberia.fun:
 
-Cyberia offers easier accessibility through browser-based play and AI-generated content, which
-could appeal to casual players looking for a quick, creative experience.
+Cyberia offers easier accessibility through browser-based play and AI-generated content, which could
+appeal to casual players looking for a quick, creative experience.
 
 ## 2. Townscaper
 

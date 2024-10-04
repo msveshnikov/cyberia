@@ -77,4 +77,4 @@ https://cyberia.fun
 
 # TODO
 
--   Optimize perf and render only tiles in the viewport, skip otside
+-   Optimize perf and render only tiles in the viewport, skip outside

@@ -281,7 +281,7 @@ const App = () => {
                 bg="gray.100"
             >
                 <Heading as="h1" size="lg">
-                    Cyberia 
+                    Cyberia
                     {/* {mapPosition.x} {mapPosition.y} */}
                 </Heading>
                 {user ? (

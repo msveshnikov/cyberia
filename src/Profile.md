@@ -3,8 +3,8 @@
 ## Overview
 
 The `Profile` component is a React component that displays a user's profile information and owned
-tiles in the Cyberia application. It fetches user data and owned tiles from the server, and
-presents them in a visually appealing layout using Chakra UI components.
+tiles in the Cyberia application. It fetches user data and owned tiles from the server, and presents
+them in a visually appealing layout using Chakra UI components.
 
 This component is part of the client-side application, located in the `src` directory. It interacts
 with the server API to retrieve user-specific data.
