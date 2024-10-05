@@ -117,3 +117,7 @@ For support or inquiries, please contact us at support@cyberia.fun
 Join our community on Discord: [Cyberia Discord Server](https://discord.gg/Cyberiagame)
 
 Follow us on Twitter: [@CyberiaGame](https://twitter.com/CyberiaGame)
+
+# TODO
+
+-   make more dev detailed roadmap with 6 stages
