@@ -88,11 +88,12 @@ export function IsometricMap({ mapRef, map, mapPosition, setMapPosition }) {
 
     const centerX = windowSize.width / 2;
     const centerY = windowSize.height / 2;
+    const shift = windowSize.width < 600 ? 200 : -200;
 
     return (
         <Box className="isometric-map" ref={mapRef} position="relative" width="100%" height="100%">
             {map.map((tile) => {
-                const x = (tile.x - mapPosition.x - 1) * 350 + centerX + 200;
+                const x = (tile.x - mapPosition.x - 1) * 350 + centerX + shift;
                 const y = ((tile.y - mapPosition.y - 3) * 175) / 2 + centerY;
                 const isOddRow = tile.y % 2 !== 0;
                 const isOddPosition = mapPosition.y % 2 !== 0;
@@ -131,7 +132,7 @@ export function IsometricMap({ mapRef, map, mapPosition, setMapPosition }) {
             <Box
                 className="tile"
                 position="absolute"
-                left={`${-175 * 2 + centerX + 200}px`}
+                left={`${-175 * 2 + centerX + shift}px`}
                 top={`${-3 * (175 / 2) + centerY}px`}
                 width="250px"
                 height="250px"

@@ -24,7 +24,8 @@ import {
     Grid,
     GridItem,
     Icon,
-    Tooltip
+    Tooltip,
+    useMediaQuery
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { FaSun, FaMoon, FaVolumeMute, FaVolumeUp } from 'react-icons/fa';
@@ -45,6 +46,7 @@ const App = () => {
     const [isMuted, setIsMuted] = useState(false);
     const mapRef = useRef(null);
     const toast = useToast();
+    const [isMobile] = useMediaQuery('(max-width: 768px)');
 
     const { isOpen: isLoginOpen, onOpen: openLogin, onClose: closeLogin } = useDisclosure();
     const {
@@ -115,7 +117,7 @@ const App = () => {
     const fetchMapChunk = async (startX, startY) => {
         try {
             const response = await axios.get(`${API_URL}/api/tiles`, {
-                params: { startX: startX - 3, startY: startY - 4, sizeX: 6, sizeY: 9 },
+                params: { startX: startX - 2, startY: startY - 4, sizeX: 6, sizeY: 9 },
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
             });
             setMap(response?.data);
@@ -253,48 +255,58 @@ const App = () => {
                 align="center"
                 justify="space-between"
                 wrap="wrap"
-                padding="1.5rem"
+                padding={isMobile ? '1rem' : '1.5rem'}
                 bg={isDarkMode ? 'gray.700' : 'gray.200'}
             >
-                <Heading as="h1" size="lg">
+                <Heading as="h1" size={isMobile ? 'md' : 'lg'}>
                     Cyberia
                 </Heading>
-                <HStack>
+                <HStack spacing={isMobile ? 2 : 4}>
                     <Tooltip label={isDarkMode ? 'Light Mode' : 'Dark Mode'}>
-                        <Button onClick={toggleDarkMode} variant="ghost">
+                        <Button
+                            onClick={toggleDarkMode}
+                            variant="ghost"
+                            size={isMobile ? 'sm' : 'md'}
+                        >
                             <Icon as={isDarkMode ? FaSun : FaMoon} />
                         </Button>
                     </Tooltip>
                     <Tooltip label={isMuted ? 'Unmute' : 'Mute'}>
-                        <Button onClick={toggleMute} variant="ghost">
+                        <Button onClick={toggleMute} variant="ghost" size={isMobile ? 'sm' : 'md'}>
                             <Icon as={isMuted ? FaVolumeMute : FaVolumeUp} />
                         </Button>
                     </Tooltip>
                     {user ? (
                         <>
-                            <Text>{user.email}</Text>
+                            {!isMobile && <Text>{user.email}</Text>}
                             <Link to="/profile">
-                                <Button>Profile</Button>
+                                <Button size={isMobile ? 'sm' : 'md'}>Profile</Button>
                             </Link>
-                            <Button onClick={handleLogout}>Logout</Button>
+                            <Button onClick={handleLogout} size={isMobile ? 'sm' : 'md'}>
+                                Logout
+                            </Button>
                         </>
                     ) : (
                         <>
-                            <Button onClick={openLogin}>Login</Button>
-                            <Button onClick={openRegister}>Register</Button>
+                            <Button onClick={openLogin} size={isMobile ? 'sm' : 'md'}>
+                                Login
+                            </Button>
+                            <Button onClick={openRegister} size={isMobile ? 'sm' : 'md'}>
+                                Register
+                            </Button>
                         </>
                     )}
                 </HStack>
             </Flex>
 
             <Container maxW="container.xl" py={4}>
-                <Grid templateColumns="repeat(3, 1fr)" gap={4}>
-                    <GridItem colSpan={2}>
+                <Grid templateColumns={isMobile ? '1fr' : 'repeat(3, 1fr)'} gap={4}>
+                    <GridItem colSpan={isMobile ? 1 : 2}>
                         <Box
                             className="map-container"
                             position="relative"
                             width="100%"
-                            height="69vh"
+                            height={isMobile ? '50vh' : '69vh'}
                             overflow="hidden"
                             perspective="1000px"
                             borderRadius="md"
@@ -309,10 +321,30 @@ const App = () => {
                             />
                         </Box>
                         <HStack justify="center" mt={4}>
-                            <Button onClick={() => handleMapScroll('up')}>Up</Button>
-                            <Button onClick={() => handleMapScroll('down')}>Down</Button>
-                            <Button onClick={() => handleMapScroll('left')}>Left</Button>
-                            <Button onClick={() => handleMapScroll('right')}>Right</Button>
+                            <Button
+                                onClick={() => handleMapScroll('up')}
+                                size={isMobile ? 'sm' : 'md'}
+                            >
+                                Up
+                            </Button>
+                            <Button
+                                onClick={() => handleMapScroll('down')}
+                                size={isMobile ? 'sm' : 'md'}
+                            >
+                                Down
+                            </Button>
+                            <Button
+                                onClick={() => handleMapScroll('left')}
+                                size={isMobile ? 'sm' : 'md'}
+                            >
+                                Left
+                            </Button>
+                            <Button
+                                onClick={() => handleMapScroll('right')}
+                                size={isMobile ? 'sm' : 'md'}
+                            >
+                                Right
+                            </Button>
                         </HStack>
                     </GridItem>
                     <GridItem>
@@ -323,7 +355,7 @@ const App = () => {
                                 loadingText="Generating..."
                                 isDisabled={!user}
                                 colorScheme="teal"
-                                size="lg"
+                                size={isMobile ? 'md' : 'lg'}
                             >
                                 Generate Property
                             </Button>
