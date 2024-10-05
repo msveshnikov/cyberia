@@ -34,7 +34,6 @@ https://cyberia.fun
 5. Scalable backend architecture for growing user base
 6. Isometric rendering optimization for performance
 7. Progressive loading of map areas
-8. WebGL integration for improved graphics rendering
 9. Microservices architecture for better scalability
 10. Caching strategies for frequently accessed data
 11. Serverless functions for specific AI-related tasks

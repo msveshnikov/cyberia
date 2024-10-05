@@ -185,7 +185,6 @@ best practices.
 5. Scalable backend architecture for growing user base
 6. Isometric rendering optimization for performance
 7. Progressive loading of map areas
-8. WebGL integration for improved graphics rendering
 
 ## Planned Features
 

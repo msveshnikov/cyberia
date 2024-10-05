@@ -20,7 +20,6 @@ business insights:
 -   Cross-platform accessibility through browser-based gameplay.
 -   Potential for a strong community-driven ecosystem with user-generated content and collaborative
     features.
--   Integration of cutting-edge technologies like WebGL and AI-generated content.
 
 3. Risks and challenges:
 
