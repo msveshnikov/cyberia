@@ -111,21 +111,10 @@ const App = () => {
     const fetchMapChunk = async (startX, startY) => {
         try {
             const response = await axios.get(`${API_URL}/api/tiles`, {
-                params: { startX: startX - 2, startY: startY - 5, sizeX: 5, sizeY: 9 },
+                params: { startX: startX - 3, startY: startY - 4, sizeX: 6, sizeY: 9 },
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
             });
-            setMap((prevMap) => {
-                const newMap = [...prevMap];
-                response?.data?.forEach((tile) => {
-                    const index = newMap.findIndex((t) => t.x === tile.x && t.y === tile.y);
-                    if (index !== -1) {
-                        newMap[index] = tile;
-                    } else {
-                        newMap.push(tile);
-                    }
-                });
-                return newMap;
-            });
+            setMap(response?.data);
         } catch (error) {
             console.error('Error fetching map chunk:', error);
         }
@@ -252,7 +241,8 @@ const App = () => {
                 bg="gray.100"
             >
                 <Heading as="h1" size="lg">
-                    Cyberia {mapPosition.x} {mapPosition.y}
+                    Cyberia
+                    {/* {mapPosition.x} {mapPosition.y} */}
                 </Heading>
                 {user ? (
                     <HStack>

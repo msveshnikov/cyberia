@@ -11,6 +11,7 @@ import { createServer } from 'http';
 import { Server } from 'socket.io';
 import jwt from 'jsonwebtoken';
 import rateLimit from 'express-rate-limit';
+import compression from 'compression';
 
 dotenv.config();
 
@@ -37,7 +38,8 @@ const limiter = rateLimit({
 app.use(limiter);
 app.use(cors());
 app.use(express.json());
-app.use(express.static(join(__dirname, '../dist')));
+app.use(compression());
+app.use(express.static(join(__dirname, '../dist'), { maxAge: '1y' }));
 app.use(morgan('dev'));
 
 mongoose.connect(process.env.MONGODB_URI, {});

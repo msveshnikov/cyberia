@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useMemo } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Box, Image } from '@chakra-ui/react';
 
 const API_URL = import.meta.env.DEV ? 'http://localhost:3000' : 'https://cyberia.fun';
@@ -89,35 +89,11 @@ export function IsometricMap({ mapRef, map, mapPosition, setMapPosition }) {
     const centerX = windowSize.width / 2;
     const centerY = windowSize.height / 2;
 
-    const visibleTiles = useMemo(() => {
-        const tilesInViewport = [];
-        const viewportWidth = windowSize.width;
-        const viewportHeight = windowSize.height;
-        const tileWidth = 350;
-        const tileHeight = 176;
-
-        const startX = Math.floor(mapPosition.x - viewportWidth / tileWidth / 2) - 1;
-        const startY = Math.floor(mapPosition.y - viewportHeight / tileHeight / 2) - 3;
-        const endX = Math.ceil(mapPosition.x + viewportWidth / tileWidth / 2) + 1;
-        const endY = Math.ceil(mapPosition.y + viewportHeight / tileHeight / 2) + 1;
-
-        for (let x = startX; x <= endX; x++) {
-            for (let y = startY; y <= endY; y++) {
-                const tile = map.find((t) => t.x === x && t.y === y);
-                if (tile) {
-                    tilesInViewport.push(tile);
-                }
-            }
-        }
-
-        return tilesInViewport;
-    }, [map, mapPosition, windowSize]);
-
     return (
         <Box className="isometric-map" ref={mapRef} position="relative" width="100%" height="100%">
-            {visibleTiles.map((tile) => {
+            {map.map((tile) => {
                 const x = (tile.x - mapPosition.x - 1) * 350 + centerX + 200;
-                const y = (tile.y - mapPosition.y - 3) * (176 / 2) + centerY;
+                const y = ((tile.y - mapPosition.y - 3) * 175) / 2 + centerY;
                 const isOddRow = tile.y % 2 !== 0;
                 const isOddPosition = mapPosition.y % 2 !== 0;
 
@@ -127,7 +103,7 @@ export function IsometricMap({ mapRef, map, mapPosition, setMapPosition }) {
                         className="tile"
                         position="absolute"
                         left={`${x + (isOddRow ? 175 : 0) - (isOddPosition ? 175 : 0)}px`}
-                        top={`${y + (isOddRow ? 175 : 0)}px`}
+                        top={`${y}px`}
                         width="250px"
                         height="250px"
                         transform="rotateX(60deg) rotateZ(-45deg)"
@@ -155,8 +131,8 @@ export function IsometricMap({ mapRef, map, mapPosition, setMapPosition }) {
             <Box
                 className="tile"
                 position="absolute"
-                left={`${-150 + centerX}px`}
-                top={`${-3 * (176 / 2) + centerY}px`}
+                left={`${-175 * 2 + centerX + 200}px`}
+                top={`${-3 * (175 / 2) + centerY}px`}
                 width="250px"
                 height="250px"
                 border="8px solid yellow"

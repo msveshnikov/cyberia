@@ -11,15 +11,15 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 export const landscapeTypes = [
-    'grass',
+    'lava',
     'stones',
-    'ground',
     'sand',
-    'snow',
+    'grass',
+    'ground',
     'mud',
     'water',
-    'lava',
     'moss',
+    'snow',
     'ice'
 ];
 
@@ -191,7 +191,7 @@ tileSchema.statics.takeFractalLandscapeTile = async function (x, y) {
     };
 
     const p = new Array(512);
-    for (let i = 0; i < 256; i++) p[i] = p[i + 256] = Math.floor(0.8 * 256);
+    for (let i = 0; i < 256; i++) p[i] = p[i + 256] = Math.floor(0.3 * 256);
 
     let value = 0;
     let amplitude = 1;
