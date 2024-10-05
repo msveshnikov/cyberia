@@ -139,6 +139,15 @@ export function IsometricMap({ mapRef, map, mapPosition, setMapPosition }) {
                 border="8px solid yellow"
                 transform="rotateX(60deg) rotateZ(-45deg)"
                 pointerEvents="none"
+                _before={{
+                    content: '""',
+                    position: 'absolute',
+                    top: '-1px',
+                    left: '-1px',
+                    right: '-1px',
+                    bottom: '-1px',
+                    background: 'rgba(255, 255, 0, 0.2)'
+                }}
             />
         </Box>
     );
