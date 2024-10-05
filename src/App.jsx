@@ -20,9 +20,14 @@ import {
     Heading,
     FormControl,
     FormLabel,
-    Container
+    Container,
+    Grid,
+    GridItem,
+    Icon,
+    Tooltip
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
+import { FaSun, FaMoon, FaVolumeMute, FaVolumeUp } from 'react-icons/fa';
 import PropertySelector from './PropertySelector';
 import { IsometricMap } from './IsometricMap';
 
@@ -36,6 +41,8 @@ const App = () => {
     const [socket, setSocket] = useState(null);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [isDarkMode, setIsDarkMode] = useState(false);
+    const [isMuted, setIsMuted] = useState(false);
     const mapRef = useRef(null);
     const toast = useToast();
 
@@ -59,11 +66,8 @@ const App = () => {
 
     useEffect(() => {
         checkUserAuth();
-    }, []);
-
-    useEffect(() => {
         fetchMapChunk(mapPosition.x, mapPosition.y);
-    }, [mapPosition]);
+    }, [mapPosition.x, mapPosition.y]);
 
     useEffect(() => {
         if (socket) {
@@ -206,6 +210,14 @@ const App = () => {
         }
     };
 
+    const toggleDarkMode = () => {
+        setIsDarkMode(!isDarkMode);
+    };
+
+    const toggleMute = () => {
+        setIsMuted(!isMuted);
+    };
+
     useEffect(() => {
         const handleKeyDown = (e) => {
             switch (e.key) {
@@ -231,38 +243,53 @@ const App = () => {
     }, [handleMapScroll]);
 
     return (
-        <Box minHeight="100vh">
+        <Box
+            minHeight="100vh"
+            bg={isDarkMode ? 'gray.800' : 'gray.100'}
+            color={isDarkMode ? 'white' : 'black'}
+        >
             <Flex
                 as="header"
                 align="center"
                 justify="space-between"
                 wrap="wrap"
                 padding="1.5rem"
-                bg="gray.100"
+                bg={isDarkMode ? 'gray.700' : 'gray.200'}
             >
                 <Heading as="h1" size="lg">
                     Cyberia
-                    {/* {mapPosition.x} {mapPosition.y} */}
                 </Heading>
-                {user ? (
-                    <HStack>
-                        <Text>{user.email}</Text>
-                        <Link to="/profile">
-                            <Button>Profile</Button>
-                        </Link>
-                        <Button onClick={handleLogout}>Logout</Button>
-                    </HStack>
-                ) : (
-                    <HStack>
-                        <Button onClick={openLogin}>Login</Button>
-                        <Button onClick={openRegister}>Register</Button>
-                    </HStack>
-                )}
+                <HStack>
+                    <Tooltip label={isDarkMode ? 'Light Mode' : 'Dark Mode'}>
+                        <Button onClick={toggleDarkMode} variant="ghost">
+                            <Icon as={isDarkMode ? FaSun : FaMoon} />
+                        </Button>
+                    </Tooltip>
+                    <Tooltip label={isMuted ? 'Unmute' : 'Mute'}>
+                        <Button onClick={toggleMute} variant="ghost">
+                            <Icon as={isMuted ? FaVolumeMute : FaVolumeUp} />
+                        </Button>
+                    </Tooltip>
+                    {user ? (
+                        <>
+                            <Text>{user.email}</Text>
+                            <Link to="/profile">
+                                <Button>Profile</Button>
+                            </Link>
+                            <Button onClick={handleLogout}>Logout</Button>
+                        </>
+                    ) : (
+                        <>
+                            <Button onClick={openLogin}>Login</Button>
+                            <Button onClick={openRegister}>Register</Button>
+                        </>
+                    )}
+                </HStack>
             </Flex>
 
             <Container maxW="container.xl" py={4}>
-                <VStack spacing={2} align="stretch">
-                    <Box>
+                <Grid templateColumns="repeat(3, 1fr)" gap={4}>
+                    <GridItem colSpan={2}>
                         <Box
                             className="map-container"
                             position="relative"
@@ -270,12 +297,15 @@ const App = () => {
                             height="69vh"
                             overflow="hidden"
                             perspective="1000px"
+                            borderRadius="md"
+                            boxShadow="xl"
                         >
                             <IsometricMap
                                 mapRef={mapRef}
                                 map={map}
                                 mapPosition={mapPosition}
                                 setMapPosition={setMapPosition}
+                                isDarkMode={isDarkMode}
                             />
                         </Box>
                         <HStack justify="center" mt={4}>
@@ -284,16 +314,37 @@ const App = () => {
                             <Button onClick={() => handleMapScroll('left')}>Left</Button>
                             <Button onClick={() => handleMapScroll('right')}>Right</Button>
                         </HStack>
-                    </Box>
-                    <Button
-                        onClick={generateProperty}
-                        isLoading={isGenerating}
-                        loadingText="Generating..."
-                        isDisabled={!user}
-                    >
-                        Generate Property
-                    </Button>
-                </VStack>
+                    </GridItem>
+                    <GridItem>
+                        <VStack spacing={4} align="stretch">
+                            <Button
+                                onClick={generateProperty}
+                                isLoading={isGenerating}
+                                loadingText="Generating..."
+                                isDisabled={!user}
+                                colorScheme="teal"
+                                size="lg"
+                            >
+                                Generate Property
+                            </Button>
+                            <Box borderWidth={1} borderRadius="md" p={4}>
+                                <Heading size="md" mb={2}>
+                                    Current Position
+                                </Heading>
+                                <Text>
+                                    X: {mapPosition.x}, Y: {mapPosition.y}
+                                </Text>
+                            </Box>
+                            <Box borderWidth={1} borderRadius="md" p={4}>
+                                <Heading size="md" mb={2}>
+                                    Game Stats
+                                </Heading>
+                                <Text>Properties Owned: {user ? user.properties?.length : 0}</Text>
+                                <Text>Total Players: {/* Add real-time player count */}</Text>
+                            </Box>
+                        </VStack>
+                    </GridItem>
+                </Grid>
             </Container>
 
             <Modal isOpen={isLoginOpen} onClose={closeLogin}>
@@ -319,7 +370,7 @@ const App = () => {
                                     onChange={(e) => setPassword(e.target.value)}
                                 />
                             </FormControl>
-                            <Button onClick={handleLogin} width="100%">
+                            <Button onClick={handleLogin} width="100%" colorScheme="blue">
                                 Login
                             </Button>
                         </VStack>
@@ -350,7 +401,7 @@ const App = () => {
                                     onChange={(e) => setPassword(e.target.value)}
                                 />
                             </FormControl>
-                            <Button onClick={handleRegister} width="100%">
+                            <Button onClick={handleRegister} width="100%" colorScheme="green">
                                 Register
                             </Button>
                         </VStack>

@@ -114,6 +114,6 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 For support or inquiries, please contact us at support@cyberia.fun
 
-Join our community on Discord: [Cyberia Discord Server](https://discord.gg/cyberia)
+Join our community on Discord: [Cyberia Discord Server](https://discord.gg/Cyberiagame)
 
 Follow us on Twitter: [@CyberiaGame](https://twitter.com/CyberiaGame)

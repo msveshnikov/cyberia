@@ -8,7 +8,8 @@
         "build": "vite build",
         "lint": "eslint .",
         "format": "prettier --write .",
-        "autocode": "npx autocode-ai"
+        "autocode": "npx autocode-ai",
+        "copy": "copy.cmd"
     },
     "dependencies": {
         "@chakra-ui/react": "^2.9.4",
@@ -17,6 +18,7 @@
         "axios": "^1.7.7",
         "react": "^18.3.1",
         "react-dom": "^18.3.1",
+        "react-icons": "^5.3.0",
         "react-router-dom": "^6.26.2",
         "socket.io-client": "^4.8.0"
     },
