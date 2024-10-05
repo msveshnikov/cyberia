@@ -26,7 +26,8 @@ import {
     useDisclosure,
     Avatar,
     HStack,
-    Progress
+    Progress,
+    useBreakpointValue
 } from '@chakra-ui/react';
 
 const API_URL = import.meta.env.DEV ? 'http://localhost:3000' : 'https://cyberia.fun';
@@ -38,6 +39,8 @@ const Profile = () => {
     const [selectedTile, setSelectedTile] = useState(null);
     const { isOpen, onOpen, onClose } = useDisclosure();
     const toast = useToast();
+
+    const columns = useBreakpointValue({ base: 1, sm: 2, md: 3, lg: 4 });
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -79,7 +82,6 @@ const Profile = () => {
     };
 
     const handleEditTile = () => {
-        // Implement tile editing functionality
         toast({
             title: 'Edit Tile',
             description: 'Tile editing functionality not implemented yet.',
@@ -107,13 +109,17 @@ const Profile = () => {
     }
 
     return (
-        <Container maxW="container.xl" py={10}>
-            <VStack spacing={8} align="stretch">
-                <Flex alignItems="center" justifyContent="space-between">
-                    <HStack>
+        <Container maxW="container.xl" py={5}>
+            <VStack spacing={6} align="stretch">
+                <Flex
+                    direction={{ base: 'column', md: 'row' }}
+                    alignItems="center"
+                    justifyContent="space-between"
+                >
+                    <HStack mb={{ base: 4, md: 0 }}>
                         <Avatar size="xl" name={user.email} src={user.profilePicture} />
                         <VStack align="start" spacing={0}>
-                            <Heading as="h1" size="2xl">
+                            <Heading as="h1" size="xl">
                                 {user.email}
                             </Heading>
                             <Badge colorScheme={user.premium ? 'purple' : 'gray'}>
@@ -121,34 +127,38 @@ const Profile = () => {
                             </Badge>
                         </VStack>
                     </HStack>
-                    <Button colorScheme="blue">Edit Profile</Button>
+                    <Button colorScheme="blue" size="sm">
+                        Edit Profile
+                    </Button>
                 </Flex>
-                <StatGroup>
-                    <Stat>
+                <StatGroup flexWrap="wrap" justifyContent="space-between">
+                    <Stat flexBasis={{ base: '50%', md: '25%' }} textAlign="center" mb={4}>
                         <StatLabel>Joined</StatLabel>
-                        <StatNumber>{new Date(user.createdAt).toLocaleDateString()}</StatNumber>
+                        <StatNumber fontSize="sm">
+                            {new Date(user.createdAt).toLocaleDateString()}
+                        </StatNumber>
                     </Stat>
-                    <Stat>
+                    <Stat flexBasis={{ base: '50%', md: '25%' }} textAlign="center" mb={4}>
                         <StatLabel>Last Login</StatLabel>
-                        <StatNumber>
+                        <StatNumber fontSize="sm">
                             {user.lastLogin ? new Date(user.lastLogin).toLocaleString() : 'N/A'}
                         </StatNumber>
                     </Stat>
-                    <Stat>
+                    <Stat flexBasis={{ base: '50%', md: '25%' }} textAlign="center" mb={4}>
                         <StatLabel>Balance</StatLabel>
-                        <StatNumber>{user.balance} coins</StatNumber>
+                        <StatNumber fontSize="sm">{user.balance} coins</StatNumber>
                     </Stat>
-                    <Stat>
+                    <Stat flexBasis={{ base: '50%', md: '25%' }} textAlign="center" mb={4}>
                         <StatLabel>Owned Tiles</StatLabel>
-                        <StatNumber>{ownedTiles.length}</StatNumber>
+                        <StatNumber fontSize="sm">{ownedTiles.length}</StatNumber>
                     </Stat>
                 </StatGroup>
                 <Box>
-                    <Heading as="h2" size="lg" mb={2}>
+                    <Heading as="h2" size="md" mb={2}>
                         Achievements
                     </Heading>
                     <Progress value={(user.achievements.length / 3) * 100} mb={2} />
-                    <SimpleGrid columns={3} spacing={4}>
+                    <SimpleGrid columns={3} spacing={2}>
                         {['first_property', 'ten_properties', 'customization_master'].map(
                             (achievement) => (
                                 <Badge
@@ -156,8 +166,10 @@ const Profile = () => {
                                     colorScheme={
                                         user.achievements.includes(achievement) ? 'green' : 'gray'
                                     }
-                                    p={2}
+                                    p={1}
                                     borderRadius="md"
+                                    fontSize="xs"
+                                    textAlign="center"
                                 >
                                     {achievement.replace(/_/g, ' ')}
                                 </Badge>
@@ -166,13 +178,13 @@ const Profile = () => {
                     </SimpleGrid>
                 </Box>
                 <Box>
-                    <Heading as="h2" size="lg" mb={4}>
+                    <Heading as="h2" size="md" mb={4}>
                         Owned Tiles
                     </Heading>
                     {ownedTiles.length === 0 ? (
-                        <Text>You dont own any tiles yet.</Text>
+                        <Text>You don't own any tiles yet.</Text>
                     ) : (
-                        <SimpleGrid columns={[1, 2, 3, 4]} spacing={6}>
+                        <SimpleGrid columns={columns} spacing={4}>
                             {ownedTiles.map((tile) => (
                                 <Box
                                     key={`${tile.x}-${tile.y}`}
@@ -185,14 +197,18 @@ const Profile = () => {
                                     onClick={() => handleTileClick(tile)}
                                 >
                                     <Image src={tile.content} alt={`Tile ${tile.x},${tile.y}`} />
-                                    <Box p={3}>
+                                    <Box p={2}>
                                         <Flex justifyContent="space-between" alignItems="center">
-                                            <Text fontWeight="bold">
+                                            <Text fontWeight="bold" fontSize="sm">
                                                 ({tile.x}, {tile.y})
                                             </Text>
-                                            <Badge colorScheme="green">{tile.propertyType}</Badge>
+                                            <Badge colorScheme="green" fontSize="xs">
+                                                {tile.propertyType}
+                                            </Badge>
                                         </Flex>
-                                        <Text mt={2}>Style: {tile.style}</Text>
+                                        <Text mt={1} fontSize="xs">
+                                            Style: {tile.style}
+                                        </Text>
                                     </Box>
                                 </Box>
                             ))}
@@ -201,7 +217,7 @@ const Profile = () => {
                 </Box>
             </VStack>
 
-            <Modal isOpen={isOpen} onClose={onClose} size="xl">
+            <Modal isOpen={isOpen} onClose={onClose} size="md">
                 <ModalOverlay />
                 <ModalContent>
                     <ModalHeader>Tile Details</ModalHeader>
