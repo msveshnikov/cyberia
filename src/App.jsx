@@ -49,15 +49,23 @@ const App = () => {
     const [password, setPassword] = useState('');
     const [isDarkMode, setIsDarkMode] = useState(false);
     const [isMuted, setIsMuted] = useState(false);
-    const [goToX, setGoToX] = useState(0);
-    const [goToY, setGoToY] = useState(0);
+    const [goToX, setGoToX] = useState('0');
+    const [goToY, setGoToY] = useState('0');
     const mapRef = useRef(null);
     const toast = useToast();
     const [isMobile] = useMediaQuery('(max-width: 768px)');
 
     const { isOpen: isLoginOpen, onOpen: openLogin, onClose: closeLogin } = useDisclosure();
-    const { isOpen: isRegisterOpen, onOpen: openRegister, onClose: closeRegister } = useDisclosure();
-    const { isOpen: isPropertySelectorOpen, onOpen: openPropertySelector, onClose: closePropertySelector } = useDisclosure();
+    const {
+        isOpen: isRegisterOpen,
+        onOpen: openRegister,
+        onClose: closeRegister
+    } = useDisclosure();
+    const {
+        isOpen: isPropertySelectorOpen,
+        onOpen: openPropertySelector,
+        onClose: closePropertySelector
+    } = useDisclosure();
     const { isOpen: isGoToOpen, onOpen: openGoTo, onClose: closeGoTo } = useDisclosure();
 
     useEffect(() => {
@@ -221,7 +229,7 @@ const App = () => {
     };
 
     const handleGoTo = () => {
-        setMapPosition({ x: goToX, y: goToY });
+        setMapPosition({ x: parseInt(goToX), y: parseInt(goToY) });
         closeGoTo();
     };
 
@@ -464,7 +472,7 @@ const App = () => {
                         <VStack spacing={4}>
                             <FormControl>
                                 <FormLabel>X Coordinate</FormLabel>
-                                <NumberInput value={goToX} onChange={(value) => setGoToX(parseInt(value))}>
+                                <NumberInput value={goToX} onChange={(value) => setGoToX(value)}>
                                     <NumberInputField />
                                     <NumberInputStepper>
                                         <NumberIncrementStepper />
@@ -474,7 +482,7 @@ const App = () => {
                             </FormControl>
                             <FormControl>
                                 <FormLabel>Y Coordinate</FormLabel>
-                                <NumberInput value={goToY} onChange={(value) => setGoToY(parseInt(value))}>
+                                <NumberInput value={goToY} onChange={(value) => setGoToY(value)}>
                                     <NumberInputField />
                                     <NumberInputStepper>
                                         <NumberIncrementStepper />

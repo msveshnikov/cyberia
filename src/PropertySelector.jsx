@@ -29,6 +29,27 @@ const PropertySelector = ({ isOpen, onClose, onGenerate }) => {
     const [material, setMaterial] = useState('brick');
     const [additionalDetails, setAdditionalDetails] = useState('');
 
+    const propertyTypes = [
+        'house', 'apartment', 'skyscraper', 'castle', 'shop', 'office', 'villa', 'bungalow',
+        'mansion', 'cottage', 'townhouse', 'warehouse', 'factory', 'school', 'hospital'
+    ];
+
+    const colors = [
+        'white', 'red', 'blue', 'green', 'yellow', 'black', 'gray', 'brown', 'orange', 'purple',
+        'pink', 'teal', 'navy', 'maroon', 'olive'
+    ];
+
+    const styles = [
+        'modern', 'rustic', 'futuristic', 'medieval', 'minimalist', 'victorian', 'art deco',
+        'industrial', 'mediterranean', 'colonial', 'contemporary', 'gothic', 'baroque', 'zen',
+        'scandinavian'
+    ];
+
+    const materials = [
+        'brick', 'wood', 'concrete', 'glass', 'stone', 'steel', 'marble', 'titanium', 'copper',
+        'bamboo', 'straw', 'adobe', 'recycled plastic', 'carbon fiber', 'smart glass'
+    ];
+
     const handleSubmit = () => {
         const propertyDetails = {
             propertyType,
@@ -56,33 +77,25 @@ const PropertySelector = ({ isOpen, onClose, onGenerate }) => {
                                 value={propertyType}
                                 onChange={(e) => setPropertyType(e.target.value)}
                             >
-                                <option value="house">House</option>
-                                <option value="apartment">Apartment</option>
-                                <option value="skyscraper">Skyscraper</option>
-                                <option value="castle">Castle</option>
-                                <option value="shop">Shop</option>
-                                <option value="office">Office</option>
+                                {propertyTypes.map((type) => (
+                                    <option key={type} value={type}>{type}</option>
+                                ))}
                             </Select>
                         </FormControl>
                         <FormControl>
                             <FormLabel>Property Color</FormLabel>
                             <Select value={color} onChange={(e) => setColor(e.target.value)}>
-                                <option value="white">White</option>
-                                <option value="red">Red</option>
-                                <option value="blue">Blue</option>
-                                <option value="green">Green</option>
-                                <option value="yellow">Yellow</option>
+                                {colors.map((c) => (
+                                    <option key={c} value={c}>{c}</option>
+                                ))}
                             </Select>
                         </FormControl>
                         <FormControl>
                             <FormLabel>Style</FormLabel>
                             <Select value={style} onChange={(e) => setStyle(e.target.value)}>
-                                <option value="modern">Modern</option>
-                                <option value="rustic">Rustic</option>
-                                <option value="futuristic">Futuristic</option>
-                                <option value="medieval">Medieval</option>
-                                <option value="minimalist">Minimalist</option>
-                                <option value="victorian">Victorian</option>
+                                {styles.map((s) => (
+                                    <option key={s} value={s}>{s}</option>
+                                ))}
                             </Select>
                         </FormControl>
                         <FormControl>
@@ -93,7 +106,7 @@ const PropertySelector = ({ isOpen, onClose, onGenerate }) => {
                                     onChange={(value) => setSize(value)}
                                     min={10}
                                     max={100}
-                                    step={10}
+                                    step={5}
                                 >
                                     <SliderTrack>
                                         <SliderFilledTrack />
@@ -106,11 +119,9 @@ const PropertySelector = ({ isOpen, onClose, onGenerate }) => {
                         <FormControl>
                             <FormLabel>Material</FormLabel>
                             <Select value={material} onChange={(e) => setMaterial(e.target.value)}>
-                                <option value="brick">Brick</option>
-                                <option value="wood">Wood</option>
-                                <option value="concrete">Concrete</option>
-                                <option value="glass">Glass</option>
-                                <option value="stone">Stone</option>
+                                {materials.map((m) => (
+                                    <option key={m} value={m}>{m}</option>
+                                ))}
                             </Select>
                         </FormControl>
                         <FormControl>
