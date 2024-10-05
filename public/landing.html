@@ -126,7 +126,7 @@
                 background: var(--accent-color);
                 color: var(--bg-color);
                 padding: 12px 30px;
-                margin-top: 20px;
+                margin-top: 70px;
                 text-decoration: none;
                 border-radius: 50px;
                 transition: all 0.3s;
@@ -215,7 +215,42 @@
                 color: var(--accent-color);
                 font-weight: bold;
             }
-         
+            .cta {
+                text-align: center;
+                padding: 100px 0;
+                position: relative;
+                background: url('hero2.jpg') no-repeat center center/cover;
+            }
+            .cta::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(10, 10, 10, 0.4);
+            }
+            .cta-content {
+                position: relative;
+                z-index: 1;
+            }
+            .cta h2 {
+                font-size: 2.5rem;
+                margin-bottom: 20px;
+                color: var(--primary-color);
+                font-family: 'Orbitron', sans-serif;
+            }
+            .cta p {
+                font-size: 1.2rem;
+                margin-bottom: 30px;
+                color: var(--text-color);
+            }
+            footer {
+                background: var(--dark-accent);
+                color: var(--text-color);
+                text-align: center;
+                padding: 30px 0;
+            }
             .info-section {
                 padding: 80px 0;
                 background-color: var(--bg-color);
@@ -249,28 +284,7 @@
                 border-radius: 10px;
                 box-shadow: 0 5px 15px rgba(0, 255, 255, 0.2);
             }
-            .cta {
-                text-align: center;
-                padding: 100px 0;
-                background: linear-gradient(135deg, var(--bg-color), var(--dark-accent));
-            }
-            .cta h2 {
-                font-size: 2.5rem;
-                margin-bottom: 20px;
-                color: var(--primary-color);
-                font-family: 'Orbitron', sans-serif;
-            }
-            .cta p {
-                font-size: 1.2rem;
-                margin-bottom: 30px;
-                color: var(--text-color);
-            }
-            footer {
-                background: var(--dark-accent);
-                color: var(--text-color);
-                text-align: center;
-                padding: 30px 0;
-            }
+
             @media (max-width: 768px) {
                 .hero h1 {
                     font-size: 2.5rem;
@@ -294,7 +308,6 @@
                     <ul>
                         <li><a href="#features">Features</a></li>
                         <li><a href="#demo">Demo</a></li>
-                        <li><a href="#cta">Get Started</a></li>
                     </ul>
                 </nav>
             </div>
@@ -330,7 +343,7 @@
                             <h3>Browser-Based Gameplay</h3>
                             <p>No downloads required – play instantly on any device</p>
                         </div>
-               
+
                         <div class="feature">
                             <h3>Own Your Digital Space</h3>
                             <p>
@@ -451,26 +464,30 @@
                     <h2 class="section-title">See Cyberia in Action</h2>
                     <div class="demo-content">
                         <iframe
-                        width="560"
-                        height="315"
-                        src="https://www.youtube.com/embed/6puokh80wn8"
-                        title="Cyberia Roast Video"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen
-                    ></iframe>
+                            width="560"
+                            height="315"
+                            src="https://www.youtube.com/embed/6puokh80wn8"
+                            title="Cyberia Roast Video"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen
+                        ></iframe>
                     </div>
                 </div>
             </section>
 
-            <section id="cta" class="cta">
-                <div class="container">
-                    <h2>Ready to Shape Your Digital Universe?</h2>
-                    <p>Join thousands of creators already building in Cyberia!</p>
-                    <a href="/app" class="btn">Create Your World Now</a>
-                    <p style="margin-top: 20px; font-size: 0.9rem">
-                        No download required. Start building in seconds!
+            <section class="cta">
+                <div class="container cta-content">
+                    <h2>Ready to Shape Your Digital Destiny?</h2>
+                    <p>
+                        Join thousands of players already crafting their unique worlds in Cyberia!
                     </p>
+                    <a href="https://cyberia.fun" class="btn">Create Your World Now</a>
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <p class="subtext">No download required. Start playing in seconds!</p>
                 </div>
             </section>
         </main>
