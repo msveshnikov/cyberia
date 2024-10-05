@@ -25,7 +25,12 @@ import {
     GridItem,
     Icon,
     Tooltip,
-    useMediaQuery
+    useMediaQuery,
+    NumberInput,
+    NumberInputField,
+    NumberInputStepper,
+    NumberIncrementStepper,
+    NumberDecrementStepper
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { FaSun, FaMoon, FaVolumeMute, FaVolumeUp } from 'react-icons/fa';
@@ -44,21 +49,16 @@ const App = () => {
     const [password, setPassword] = useState('');
     const [isDarkMode, setIsDarkMode] = useState(false);
     const [isMuted, setIsMuted] = useState(false);
+    const [goToX, setGoToX] = useState(0);
+    const [goToY, setGoToY] = useState(0);
     const mapRef = useRef(null);
     const toast = useToast();
     const [isMobile] = useMediaQuery('(max-width: 768px)');
 
     const { isOpen: isLoginOpen, onOpen: openLogin, onClose: closeLogin } = useDisclosure();
-    const {
-        isOpen: isRegisterOpen,
-        onOpen: openRegister,
-        onClose: closeRegister
-    } = useDisclosure();
-    const {
-        isOpen: isPropertySelectorOpen,
-        onOpen: openPropertySelector,
-        onClose: closePropertySelector
-    } = useDisclosure();
+    const { isOpen: isRegisterOpen, onOpen: openRegister, onClose: closeRegister } = useDisclosure();
+    const { isOpen: isPropertySelectorOpen, onOpen: openPropertySelector, onClose: closePropertySelector } = useDisclosure();
+    const { isOpen: isGoToOpen, onOpen: openGoTo, onClose: closeGoTo } = useDisclosure();
 
     useEffect(() => {
         checkUserAuth();
@@ -220,6 +220,11 @@ const App = () => {
         setIsMuted(!isMuted);
     };
 
+    const handleGoTo = () => {
+        setMapPosition({ x: goToX, y: goToY });
+        closeGoTo();
+    };
+
     useEffect(() => {
         const handleKeyDown = (e) => {
             switch (e.key) {
@@ -345,6 +350,9 @@ const App = () => {
                             >
                                 Right
                             </Button>
+                            <Button onClick={openGoTo} size={isMobile ? 'sm' : 'md'}>
+                                Go To
+                            </Button>
                         </HStack>
                     </GridItem>
                     <GridItem>
@@ -446,6 +454,41 @@ const App = () => {
                 onClose={closePropertySelector}
                 onGenerate={handleGenerateProperty}
             />
+
+            <Modal isOpen={isGoToOpen} onClose={closeGoTo}>
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader>Go To Coordinates</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                        <VStack spacing={4}>
+                            <FormControl>
+                                <FormLabel>X Coordinate</FormLabel>
+                                <NumberInput value={goToX} onChange={(value) => setGoToX(parseInt(value))}>
+                                    <NumberInputField />
+                                    <NumberInputStepper>
+                                        <NumberIncrementStepper />
+                                        <NumberDecrementStepper />
+                                    </NumberInputStepper>
+                                </NumberInput>
+                            </FormControl>
+                            <FormControl>
+                                <FormLabel>Y Coordinate</FormLabel>
+                                <NumberInput value={goToY} onChange={(value) => setGoToY(parseInt(value))}>
+                                    <NumberInputField />
+                                    <NumberInputStepper>
+                                        <NumberIncrementStepper />
+                                        <NumberDecrementStepper />
+                                    </NumberInputStepper>
+                                </NumberInput>
+                            </FormControl>
+                            <Button onClick={handleGoTo} width="100%" colorScheme="blue">
+                                Go To
+                            </Button>
+                        </VStack>
+                    </ModalBody>
+                </ModalContent>
+            </Modal>
         </Box>
     );
 };
