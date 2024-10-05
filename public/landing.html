@@ -174,6 +174,48 @@
                 margin-bottom: 15px;
                 font-family: 'Orbitron', sans-serif;
             }
+            .roadmap {
+                padding: 100px 0;
+                background: linear-gradient(135deg, var(--bg-color), var(--dark-accent));
+            }
+            .roadmap-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 30px;
+            }
+            .roadmap-item {
+                background: var(--dark-accent);
+                padding: 30px;
+                border-radius: 10px;
+                box-shadow: 0 5px 15px rgba(0, 255, 255, 0.1);
+                border: 1px solid var(--secondary-color);
+            }
+            .roadmap-item h3 {
+                color: var(--accent-color);
+                margin-bottom: 15px;
+                font-family: 'Orbitron', sans-serif;
+            }
+            .benefits {
+                padding: 80px 0;
+                background-color: var(--bg-color);
+            }
+            .benefits-list {
+                list-style: none;
+                padding: 0;
+            }
+            .benefits-list li {
+                margin-bottom: 15px;
+                padding-left: 30px;
+                position: relative;
+            }
+            .benefits-list li::before {
+                content: '>';
+                position: absolute;
+                left: 0;
+                color: var(--accent-color);
+                font-weight: bold;
+            }
+         
             .info-section {
                 padding: 80px 0;
                 background-color: var(--bg-color);
@@ -237,6 +279,7 @@
                     font-size: 1rem;
                 }
                 .feature-grid,
+                .roadmap-grid,
                 .info-grid {
                     grid-template-columns: 1fr;
                 }
@@ -287,9 +330,13 @@
                             <h3>Browser-Based Gameplay</h3>
                             <p>No downloads required – play instantly on any device</p>
                         </div>
+               
                         <div class="feature">
-                            <h3>Real-Time Multiplayer</h3>
-                            <p>Interact with players globally in a shared, dynamic environment</p>
+                            <h3>Own Your Digital Space</h3>
+                            <p>
+                                Claim and customize your personal property in this vast digital
+                                realm
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -315,6 +362,90 @@
                 </div>
             </section>
 
+            <section id="benefits" class="benefits">
+                <div class="container">
+                    <h2 class="section-title">Why Join Cyberia?</h2>
+                    <ul class="benefits-list">
+                        <li>
+                            Unleash Your Creativity: Let AI assist you in bringing your wildest
+                            ideas to life
+                        </li>
+                        <li>
+                            Connect with a Global Community: Make friends, trade, and collaborate
+                            with players worldwide
+                        </li>
+                        <li>
+                            Accessible Anywhere: Play on your computer, tablet, or phone – your
+                            world is always at your fingertips
+                        </li>
+                        <li>
+                            Constantly Evolving: Regular updates, seasonal events, and new features
+                            keep the game fresh and exciting
+                        </li>
+                        <li>
+                            Free to Start: Begin your adventure without spending a dime, with
+                            optional premium features for enhanced gameplay
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="roadmap" class="roadmap">
+                <div class="container">
+                    <h2 class="section-title">Development Roadmap</h2>
+                    <div class="roadmap-grid">
+                        <div class="roadmap-item">
+                            <h3>Phase 1: Foundation</h3>
+                            <ul>
+                                <li>Core game engine and map rendering</li>
+                                <li>AI integration for property generation</li>
+                                <li>User authentication and basic profile management</li>
+                            </ul>
+                        </div>
+                        <div class="roadmap-item">
+                            <h3>Phase 2: Core Gameplay</h3>
+                            <ul>
+                                <li>Property creation and placement system</li>
+                                <li>Multiplayer functionality and real-time updates</li>
+                                <li>Basic monetization features</li>
+                            </ul>
+                        </div>
+                        <div class="roadmap-item">
+                            <h3>Phase 3: Enhanced Features</h3>
+                            <ul>
+                                <li>Community tools and social features</li>
+                                <li>Mobile responsiveness and cross-platform support</li>
+                                <li>Performance optimization and scalability improvements</li>
+                            </ul>
+                        </div>
+                        <div class="roadmap-item">
+                            <h3>Phase 4: Advanced AI</h3>
+                            <ul>
+                                <li>Advanced AI features for dynamic world generation</li>
+                                <li>AI-powered NPCs and quests</li>
+                                <li>Machine learning for personalized content recommendations</li>
+                            </ul>
+                        </div>
+                        <div class="roadmap-item">
+                            <h3>Phase 5: Expansion</h3>
+                            <ul>
+                                <li>Integration of VR and AR technologies</li>
+                                <li>Blockchain and NFT implementation</li>
+                                <li>Launch of user-generated content marketplace</li>
+                            </ul>
+                        </div>
+                        <div class="roadmap-item">
+                            <h3>Phase 6: Ecosystem Growth</h3>
+                            <ul>
+                                <li>Development of external API and developer tools</li>
+                                <li>Partnerships with other platforms and games</li>
+                                <li>Expansion into educational and professional use cases</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <section id="demo" class="demo">
                 <div class="container">
                     <h2 class="section-title">See Cyberia in Action</h2>
@@ -323,9 +454,9 @@
                         width="560"
                         height="315"
                         src="https://www.youtube.com/embed/6puokh80wn8"
-                        title="AutoCode Demo Video"
+                        title="Cyberia Roast Video"
                         frameborder="0"
-                        <!-- allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" -->
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen
                     ></iframe>
                     </div>
@@ -346,7 +477,7 @@
 
         <footer>
             <div class="container">
-                <p>&copy; 2024 Cyberia. All rights reserved.</p>
+                <p>&copy; 2024 MaxSoft. All rights reserved.</p>
             </div>
         </footer>
     </body>
