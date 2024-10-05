@@ -101,23 +101,48 @@ https://cyberia.fun
 -   `Dockerfile` & `docker-compose.yml`: Docker configuration files
 -   `.prettierrc`: Code formatting configuration
 
-## Contributing
-
-We welcome contributions to Cyberia! Please read our contributing guidelines before submitting pull
-requests.
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Contact
-
-For support or inquiries, please contact us at support@cyberia.fun
-
-Join our community on Discord: [Cyberia Discord Server](https://discord.gg/Cyberiagame)
-
-Follow us on Twitter: [@CyberiaGame](https://twitter.com/CyberiaGame)
 
 # TODO
 
--   make more dev detailed roadmap with 6 stages
+-   Fix landing according to this roast video transcript (take care about all issues!!!)
+
+yes for roast you're going to get a roast all right siberia. fun what the hell is this craft your
+Jesus what a weird font craft your AI powered isometric World isometric what the does that mean BR I
+don't know what that means uh I'm not that smart explore create and connect an infinite 3D Universe
+3D universe that sounds cool this doesn't look this looks like a model in person I don't know I
+don't understand would I understand what this is immediately no I actually don't know start your
+adventure I'm not going to click Start your adventure because I don't know what exactly I'm starting
+uh key features AI generated Landscapes okay that's more descripted than craft your AI powered
+isometric world this makes more sense create unique 1024 x 1024 property tiles using Cutting Edge AI
+technology cool get that infinite like what is the use case though what are people using this for
+this is a landscape they're going to put on their background this is something they're going to play
+in a game like what is what exactly is the the promise so usually up here it's like this is the
+promise like the fastest way to do blah the easiest way to do blah um connect create your perfect 3D
+World whatever that promise is and then the execution of the promise is like the next sign like what
+exactly do you do to make sure that happens and why do you do it in a different way that's kind of
+the structure that I think works really well for Stuff browser based gameplay you're naming these
+features but I don't know what they are adding up to I think that's my problem um so I'd probably
+scroll past that it's weird to U maybe it's just because of my yeah it's a little I would have a
+even well yeah I don't know it's weird to have like a straggler you have a bunch of white space
+Unleash Your creativity in Siberia your imagination is the only limit use our Advanced AI tools to
+create landscape so much text architect so cber is like a game it's like a virtual world what is it
+connect with the global Community make friends trade and collaborate with players worldwide you're
+just saying a lot of stuff I don't know I feel like you have an idea of what this is but a random
+person landing on this page has no idea what this is so when you write your copy you have to assume
+that people have zero idea what it is and it's sometimes it's hard to do that that's why you hire
+Consultants to do that or you hire like just go to Starbucks and ask somebody like hey what is this
+we just go to Starbucks don't even hire consultant go to Starbucks and ask someone hey see them
+standing in line it's like hey can I ask you something do you think you could um I'd love to buy
+your coffee do you think you could give me some feedback on something I'm working on boom just get
+them get them in there it works um development road map development road map I'm here to tell you
+right now we don't care let me let me tell we don't care I mean tell me what's available when it's
+ready like people don't care about your road map um especially on the homepage where they just they
+just met you it's like you go on a first date with someone is like yep my plan is to to get married
+on this time and um yeah I just picked out this dress you're like whoa like what are you talking
+about um ready to shape your digital Destiny I have no idea what that means join thousands of
+players ready crafting their unique worlds in Siberia so what I can piece together from the little
+bits of this website that sort of make sense is that people can create a 3D world that they can
+explore it is a game I believe I don't know if it's a personal I don't know because like a AI
+generated landscape seems like a separate thing from like a virtual world so I honestly don't know
+what this is do you have like a demo or something of what it is and maybe we could craft some copy
+around what that is happy to do that but to be honest I just I really don't know what this is peace
