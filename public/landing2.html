@@ -3,20 +3,20 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="theme-color" content="#000000" />
-        <title>Cyberia - Create Your AI-Powered 3D World</title>
+        <meta name="theme-color" content="#6b3e2e" />
+        <title>Cyberia - Craft Your AI-Powered Isometric World</title>
         <link
-            href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap"
             rel="stylesheet"
         />
         <style>
             :root {
-                --primary-color: #00ffff;
-                --secondary-color: #ff00ff;
-                --accent-color: #ffff00;
-                --text-color: #ffffff;
-                --bg-color: #0a0a0a;
-                --dark-accent: #1a1a1a;
+                --primary-color: #4a2c2a;
+                --secondary-color: #6b3e2e;
+                --accent-color: #d35400;
+                --text-color: #ecf0f1;
+                --bg-color: #2c1a1a;
+                --white: #ffffff;
             }
             * {
                 box-sizing: border-box;
@@ -24,7 +24,7 @@
                 padding: 0;
             }
             body {
-                font-family: 'Roboto', sans-serif;
+                font-family: 'Montserrat', sans-serif;
                 line-height: 1.6;
                 color: var(--text-color);
                 background-color: var(--bg-color);
@@ -35,13 +35,13 @@
                 padding: 0 20px;
             }
             header {
-                background: linear-gradient(135deg, var(--bg-color), var(--dark-accent));
-                color: var(--primary-color);
+                background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+                color: var(--white);
                 padding: 20px 0;
                 position: fixed;
                 width: 100%;
                 z-index: 1000;
-                box-shadow: 0 2px 10px rgba(0, 255, 255, 0.3);
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
             }
             nav {
                 display: flex;
@@ -56,20 +56,19 @@
                 margin-left: 30px;
             }
             nav a {
-                color: var(--primary-color);
+                color: var(--white);
                 text-decoration: none;
                 font-weight: 600;
-                transition: color 0.3s;
+                transition: opacity 0.5s;
             }
             nav a:hover {
-                color: var(--accent-color);
+                opacity: 0.8;
             }
             .hero {
                 text-align: center;
-                padding: 180px 0;
-                background: url('hero2.jpg') no-repeat center center/cover;
+                padding: 180px 0 180px;
+                background: url('hero.jpg') no-repeat center center/cover;
                 position: relative;
-                overflow: hidden;
             }
             .hero::before {
                 content: '';
@@ -78,45 +77,22 @@
                 left: 0;
                 right: 0;
                 bottom: 0;
-                background: rgba(10, 10, 10, 0.5);
-            }
-            .hero::after {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-                opacity: 0.1;
-                animation: glitch 5s infinite alternate;
-            }
-            @keyframes glitch {
-                0% {
-                    opacity: 0.1;
-                }
-                50% {
-                    opacity: 0.2;
-                }
-                100% {
-                    opacity: 0.1;
-                }
+                background: rgba(44, 26, 26, 0.3);
             }
             .hero-content {
                 position: relative;
                 z-index: 1;
             }
             .hero h1 {
-                font-family: 'Orbitron', sans-serif;
                 font-size: 3.5rem;
                 margin-bottom: 20px;
-                color: var(--primary-color);
-                text-shadow: 2px 2px 4px rgba(0, 255, 255, 0.5);
+                color: var(--white);
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
             }
             .hero p {
                 font-size: 1.2rem;
                 margin-bottom: 30px;
-                color: var(--text-color);
+                color: var(--white);
                 max-width: 600px;
                 margin-left: auto;
                 margin-right: auto;
@@ -124,7 +100,7 @@
             .btn {
                 display: inline-block;
                 background: var(--accent-color);
-                color: var(--bg-color);
+                color: var(--white);
                 padding: 12px 30px;
                 margin-top: 70px;
                 text-decoration: none;
@@ -135,20 +111,19 @@
                 letter-spacing: 1px;
             }
             .btn:hover {
-                background: var(--secondary-color);
+                background: #e67e22;
                 transform: translateY(-3px);
-                box-shadow: 0 4px 10px rgba(255, 255, 0, 0.3);
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
             }
             .features {
                 padding: 80px 0;
-                background-color: var(--dark-accent);
+                background-color: #3c2222;
             }
             .section-title {
                 text-align: center;
                 font-size: 2.5rem;
                 margin-bottom: 50px;
                 color: var(--accent-color);
-                font-family: 'Orbitron', sans-serif;
             }
             .feature-grid {
                 display: grid;
@@ -156,27 +131,22 @@
                 gap: 40px;
             }
             .feature {
-                background: var(--bg-color);
+                background: var(--secondary-color);
                 padding: 30px;
                 border-radius: 10px;
-                box-shadow: 0 5px 15px rgba(0, 255, 255, 0.1);
-                transition:
-                    transform 0.3s,
-                    box-shadow 0.3s;
-                border: 1px solid var(--primary-color);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+                transition: transform 0.3s;
             }
             .feature:hover {
                 transform: translateY(-10px);
-                box-shadow: 0 10px 20px rgba(0, 255, 255, 0.2);
             }
             .feature h3 {
-                color: var(--secondary-color);
+                color: var(--accent-color);
                 margin-bottom: 15px;
-                font-family: 'Orbitron', sans-serif;
             }
             .roadmap {
                 padding: 100px 0;
-                background: linear-gradient(135deg, var(--bg-color), var(--dark-accent));
+                background: linear-gradient(135deg, #4a2c2a, #6b3e2e);
             }
             .roadmap-grid {
                 display: grid;
@@ -184,20 +154,18 @@
                 gap: 30px;
             }
             .roadmap-item {
-                background: var(--dark-accent);
+                background: var(--primary-color);
                 padding: 30px;
                 border-radius: 10px;
-                box-shadow: 0 5px 15px rgba(0, 255, 255, 0.1);
-                border: 1px solid var(--secondary-color);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             }
             .roadmap-item h3 {
                 color: var(--accent-color);
                 margin-bottom: 15px;
-                font-family: 'Orbitron', sans-serif;
             }
             .benefits {
                 padding: 80px 0;
-                background-color: var(--bg-color);
+                background-color: #3c2222;
             }
             .benefits-list {
                 list-style: none;
@@ -209,7 +177,7 @@
                 position: relative;
             }
             .benefits-list li::before {
-                content: '>';
+                content: '✓';
                 position: absolute;
                 left: 0;
                 color: var(--accent-color);
@@ -219,7 +187,7 @@
                 text-align: center;
                 padding: 100px 0;
                 position: relative;
-                background: url('hero3.jpg') no-repeat center center/cover;
+                background: url('hero2.jpg') no-repeat center center/cover;
             }
             .cta::before {
                 content: '';
@@ -228,7 +196,7 @@
                 left: 0;
                 right: 0;
                 bottom: 0;
-                background: rgba(10, 10, 10, 0.4);
+                background: rgba(44, 26, 26, 0.7);
             }
             .cta-content {
                 position: relative;
@@ -237,23 +205,22 @@
             .cta h2 {
                 font-size: 2.5rem;
                 margin-bottom: 20px;
-                color: var(--primary-color);
-                font-family: 'Orbitron', sans-serif;
+                color: var(--white);
             }
             .cta p {
                 font-size: 1.2rem;
                 margin-bottom: 30px;
-                color: var(--text-color);
+                color: var(--white);
             }
             footer {
-                background: var(--dark-accent);
-                color: var(--text-color);
+                background: #1a0f0f;
+                color: var(--white);
                 text-align: center;
                 padding: 30px 0;
             }
             .info-section {
                 padding: 80px 0;
-                background-color: var(--bg-color);
+                background-color: #2c1a1a;
             }
             .info-grid {
                 display: grid;
@@ -264,40 +231,12 @@
             .info-content h2 {
                 font-size: 2rem;
                 margin-bottom: 20px;
-                color: var(--secondary-color);
-                font-family: 'Orbitron', sans-serif;
+                color: var(--accent-color);
             }
             .info-image img {
                 width: 100%;
                 border-radius: 10px;
-                box-shadow: 0 5px 15px rgba(0, 255, 255, 0.2);
-            }
-            .demo {
-                padding: 80px 0;
-                background-color: var(--dark-accent);
-            }
-            .demo-content {
-                text-align: center;
-            }
-            .demo-video {
-                max-width: 100%;
-                border-radius: 10px;
-                box-shadow: 0 5px 15px rgba(0, 255, 255, 0.2);
-            }
-            .video-container {
-                position: relative;
-                width: 100%;
-                padding-bottom: 56.25%;
-                margin-top: 2rem;
-            }
-
-            .video-container iframe {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                border: none;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             }
             @media (max-width: 768px) {
                 .hero h1 {
@@ -321,7 +260,7 @@
                     <h1><b>Cyberia</b></h1>
                     <ul>
                         <li><a href="#features">Features</a></li>
-                        <li><a href="#demo">Demo</a></li>
+                        <li><a href="#benefits">Benefits</a></li>
                     </ul>
                 </nav>
             </div>
@@ -330,11 +269,8 @@
         <main>
             <section class="hero">
                 <div class="container hero-content">
-                    <h1>Create Your AI-Powered 3D World</h1>
-                    <p>
-                        Cyberia: The fastest way to build and explore unique isometric universes
-                        using cutting-edge AI technology
-                    </p>
+                    <h1>Craft Your AI-Powered Isometric World</h1>
+                    <p>Explore, Create, and Connect in an Infinite 3D Universe</p>
                     <a href="/app" class="btn">Start Your Adventure</a>
                 </div>
             </section>
@@ -346,18 +282,28 @@
                         <div class="feature">
                             <h3>AI-Generated Landscapes</h3>
                             <p>
-                                Create stunning 1024x1024 property tiles using Stable Diffusion SDXL
+                                Create unique 1024x1024 property tiles using cutting-edge AI
+                                technology
                             </p>
                         </div>
                         <div class="feature">
                             <h3>Infinite Exploration</h3>
-                            <p>Discover an endless isometric world filled with player creations</p>
+                            <p>
+                                Scroll through an endless isometric world filled with player
+                                creations
+                            </p>
                         </div>
                         <div class="feature">
                             <h3>Browser-Based Gameplay</h3>
-                            <p>No downloads required – play instantly on any device</p>
+                            <p>No downloads required – play instantly from any device</p>
                         </div>
-
+                        <div class="feature">
+                            <h3>Real-Time Multiplayer</h3>
+                            <p>
+                                Interact with players from around the globe in a shared, dynamic
+                                environment
+                            </p>
+                        </div>
                         <div class="feature">
                             <h3>Own Your Digital Space</h3>
                             <p>
@@ -373,13 +319,13 @@
                 <div class="container">
                     <div class="info-grid">
                         <div class="info-content">
-                            <h2>Your Imagination, Our Technology</h2>
+                            <h2>Unleash Your Creativity</h2>
                             <p>
-                                Cyberia combines the power of AI with your creativity. Design
-                                breathtaking landscapes, construct intricate buildings, and bring
-                                your digital dreams to life. Whether you're an artist, gamer, or
-                                just love to create, Cyberia offers an unparalleled platform for
-                                self-expression and exploration.
+                                In Cyberia, your imagination is the only limit. Use our advanced AI
+                                tools to generate stunning landscapes, build intricate structures,
+                                and craft a world that's uniquely yours. Whether you're an aspiring
+                                architect, a digital artist, or simply someone who loves to create,
+                                Cyberia provides the canvas for your digital dreams.
                             </p>
                         </div>
                         <div class="info-image">
@@ -422,7 +368,7 @@
                     <h2 class="section-title">Development Roadmap</h2>
                     <div class="roadmap-grid">
                         <div class="roadmap-item">
-                            <h3>Phase 1: Foundation</h3>
+                            <h3>Phase 1</h3>
                             <ul>
                                 <li>Core game engine and map rendering</li>
                                 <li>AI integration for property generation</li>
@@ -430,63 +376,21 @@
                             </ul>
                         </div>
                         <div class="roadmap-item">
-                            <h3>Phase 2: Core Gameplay</h3>
+                            <h3>Phase 2</h3>
                             <ul>
                                 <li>Property creation and placement system</li>
                                 <li>Multiplayer functionality and real-time updates</li>
-                                <li>Basic monetization features</li>
+                                <li>Monetization features and premium content</li>
                             </ul>
                         </div>
                         <div class="roadmap-item">
-                            <h3>Phase 3: Enhanced Features</h3>
+                            <h3>Phase 3</h3>
                             <ul>
                                 <li>Community tools and social features</li>
                                 <li>Mobile responsiveness and cross-platform support</li>
                                 <li>Performance optimization and scalability improvements</li>
                             </ul>
                         </div>
-                        <div class="roadmap-item">
-                            <h3>Phase 4: Advanced AI</h3>
-                            <ul>
-                                <li>Advanced AI features for dynamic world generation</li>
-                                <li>AI-powered NPCs and quests</li>
-                                <li>Machine learning for personalized content recommendations</li>
-                            </ul>
-                        </div>
-                        <div class="roadmap-item">
-                            <h3>Phase 5: Expansion</h3>
-                            <ul>
-                                <li>Integration of VR and AR technologies</li>
-                                <li>Blockchain and NFT implementation</li>
-                                <li>Launch of user-generated content marketplace</li>
-                            </ul>
-                        </div>
-                        <div class="roadmap-item">
-                            <h3>Phase 6: Ecosystem Growth</h3>
-                            <ul>
-                                <li>Development of external API and developer tools</li>
-                                <li>Partnerships with other platforms and games</li>
-                                <li>Expansion into educational and professional use cases</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section id="demo" class="demo">
-                <div class="container">
-                    <h2 class="section-title text-center">See Cyberia in Action</h2>
-                    <div class="video-container">
-                        <iframe
-                            class="demo-video"
-                            width="560"
-                            height="315"
-                            src="https://www.youtube.com/embed/6puokh80wn8"
-                            title="Cyberia Roast Video"
-                            frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen
-                        ></iframe>
                     </div>
                 </div>
             </section>
