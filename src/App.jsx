@@ -61,13 +61,13 @@ const App = () => {
     } = useDisclosure();
 
     useEffect(() => {
+        checkUserAuth();
         const newSocket = io(API_URL);
         setSocket(newSocket);
         return () => newSocket.close();
     }, []);
 
     useEffect(() => {
-        checkUserAuth();
         fetchMapChunk(mapPosition.x, mapPosition.y);
     }, [mapPosition.x, mapPosition.y]);
 
