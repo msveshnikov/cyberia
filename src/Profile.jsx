@@ -182,7 +182,7 @@ const Profile = () => {
                         Owned Tiles
                     </Heading>
                     {ownedTiles.length === 0 ? (
-                        <Text>You don't own any tiles yet.</Text>
+                        <Text>You dont own any tiles yet.</Text>
                     ) : (
                         <SimpleGrid columns={columns} spacing={4}>
                             {ownedTiles.map((tile) => (
