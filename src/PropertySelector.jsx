@@ -18,7 +18,8 @@ import {
     SliderTrack,
     SliderFilledTrack,
     SliderThumb,
-    Text
+    Text,
+    Checkbox
 } from '@chakra-ui/react';
 
 const PropertySelector = ({ isOpen, onClose, onGenerate }) => {
@@ -28,6 +29,7 @@ const PropertySelector = ({ isOpen, onClose, onGenerate }) => {
     const [size, setSize] = useState(50);
     const [material, setMaterial] = useState('brick');
     const [additionalDetails, setAdditionalDetails] = useState('');
+    const [flux, setFlux] = useState(false);
 
     const propertyTypes = [
         'house',
@@ -108,7 +110,8 @@ const PropertySelector = ({ isOpen, onClose, onGenerate }) => {
             style,
             size,
             material,
-            additionalDetails
+            additionalDetails,
+            flux
         };
         onGenerate(propertyDetails);
         onClose();
@@ -191,6 +194,11 @@ const PropertySelector = ({ isOpen, onClose, onGenerate }) => {
                                 onChange={(e) => setAdditionalDetails(e.target.value)}
                                 placeholder="Any specific features or elements"
                             />
+                        </FormControl>
+                        <FormControl>
+                            <Checkbox isChecked={flux} onChange={(e) => setFlux(e.target.checked)}>
+                                Flux
+                            </Checkbox>
                         </FormControl>
                     </VStack>
                 </ModalBody>

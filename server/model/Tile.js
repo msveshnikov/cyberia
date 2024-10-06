@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { promises as fs } from 'fs';
+import Together from 'together-ai';
 import OpenAI from 'openai';
 
 dotenv.config();
@@ -97,6 +98,21 @@ tileSchema.statics.getChunk = async function (startX, startY, sizeX, sizeY) {
     return chunk;
 };
 
+const together = new Together({ apiKey: process.env.TOGETHER_KEY });
+
+tileSchema.statics.generateWithFlux = async function (prompt) {
+    const response = await together.images.create({
+        model: 'black-forest-labs/FLUX.1-schnell-Free',
+        prompt: prompt,
+        width: 1024,
+        height: 1024,
+        steps: 4,
+        n: 1,
+        response_format: 'b64_json'
+    });
+    return response.data[0].b64_json;
+};
+
 export const openai = new OpenAI({
     apiKey: process.env.OPENAI_KEY
 });
@@ -120,7 +136,8 @@ tileSchema.statics.generateAIContent = async function (
     size,
     material,
     customPrompt = '',
-    landscape = false
+    landscape = false,
+    useFlux = false
 ) {
     const basePrompt = `Create an isometric tile for a game map. The tile should be cohesive style that fits into an infinite, scrollable game world. ${landscape ? 'Landscape' : 'Property'} type: ${propertyType}, Style:${style}, Color: ${color}, Size: ${size}, Material: ${material}.  ${customPrompt}`;
 
@@ -141,33 +158,40 @@ tileSchema.statics.generateAIContent = async function (
         }
     }
 
-    const response = await fetch(
-        'https://api.stability.ai/v1/generation/stable-diffusion-xl-1024-v1-0/text-to-image',
-        {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-                Authorization: `Bearer ${process.env.STABILITY_KEY}`
-            },
-            body: JSON.stringify({
-                text_prompts: [{ text: processedPrompt }],
-                style_preset: 'isometric',
-                cfg_scale: 7,
-                height: 1024,
-                width: 1024,
-                samples: 1,
-                steps: 30
-            })
+    let imageBuffer;
+
+    if (useFlux) {
+        const base64Image = await this.generateWithFlux(processedPrompt);
+        imageBuffer = Buffer.from(base64Image, 'base64');
+    } else {
+        const response = await fetch(
+            'https://api.stability.ai/v1/generation/stable-diffusion-xl-1024-v1-0/text-to-image',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json',
+                    Authorization: `Bearer ${process.env.STABILITY_KEY}`
+                },
+                body: JSON.stringify({
+                    text_prompts: [{ text: processedPrompt }],
+                    style_preset: 'isometric',
+                    cfg_scale: 7,
+                    height: 1024,
+                    width: 1024,
+                    samples: 1,
+                    steps: 30
+                })
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error(`AI generation failed: ${response.statusText}`);
         }
-    );
 
-    if (!response.ok) {
-        throw new Error(`AI generation failed: ${response.statusText}`);
+        const result = await response.json();
+        imageBuffer = Buffer.from(result.artifacts[0].base64, 'base64');
     }
-
-    const result = await response.json();
-    const imageBuffer = Buffer.from(result.artifacts[0].base64, 'base64');
 
     const jpgBuffer = await sharp(imageBuffer).jpeg({ quality: 80 }).toBuffer();
 

@@ -12,7 +12,7 @@ https://cyberia.fun
 
 ## Key Features
 
--   AI-powered property generation using Stable Diffusion SDXL
+-   AI-powered property generation using Stable Diffusion SDXL & Flux
 -   Infinite map scrolling and exploration
 -   User-owned 1024x1024 property tiles
 -   Multiplayer interaction in a shared world
@@ -22,7 +22,7 @@ https://cyberia.fun
 
 -   Frontend: React + Vite + Chakra UI + Router v6
 -   Backend: ExpressJS + MongoDB, ES6 modules
--   AI Generation: Stable Diffusion SDXL
+-   AI Generation: Stable Diffusion SDXL ^ Flux
 -   Containerization: Docker
 
 ## Design Considerations
@@ -118,5 +118,3 @@ Join our community on Discord: [Cyberia Discord Server](https://discord.gg/Cyber
 Follow us on Twitter: [@CyberiaGame](https://twitter.com/CyberiaGame)
 
 # TODO
-
--   add Flux via Together.AI to image models

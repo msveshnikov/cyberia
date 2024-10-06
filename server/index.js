@@ -132,10 +132,13 @@ app.get('/api/tiles/:x/:y', async (req, res) => {
 
 app.post('/api/tiles/generate', authenticateToken, async (req, res) => {
     try {
-        const { x, y, propertyType, color, style, size, material, additionalDetails } = req.body;
+        const { x, y, flux, propertyType, color, style, size, material, additionalDetails } =
+            req.body;
         const existingTile = await Tile.findOne({ x, y });
         if (existingTile) {
-            return res.status(400).json({ message: 'You can build only on free tiles (landscape)' });
+            return res
+                .status(400)
+                .json({ message: 'You can build only on free tiles (landscape)' });
         }
         const generatedTile = await Tile.generateAIContent(
             x,
@@ -146,7 +149,9 @@ app.post('/api/tiles/generate', authenticateToken, async (req, res) => {
             color,
             size,
             material,
-            additionalDetails
+            additionalDetails,
+            false,
+            flux
         );
 
         await User.findByIdAndUpdate(req.user._id, { $push: { ownedTiles: generatedTile._id } });
