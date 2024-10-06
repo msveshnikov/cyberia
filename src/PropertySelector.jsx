@@ -30,24 +30,75 @@ const PropertySelector = ({ isOpen, onClose, onGenerate }) => {
     const [additionalDetails, setAdditionalDetails] = useState('');
 
     const propertyTypes = [
-        'house', 'apartment', 'skyscraper', 'castle', 'shop', 'office', 'villa', 'bungalow',
-        'mansion', 'cottage', 'townhouse', 'warehouse', 'factory', 'school', 'hospital'
+        'house',
+        'apartment',
+        'skyscraper',
+        'castle',
+        'shop',
+        'office',
+        'villa',
+        'bungalow',
+        'mansion',
+        'cottage',
+        'townhouse',
+        'warehouse',
+        'factory',
+        'school',
+        'hospital'
     ];
 
     const colors = [
-        'white', 'red', 'blue', 'green', 'yellow', 'black', 'gray', 'brown', 'orange', 'purple',
-        'pink', 'teal', 'navy', 'maroon', 'olive'
+        'white',
+        'red',
+        'blue',
+        'green',
+        'yellow',
+        'black',
+        'gray',
+        'brown',
+        'orange',
+        'purple',
+        'pink',
+        'teal',
+        'navy',
+        'maroon',
+        'olive'
     ];
 
     const styles = [
-        'modern', 'rustic', 'futuristic', 'medieval', 'minimalist', 'victorian', 'art deco',
-        'industrial', 'mediterranean', 'colonial', 'contemporary', 'gothic', 'baroque', 'zen',
+        'modern',
+        'rustic',
+        'futuristic',
+        'medieval',
+        'minimalist',
+        'victorian',
+        'art deco',
+        'industrial',
+        'mediterranean',
+        'colonial',
+        'contemporary',
+        'gothic',
+        'baroque',
+        'zen',
         'scandinavian'
     ];
 
     const materials = [
-        'brick', 'wood', 'concrete', 'glass', 'stone', 'steel', 'marble', 'titanium', 'copper',
-        'bamboo', 'straw', 'adobe', 'recycled plastic', 'carbon fiber', 'smart glass'
+        'brick',
+        'wood',
+        'concrete',
+        'glass',
+        'stone',
+        'steel',
+        'marble',
+        'titanium',
+        'copper',
+        'bamboo',
+        'straw',
+        'adobe',
+        'recycled plastic',
+        'carbon fiber',
+        'smart glass'
     ];
 
     const handleSubmit = () => {
@@ -78,7 +129,9 @@ const PropertySelector = ({ isOpen, onClose, onGenerate }) => {
                                 onChange={(e) => setPropertyType(e.target.value)}
                             >
                                 {propertyTypes.map((type) => (
-                                    <option key={type} value={type}>{type}</option>
+                                    <option key={type} value={type}>
+                                        {type}
+                                    </option>
                                 ))}
                             </Select>
                         </FormControl>
@@ -86,7 +139,9 @@ const PropertySelector = ({ isOpen, onClose, onGenerate }) => {
                             <FormLabel>Property Color</FormLabel>
                             <Select value={color} onChange={(e) => setColor(e.target.value)}>
                                 {colors.map((c) => (
-                                    <option key={c} value={c}>{c}</option>
+                                    <option key={c} value={c}>
+                                        {c}
+                                    </option>
                                 ))}
                             </Select>
                         </FormControl>
@@ -94,7 +149,9 @@ const PropertySelector = ({ isOpen, onClose, onGenerate }) => {
                             <FormLabel>Style</FormLabel>
                             <Select value={style} onChange={(e) => setStyle(e.target.value)}>
                                 {styles.map((s) => (
-                                    <option key={s} value={s}>{s}</option>
+                                    <option key={s} value={s}>
+                                        {s}
+                                    </option>
                                 ))}
                             </Select>
                         </FormControl>
@@ -120,7 +177,9 @@ const PropertySelector = ({ isOpen, onClose, onGenerate }) => {
                             <FormLabel>Material</FormLabel>
                             <Select value={material} onChange={(e) => setMaterial(e.target.value)}>
                                 {materials.map((m) => (
-                                    <option key={m} value={m}>{m}</option>
+                                    <option key={m} value={m}>
+                                        {m}
+                                    </option>
                                 ))}
                             </Select>
                         </FormControl>

@@ -7,6 +7,8 @@ services:
         environment:
             - NODE_ENV=production
             - STABILITY_KEY=${STABILITY_KEY}
+            - OPENAI_KEY=${OPENAI_KEY}
+            - TOGETHER_KEY=${TOGETHER_KEY}
             - JWT_SECRET=${JWT_SECRET}
             - MONGODB_URI=mongodb://mongodb:27017/isocraft
         depends_on:

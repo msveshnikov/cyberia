@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { promises as fs } from 'fs';
+import OpenAI from 'openai';
 
 dotenv.config();
 
@@ -74,6 +75,19 @@ tileSchema.statics.getChunk = async function (startX, startY, sizeX, sizeY) {
     return chunk;
 };
 
+export const openai = new OpenAI({
+    apiKey: process.env.OPENAI_KEY
+});
+
+const getTextGpt = async (prompt) => {
+    const completion = await openai.chat.completions.create({
+        model: 'gpt-4o-mini',
+        messages: [{ role: 'user', content: prompt }],
+        temperature: 0.7
+    });
+    return completion.choices?.[0]?.message?.content;
+};
+
 tileSchema.statics.generateAIContent = async function (
     x,
     y,
@@ -83,10 +97,27 @@ tileSchema.statics.generateAIContent = async function (
     color,
     size,
     material,
-    customPrompt = ''
+    customPrompt = '',
+    landscape = false
 ) {
-    const basePrompt = `Create an isometric tile for a game map. The tile should be a 1024x1024 pixel image with a cohesive style that fits into an infinite, scrollable game world. Property type: ${propertyType}, Style:${style}, Color: ${color}, Size: ${size}, Material: ${material}.`;
-    const prompt = customPrompt ? `${basePrompt} ${customPrompt}` : basePrompt;
+    const basePrompt = `Create an isometric tile for a game map. The tile should be cohesive style that fits into an infinite, scrollable game world. ${landscape ? 'Landscape' : 'Property'} type: ${propertyType}, Style:${style}, Color: ${color}, Size: ${size}, Material: ${material}.  ${customPrompt}`;
+
+    const scenePrompt = `Pretend you are a graphic designer generating creative images for midjourney. 
+    Midjourney is an app that can generate AI art from simple prompts. 
+    I will give you a scene description and you will give me a prompt that I can feed into midjourney. 
+    
+    ${basePrompt}`;
+
+    const RETRY_LIMIT = 3;
+    let processedPrompt = basePrompt;
+
+    for (let i = 0; i < RETRY_LIMIT; i++) {
+        const translated = await getTextGpt(scenePrompt);
+        if (translated) {
+            processedPrompt = translated;
+            break;
+        }
+    }
 
     const response = await fetch(
         'https://api.stability.ai/v1/generation/stable-diffusion-xl-1024-v1-0/text-to-image',
@@ -98,7 +129,7 @@ tileSchema.statics.generateAIContent = async function (
                 Authorization: `Bearer ${process.env.STABILITY_KEY}`
             },
             body: JSON.stringify({
-                text_prompts: [{ text: prompt }],
+                text_prompts: [{ text: processedPrompt }],
                 style_preset: 'isometric',
                 cfg_scale: 7,
                 height: 1024,
@@ -123,10 +154,7 @@ tileSchema.statics.generateAIContent = async function (
     const dirPath = join(__dirname, '../../content');
     const filePath = join(dirPath, fileName);
 
-    // Ensure the directory exists
     await fs.mkdir(dirPath, { recursive: true });
-
-    // Write the file
     await fs.writeFile(filePath, jpgBuffer);
 
     const tile = await this.findOneAndUpdate(
@@ -134,7 +162,7 @@ tileSchema.statics.generateAIContent = async function (
         {
             content: `/content/${fileName}`,
             isCustomized: false,
-            aiPrompt: prompt,
+            aiPrompt: processedPrompt,
             propertyType,
             color,
             style,

@@ -34,13 +34,13 @@ https://cyberia.fun
 5. Scalable backend architecture for growing user base
 6. Isometric rendering optimization for performance
 7. Progressive loading of map areas
-9. Microservices architecture for better scalability
-10. Caching strategies for frequently accessed data
-11. Serverless functions for specific AI-related tasks
-12. Websocket implementation for real-time updates
-13. Automated testing and continuous integration
-14. Localization support for multiple languages
-15. Accessibility features for inclusive gameplay
+8. Microservices architecture for better scalability
+9. Caching strategies for frequently accessed data
+10. Serverless functions for specific AI-related tasks
+11. Websocket implementation for real-time updates
+12. Automated testing and continuous integration
+13. Localization support for multiple languages
+14. Accessibility features for inclusive gameplay
 
 ## Planned Features
 
@@ -116,4 +116,3 @@ For support or inquiries, please contact us at support@cyberia.fun
 Join our community on Discord: [Cyberia Discord Server](https://discord.gg/Cyberiagame)
 
 Follow us on Twitter: [@CyberiaGame](https://twitter.com/CyberiaGame)
-

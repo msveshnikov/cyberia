@@ -218,7 +218,8 @@ const generateLandscapeElements = async () => {
             'earth tones',
             'large',
             'organic',
-            `Create a natural ${type} landscape element for an isometric game world.`
+            `Create a natural ${type} landscape element for an isometric game world.`,
+            true
         );
 
         elements.push(element);
