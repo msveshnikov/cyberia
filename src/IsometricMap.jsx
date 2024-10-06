@@ -1,11 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Box, Image } from '@chakra-ui/react';
 
 const API_URL = import.meta.env.DEV ? 'http://localhost:3000' : 'https://cyberia.fun';
 
 export function IsometricMap({ mapRef, map, mapPosition, setMapPosition }) {
-    const isDragging = useRef(false);
-    const lastPosition = useRef({ x: 0, y: 0 });
     const [windowSize, setWindowSize] = useState({
         width: window.innerWidth,
         height: window.innerHeight
@@ -23,72 +21,13 @@ export function IsometricMap({ mapRef, map, mapPosition, setMapPosition }) {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    useEffect(() => {
-        const handleMouseDown = (e) => {
-            isDragging.current = true;
-            lastPosition.current = { x: e.clientX, y: e.clientY };
-        };
-
-        const handleMouseMove = (e) => {
-            if (isDragging.current) {
-                const deltaX = e.clientX - lastPosition.current.x;
-                const deltaY = e.clientY - lastPosition.current.y;
-                setMapPosition((prev) => ({
-                    x: Math.round(prev.x - deltaX / 350),
-                    y: Math.round(prev.y - deltaY / 176)
-                }));
-                lastPosition.current = { x: e.clientX, y: e.clientY };
-            }
-        };
-
-        const handleMouseUp = () => {
-            isDragging.current = false;
-        };
-
-        const handleTouchStart = (e) => {
-            if (e.touches.length === 1) {
-                isDragging.current = true;
-                lastPosition.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-            }
-        };
-
-        const handleTouchMove = (e) => {
-            if (isDragging.current && e.touches.length === 1) {
-                const deltaX = e.touches[0].clientX - lastPosition.current.x;
-                const deltaY = e.touches[0].clientY - lastPosition.current.y;
-                setMapPosition((prev) => ({
-                    x: Math.round(prev.x - deltaX / 350),
-                    y: Math.round(prev.y - deltaY / 176)
-                }));
-                lastPosition.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-            }
-        };
-
-        const handleTouchEnd = () => {
-            isDragging.current = false;
-        };
-
-        const mapElement = mapRef.current;
-        mapElement.addEventListener('mousedown', handleMouseDown);
-        window.addEventListener('mousemove', handleMouseMove);
-        window.addEventListener('mouseup', handleMouseUp);
-        mapElement.addEventListener('touchstart', handleTouchStart);
-        mapElement.addEventListener('touchmove', handleTouchMove);
-        mapElement.addEventListener('touchend', handleTouchEnd);
-
-        return () => {
-            mapElement.removeEventListener('mousedown', handleMouseDown);
-            window.removeEventListener('mousemove', handleMouseMove);
-            window.removeEventListener('mouseup', handleMouseUp);
-            mapElement.removeEventListener('touchstart', handleTouchStart);
-            mapElement.removeEventListener('touchmove', handleTouchMove);
-            mapElement.removeEventListener('touchend', handleTouchEnd);
-        };
-    }, [mapRef, setMapPosition]);
-
     const centerX = windowSize.width / 2;
     const centerY = windowSize.height / 2;
     const shift = windowSize.width < 600 ? 200 : -200;
+
+    const handleTileClick = (x, y) => {
+        setMapPosition({ x, y });
+    };
 
     return (
         <Box className="isometric-map" ref={mapRef} position="relative" width="100%" height="100%">
@@ -109,6 +48,8 @@ export function IsometricMap({ mapRef, map, mapPosition, setMapPosition }) {
                         height="250px"
                         transform="rotateX(60deg) rotateZ(-45deg)"
                         style={{ transformStyle: 'preserve-3d', overflow: 'hidden' }}
+                        onClick={() => handleTileClick(tile.x, tile.y)}
+                        cursor="pointer"
                     >
                         <Box
                             position="absolute"
