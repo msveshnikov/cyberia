@@ -116,3 +116,7 @@ For support or inquiries, please contact us at support@cyberia.fun
 Join our community on Discord: [Cyberia Discord Server](https://discord.gg/Cyberiagame)
 
 Follow us on Twitter: [@CyberiaGame](https://twitter.com/CyberiaGame)
+
+# TODO
+
+-   add Flux via Together.AI to image models

@@ -135,7 +135,7 @@ app.post('/api/tiles/generate', authenticateToken, async (req, res) => {
         const { x, y, propertyType, color, style, size, material, additionalDetails } = req.body;
         const existingTile = await Tile.findOne({ x, y });
         if (existingTile) {
-            return res.status(400).json({ message: 'Tile already exists' });
+            return res.status(400).json({ message: 'You can build only on free tiles (landscape)' });
         }
         const generatedTile = await Tile.generateAIContent(
             x,

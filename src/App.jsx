@@ -165,10 +165,9 @@ const App = () => {
             );
             socket.emit('updateTile', response.data);
             fetchMapChunk(mapPosition.x, mapPosition.y);
-        } catch (error) {
-            console.error('Error generating property:', error);
+        } catch  {
             toast({
-                title: 'Error generating property',
+                title: 'You can build only on free tiles (landscape)',
                 status: 'error',
                 duration: 3000,
                 isClosable: true
