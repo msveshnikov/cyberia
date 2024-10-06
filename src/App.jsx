@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import axios from 'axios';
 import io from 'socket.io-client';
 import {
@@ -53,6 +53,7 @@ const App = () => {
     const [goToY, setGoToY] = useState('0');
     const toast = useToast();
     const [isMobile] = useMediaQuery('(max-width: 768px)');
+    const audioRef = useRef(null);
 
     const { isOpen: isLoginOpen, onOpen: openLogin, onClose: closeLogin } = useDisclosure();
     const {
@@ -89,6 +90,17 @@ const App = () => {
             });
         }
     }, [socket]);
+
+    useEffect(() => {
+        const audio = audioRef.current;
+        if (audio) {
+            if (isMuted) {
+                audio.pause();
+            } else {
+                audio.play().catch((error) => console.error('Audio playback failed:', error));
+            }
+        }
+    }, [isMuted]);
 
     const checkUserAuth = async () => {
         try {
@@ -261,6 +273,9 @@ const App = () => {
             bg={isDarkMode ? 'gray.800' : 'gray.100'}
             color={isDarkMode ? 'white' : 'black'}
         >
+            <audio ref={audioRef} loop>
+                <source src="/music2.mp3" type="audio/mpeg" />
+            </audio>
             <Flex
                 as="header"
                 align="center"
