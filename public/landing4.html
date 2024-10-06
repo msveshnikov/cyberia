@@ -1,0 +1,514 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="theme-color" content="#000000" />
+        <title>Cyberia - Create Your AI-Powered 3D World</title>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            :root {
+                --primary-color: #00bcd4;
+                --secondary-color: #4caf50;
+                --accent-color: #8bc34a;
+                --text-color: #ffffff;
+                --bg-color: #1a237e;
+                --dark-accent: #0d47a1;
+            }
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+            body {
+                font-family: 'Roboto', sans-serif;
+                line-height: 1.6;
+                color: var(--text-color);
+                background-color: var(--bg-color);
+            }
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 20px;
+            }
+            header {
+                background: linear-gradient(135deg, var(--bg-color), var(--dark-accent));
+                color: var(--primary-color);
+                padding: 20px 0;
+                position: fixed;
+                width: 100%;
+                z-index: 1000;
+                box-shadow: 0 2px 10px rgba(0, 188, 212, 0.3);
+            }
+            nav {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            nav ul {
+                list-style: none;
+                display: flex;
+            }
+            nav ul li {
+                margin-left: 30px;
+            }
+            nav a {
+                color: var(--primary-color);
+                text-decoration: none;
+                font-weight: 600;
+                transition: color 0.3s;
+            }
+            nav a:hover {
+                color: var(--accent-color);
+            }
+            .hero {
+                text-align: center;
+                padding: 180px 0;
+                background: url('hero2.jpg') no-repeat center center/cover;
+                position: relative;
+                overflow: hidden;
+            }
+            .hero::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(26, 35, 126, 0.5);
+            }
+            .hero::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+                opacity: 0.1;
+                animation: glitch 5s infinite alternate;
+            }
+            @keyframes glitch {
+                0% {
+                    opacity: 0.1;
+                }
+                50% {
+                    opacity: 0.2;
+                }
+                100% {
+                    opacity: 0.1;
+                }
+            }
+            .hero-content {
+                position: relative;
+                z-index: 1;
+            }
+            .hero h1 {
+                font-family: 'Orbitron', sans-serif;
+                font-size: 3.5rem;
+                margin-bottom: 20px;
+                color: var(--primary-color);
+                text-shadow: 2px 2px 4px rgba(0, 188, 212, 0.5);
+            }
+            .hero p {
+                font-size: 1.2rem;
+                margin-bottom: 30px;
+                color: var(--text-color);
+                max-width: 600px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .btn {
+                display: inline-block;
+                background: var(--accent-color);
+                color: var(--bg-color);
+                padding: 12px 30px;
+                margin-top: 70px;
+                text-decoration: none;
+                border-radius: 50px;
+                transition: all 0.3s;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
+            .btn:hover {
+                background: var(--secondary-color);
+                transform: translateY(-3px);
+                box-shadow: 0 4px 10px rgba(139, 195, 74, 0.3);
+            }
+            .features {
+                padding: 80px 0;
+                background-color: var(--dark-accent);
+            }
+            .section-title {
+                text-align: center;
+                font-size: 2.5rem;
+                margin-bottom: 50px;
+                color: var(--accent-color);
+                font-family: 'Orbitron', sans-serif;
+            }
+            .feature-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 40px;
+            }
+            .feature {
+                background: var(--bg-color);
+                padding: 30px;
+                border-radius: 10px;
+                box-shadow: 0 5px 15px rgba(0, 188, 212, 0.1);
+                transition:
+                    transform 0.3s,
+                    box-shadow 0.3s;
+                border: 1px solid var(--primary-color);
+            }
+            .feature:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 10px 20px rgba(0, 188, 212, 0.2);
+            }
+            .feature h3 {
+                color: var(--secondary-color);
+                margin-bottom: 15px;
+                font-family: 'Orbitron', sans-serif;
+            }
+            .roadmap {
+                padding: 100px 0;
+                background: linear-gradient(135deg, var(--bg-color), var(--dark-accent));
+            }
+            .roadmap-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 30px;
+            }
+            .roadmap-item {
+                background: var(--dark-accent);
+                padding: 30px;
+                border-radius: 10px;
+                box-shadow: 0 5px 15px rgba(0, 188, 212, 0.1);
+                border: 1px solid var(--secondary-color);
+            }
+            .roadmap-item h3 {
+                color: var(--accent-color);
+                margin-bottom: 15px;
+                font-family: 'Orbitron', sans-serif;
+            }
+            .benefits {
+                padding: 80px 0;
+                background-color: var(--bg-color);
+            }
+            .benefits-list {
+                list-style: none;
+                padding: 0;
+            }
+            .benefits-list li {
+                margin-bottom: 15px;
+                padding-left: 30px;
+                position: relative;
+            }
+            .benefits-list li::before {
+                content: '>';
+                position: absolute;
+                left: 0;
+                color: var(--accent-color);
+                font-weight: bold;
+            }
+            .cta {
+                text-align: center;
+                padding: 100px 0;
+                position: relative;
+                background: url('hero3.jpg') no-repeat center center/cover;
+            }
+            .cta::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(26, 35, 126, 0.4);
+            }
+            .cta-content {
+                position: relative;
+                z-index: 1;
+            }
+            .cta h2 {
+                font-size: 2.5rem;
+                margin-bottom: 20px;
+                color: var(--primary-color);
+                font-family: 'Orbitron', sans-serif;
+            }
+            .cta p {
+                font-size: 1.2rem;
+                margin-bottom: 30px;
+                color: var(--text-color);
+            }
+            footer {
+                background: var(--dark-accent);
+                color: var(--text-color);
+                text-align: center;
+                padding: 30px 0;
+            }
+            .info-section {
+                padding: 80px 0;
+                background-color: var(--bg-color);
+            }
+            .info-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 40px;
+                align-items: center;
+            }
+            .info-content h2 {
+                font-size: 2rem;
+                margin-bottom: 20px;
+                color: var(--secondary-color);
+                font-family: 'Orbitron', sans-serif;
+            }
+            .info-image img {
+                width: 100%;
+                border-radius: 10px;
+                box-shadow: 0 5px 15px rgba(0, 188, 212, 0.2);
+            }
+            .demo {
+                padding: 80px 0;
+                background-color: var(--dark-accent);
+            }
+            .demo-content {
+                text-align: center;
+            }
+            .demo-video {
+                max-width: 100%;
+                border-radius: 10px;
+                box-shadow: 0 5px 15px rgba(0, 188, 212, 0.2);
+            }
+            .video-container {
+                position: relative;
+                width: 100%;
+                padding-bottom: 56.25%;
+                margin-top: 2rem;
+            }
+            .video-container iframe {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                border: none;
+            }
+            @media (max-width: 768px) {
+                .hero h1 {
+                    font-size: 2.5rem;
+                }
+                .hero p {
+                    font-size: 1rem;
+                }
+                .feature-grid,
+                .roadmap-grid,
+                .info-grid {
+                    grid-template-columns: 1fr;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <div class="container">
+                <nav>
+                    <h1><b>Cyberia</b></h1>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#demo">Demo</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <main>
+            <section class="hero">
+                <div class="container hero-content">
+                    <h1>Create Your AI-Powered 3D World</h1>
+                    <p>
+                        Cyberia: The fastest way to build and explore unique isometric universes
+                        using cutting-edge AI technology
+                    </p>
+                    <a href="/app" class="btn">Start Your Adventure</a>
+                </div>
+            </section>
+
+            <section id="features" class="features">
+                <div class="container">
+                    <h2 class="section-title">Key Features</h2>
+                    <div class="feature-grid">
+                        <div class="feature">
+                            <h3>AI-Generated Landscapes</h3>
+                            <p>
+                                Create stunning 1024x1024 property tiles using Stable Diffusion SDXL
+                            </p>
+                        </div>
+                        <div class="feature">
+                            <h3>Infinite Exploration</h3>
+                            <p>Discover an endless isometric world filled with player creations</p>
+                        </div>
+                        <div class="feature">
+                            <h3>Browser-Based Gameplay</h3>
+                            <p>No downloads required – play instantly on any device</p>
+                        </div>
+                        <div class="feature">
+                            <h3>Own Your Digital Space</h3>
+                            <p>
+                                Claim and customize your personal property in this vast digital
+                                realm
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="info-section">
+                <div class="container">
+                    <div class="info-grid">
+                        <div class="info-content">
+                            <h2>Your Imagination, Our Technology</h2>
+                            <p>
+                                Cyberia combines the power of AI with your creativity. Design
+                                breathtaking landscapes, construct intricate buildings, and bring
+                                your digital dreams to life. Whether you're an artist, gamer, or
+                                just love to create, Cyberia offers an unparalleled platform for
+                                self-expression and exploration.
+                            </p>
+                        </div>
+                        <div class="info-image">
+                            <img src="1_0.jpg" alt="AI-generated landscape in Cyberia" />
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="benefits" class="benefits">
+                <div class="container">
+                    <h2 class="section-title">Why Join Cyberia?</h2>
+                    <ul class="benefits-list">
+                        <li>
+                            Unleash Your Creativity: Let AI assist you in bringing your wildest
+                            ideas to life
+                        </li>
+                        <li>
+                            Connect with a Global Community: Make friends, trade, and collaborate
+                            with players worldwide
+                        </li>
+                        <li>
+                            Accessible Anywhere: Play on your computer, tablet, or phone – your
+                            world is always at your fingertips
+                        </li>
+                        <li>
+                            Constantly Evolving: Regular updates, seasonal events, and new features
+                            keep the game fresh and exciting
+                        </li>
+                        <li>
+                            Free to Start: Begin your adventure without spending a dime, with
+                            optional premium features for enhanced gameplay
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="roadmap" class="roadmap">
+                <div class="container">
+                    <h2 class="section-title">Development Roadmap</h2>
+                    <div class="roadmap-grid">
+                        <div class="roadmap-item">
+                            <h3>Phase 1: Foundation</h3>
+                            <ul>
+                                <li>Core game engine and map rendering</li>
+                                <li>AI integration for property generation</li>
+                                <li>User authentication and basic profile management</li>
+                            </ul>
+                        </div>
+                        <div class="roadmap-item">
+                            <h3>Phase 2: Core Gameplay</h3>
+                            <ul>
+                                <li>Property creation and placement system</li>
+                                <li>Multiplayer functionality and real-time updates</li>
+                                <li>Basic monetization features</li>
+                            </ul>
+                        </div>
+                        <div class="roadmap-item">
+                            <h3>Phase 3: Enhanced Features</h3>
+                            <ul>
+                                <li>Community tools and social features</li>
+                                <li>Mobile responsiveness and cross-platform support</li>
+                                <li>Performance optimization and scalability improvements</li>
+                            </ul>
+                        </div>
+                        <div class="roadmap-item">
+                            <h3>Phase 4: Advanced AI</h3>
+                            <ul>
+                                <li>Advanced AI features for dynamic world generation</li>
+                                <li>AI-powered NPCs and quests</li>
+                                <li>Machine learning for personalized content recommendations</li>
+                            </ul>
+                        </div>
+                        <div class="roadmap-item">
+                            <h3>Phase 5: Expansion</h3>
+                            <ul>
+                                <li>Integration of VR and AR technologies</li>
+                                <li>Blockchain and NFT implementation</li>
+                                <li>Launch of user-generated content marketplace</li>
+                            </ul>
+                        </div>
+                        <div class="roadmap-item">
+                            <h3>Phase 6: Ecosystem Growth</h3>
+                            <ul>
+                                <li>Development of external API and developer tools</li>
+                                <li>Partnerships with other platforms and games</li>
+                                <li>Expansion into educational and professional use cases</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="demo" class="demo">
+                <div class="container">
+                    <h2 class="section-title text-center">See Cyberia in Action</h2>
+                    <div class="video-container">
+                        <iframe
+                            class="demo-video"
+                            width="560"
+                            height="315"
+                            src="https://www.youtube.com/embed/6puokh80wn8"
+                            title="Cyberia Roast Video"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen
+                        ></iframe>
+                    </div>
+                </div>
+            </section>
+
+            <section class="cta">
+                <div class="container cta-content">
+                    <h2>Ready to Shape Your Digital Destiny?</h2>
+                    <p>
+                        Join thousands of players already crafting their unique worlds in Cyberia!
+                    </p>
+                    <a href="/app" class="btn">Create Your World Now</a>
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <p class="subtext">No download required. Start playing in seconds!</p>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <div class="container">
+                <p>&copy; 2024 MaxSoft. All rights reserved.</p>
+            </div>
+        </footer>
+    </body>
+</html>
