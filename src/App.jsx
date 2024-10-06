@@ -274,7 +274,10 @@ const App = () => {
             color={isDarkMode ? 'white' : 'black'}
         >
             <audio ref={audioRef} loop>
-                <source src="/music2.mp3" type="audio/mpeg" />
+                <source
+                    src={Math.random() < 0.5 ? '/music1.mp3' : '/music2.mp3'}
+                    type="audio/mpeg"
+                />
             </audio>
             <Flex
                 as="header"

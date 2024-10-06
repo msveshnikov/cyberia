@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { Box, Image } from '@chakra-ui/react';
 
 const API_URL = import.meta.env.DEV ? 'http://localhost:3000' : 'https://cyberia.fun';
@@ -29,9 +29,28 @@ export function IsometricMap({ map, mapPosition, setMapPosition }) {
         setMapPosition({ x, y });
     };
 
+    const visibleTiles = useMemo(() => {
+        const tileWidth = 350;
+        const tileHeight = 175;
+        const viewportWidth = windowSize.width;
+        const viewportHeight = windowSize.height;
+
+        return map.filter((tile) => {
+            const x = (tile.x - mapPosition.x - 1) * tileWidth + centerX + shift;
+            const y = ((tile.y - mapPosition.y - 3) * tileHeight) / 2 + centerY;
+
+            return (
+                x > -tileWidth &&
+                x < viewportWidth + tileWidth &&
+                y > -tileHeight &&
+                y < viewportHeight + tileHeight
+            );
+        });
+    }, [map, mapPosition, windowSize, centerX, centerY, shift]);
+
     return (
         <Box className="isometric-map" position="relative" width="100%" height="100%">
-            {map.map((tile) => {
+            {visibleTiles.map((tile) => {
                 const x = (tile.x - mapPosition.x - 1) * 350 + centerX + shift;
                 const y = ((tile.y - mapPosition.y - 3) * 175) / 2 + centerY;
                 const isOddRow = tile.y % 2 !== 0;
