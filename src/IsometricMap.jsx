@@ -146,7 +146,7 @@ export function IsometricMap({ mapRef, map, mapPosition, setMapPosition }) {
                     left: '-1px',
                     right: '-1px',
                     bottom: '-1px',
-                    background: 'rgba(255, 255, 0, 0.2)'
+                    background: 'rgba(255, 255, 0, 0.1)'
                 }}
             />
         </Box>

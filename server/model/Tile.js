@@ -12,16 +12,36 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 export const landscapeTypes = [
-    'lava',
-    'stones',
-    'sand',
-    'grass',
-    'ground',
-    'mud',
-    'water',
-    'moss',
+    'ice',
     'snow',
-    'ice'
+    'tundra',
+    'taiga',
+    'alpine meadow',
+    'boreal forest',
+    'temperate rainforest',
+    'temperate deciduous forest',
+    'temperate grassland',
+    'temperate shrubland',
+    'mediterranean scrub',
+    'moss',
+    'stones',
+    'ground',
+    'grass',
+    'mud',
+    'subtropical desert',
+    'subtropical grassland',
+    'tropical savanna',
+    'tropical dry forest',
+    'tropical rainforest',
+    'mangrove swamp',
+    'sand',
+    'lava',
+    'coral reef',
+    'kelp forest',
+    'seagrass meadow',
+    'water',
+    'deep ocean',
+    'hydrothermal vent'
 ];
 
 const tileSchema = new mongoose.Schema({
@@ -65,9 +85,11 @@ tileSchema.statics.getChunk = async function (startX, startY, sizeX, sizeY) {
                 chunk.push(tile);
             } else {
                 const newTile = await this.takeFractalLandscapeTile(x, y);
-                newTile.x = x;
-                newTile.y = y;
-                chunk.push(newTile);
+                if (newTile) {
+                    newTile.x = x;
+                    newTile.y = y;
+                    chunk.push(newTile);
+                }
             }
         }
     }

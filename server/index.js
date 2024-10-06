@@ -112,6 +112,7 @@ app.get('/api/tiles', async (req, res) => {
         );
         res.json(tiles);
     } catch (error) {
+        console.error(error);
         res.status(500).json({ message: error.message });
     }
 });

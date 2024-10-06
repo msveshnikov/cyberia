@@ -2,6 +2,9 @@
 /* global use, db */
 // Select the database to use.
 use('isocraft');
+db.tiles.deleteMany({ x: { $lte: -9000000 } });
+db.tiles.find({ x: { $lte: -9000000 } });
+
 db.users.dropIndex('username_1');
 
 // Create collections
@@ -154,3 +157,4 @@ db.tiles
         createdAt: { $gte: new Date(Date.now() - 24 * 60 * 60 * 1000) }
     })
     .toArray();
+
