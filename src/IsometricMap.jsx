@@ -3,7 +3,7 @@ import { Box, Image } from '@chakra-ui/react';
 
 const API_URL = import.meta.env.DEV ? 'http://localhost:3000' : 'https://cyberia.fun';
 
-export function IsometricMap({ mapRef, map, mapPosition, setMapPosition }) {
+export function IsometricMap({ map, mapPosition, setMapPosition }) {
     const [windowSize, setWindowSize] = useState({
         width: window.innerWidth,
         height: window.innerHeight
@@ -30,7 +30,7 @@ export function IsometricMap({ mapRef, map, mapPosition, setMapPosition }) {
     };
 
     return (
-        <Box className="isometric-map" ref={mapRef} position="relative" width="100%" height="100%">
+        <Box className="isometric-map" position="relative" width="100%" height="100%">
             {map.map((tile) => {
                 const x = (tile.x - mapPosition.x - 1) * 350 + centerX + shift;
                 const y = ((tile.y - mapPosition.y - 3) * 175) / 2 + centerY;

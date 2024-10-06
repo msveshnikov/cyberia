@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import io from 'socket.io-client';
 import {
@@ -51,7 +51,6 @@ const App = () => {
     const [isMuted, setIsMuted] = useState(false);
     const [goToX, setGoToX] = useState('0');
     const [goToY, setGoToY] = useState('0');
-    const mapRef = useRef(null);
     const toast = useToast();
     const [isMobile] = useMediaQuery('(max-width: 768px)');
 
@@ -165,7 +164,7 @@ const App = () => {
             );
             socket.emit('updateTile', response.data);
             fetchMapChunk(mapPosition.x, mapPosition.y);
-        } catch  {
+        } catch {
             toast({
                 title: 'You can build only on free tiles (landscape)',
                 status: 'error',
@@ -325,7 +324,6 @@ const App = () => {
                             boxShadow="xl"
                         >
                             <IsometricMap
-                                mapRef={mapRef}
                                 map={map}
                                 mapPosition={mapPosition}
                                 setMapPosition={setMapPosition}
