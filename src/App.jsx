@@ -284,6 +284,9 @@ const App = () => {
                             </Link>
                         </>
                     )}
+                    <Link to="/chat">
+                        <Button size={isMobile ? 'sm' : 'md'}>Chat</Button>
+                    </Link>
                 </HStack>
             </Flex>
 
@@ -361,8 +364,8 @@ const App = () => {
                                     Game Stats
                                 </Heading>
                                 <Text>
-                                    Properties Owned: {user ? user.ownedTiles?.length : 0}
-                                    {" "} Total Players: 27{/* Add real-time player count */}
+                                    Properties Owned: {user ? user.ownedTiles?.length : 0} Total
+                                    Players: 27
                                 </Text>
                             </Box>
                         </VStack>

@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import morgan from 'morgan';
 import Tile, { landscapeTypes } from './model/Tile.js';
 import User from './model/User.js';
+import ChatMessage from './model/ChatMessage.js';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { createServer } from 'http';
@@ -206,6 +207,36 @@ app.delete('/api/user/friends/:friendId', authenticateToken, async (req, res) =>
     }
 });
 
+app.post('/api/chat', authenticateToken, async (req, res) => {
+    try {
+        const { message, receiverId } = req.body;
+        const newMessage = new ChatMessage({
+            sender: req.user._id,
+            receiver: receiverId,
+            message
+        });
+        await newMessage.save();
+        io.to(receiverId).emit('newMessage', newMessage);
+        res.status(201).json(newMessage);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+app.get('/api/chat/:userId', authenticateToken, async (req, res) => {
+    try {
+        const messages = await ChatMessage.find({
+            $or: [
+                { sender: req.user._id, receiver: req.params.userId },
+                { sender: req.params.userId, receiver: req.user._id }
+            ]
+        }).sort({ createdAt: 1 });
+        res.json(messages);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
 const generateLandscapeElements = async () => {
     const startCoord = -10000000;
     const elements = [];
@@ -258,6 +289,10 @@ io.on('connection', (socket) => {
         const { startX, startY, endX, endY } = data;
         const tiles = await Tile.getChunk(startX, startY, endX - startX, endY - startY);
         socket.emit('mapUpdated', tiles);
+    });
+
+    socket.on('joinChat', (userId) => {
+        socket.join(userId);
     });
 });
 

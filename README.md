@@ -116,4 +116,5 @@ Follow us on Twitter: [@CyberiaGame](https://twitter.com/CyberiaGame)
 
 # TODO
 
--   add chat function
+-   chat should be room based (with one global default room)
+-   no sockets for chat, just POST to room, and GET all from room
