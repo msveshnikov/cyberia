@@ -1,5 +1,5 @@
 import { ChakraProvider } from '@chakra-ui/react';
-import React, { lazy, Suspense } from 'react';
+import { lazy, Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
@@ -13,20 +13,18 @@ const Chat = lazy(() => import('./Chat'));
 const LoadingFallback = () => <div>Loading...</div>;
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-    <React.StrictMode>
-        <ChakraProvider>
-            <Router>
-                <Suspense fallback={<LoadingFallback />}>
-                    <Routes>
-                        <Route path="/" element={<Landing />} />
-                        <Route path="/app" element={<App />} />
-                        <Route path="/profile" element={<Profile />} />
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/register" element={<Register />} />
-                        <Route path="/chat" element={<Chat />} />
-                    </Routes>
-                </Suspense>
-            </Router>
-        </ChakraProvider>
-    </React.StrictMode>
+    <ChakraProvider>
+        <Router>
+            <Suspense fallback={<LoadingFallback />}>
+                <Routes>
+                    <Route path="/" element={<Landing />} />
+                    <Route path="/app" element={<App />} />
+                    <Route path="/profile" element={<Profile />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/chat" element={<Chat />} />
+                </Routes>
+            </Suspense>
+        </Router>
+    </ChakraProvider>
 );

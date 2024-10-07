@@ -115,6 +115,3 @@ Join our community on Discord: [Cyberia Discord Server](https://discord.gg/Cyber
 Follow us on Twitter: [@CyberiaGame](https://twitter.com/CyberiaGame)
 
 # TODO
-
--   chat should be room based (with one global default room)
--   no sockets for chat, just POST to room, and GET all from room

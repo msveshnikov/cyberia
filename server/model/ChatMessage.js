@@ -18,7 +18,8 @@ const chatMessageSchema = new mongoose.Schema({
     },
     room: {
         type: String,
-        required: true
+        required: true,
+        default: 'global'
     },
     isSystemMessage: {
         type: Boolean,
@@ -27,6 +28,24 @@ const chatMessageSchema = new mongoose.Schema({
 });
 
 chatMessageSchema.index({ room: 1, timestamp: -1 });
+
+chatMessageSchema.statics.getMessagesForRoom = async function (room, limit = 50) {
+    return this.find({ room })
+        .sort({ timestamp: -1 })
+        .limit(limit)
+        .populate('sender', 'email profilePicture')
+        .lean();
+};
+
+chatMessageSchema.statics.addMessageToRoom = async function (senderId, content, room) {
+    const message = new this({
+        sender: senderId,
+        content,
+        room
+    });
+    await message.save();
+    return message.populate('sender', 'email profilePicture');
+};
 
 const ChatMessage = mongoose.model('ChatMessage', chatMessageSchema);
 

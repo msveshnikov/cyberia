@@ -209,29 +209,27 @@ app.delete('/api/user/friends/:friendId', authenticateToken, async (req, res) =>
 
 app.post('/api/chat', authenticateToken, async (req, res) => {
     try {
-        const { message, receiverId } = req.body;
+        const { message, room } = req.body;
         const newMessage = new ChatMessage({
             sender: req.user._id,
-            receiver: receiverId,
-            message
+            content: message,
+            room: room || 'global'
         });
         await newMessage.save();
-        io.to(receiverId).emit('newMessage', newMessage);
         res.status(201).json(newMessage);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 });
 
-app.get('/api/chat/:userId', authenticateToken, async (req, res) => {
+app.get('/api/chat/:room', async (req, res) => {
     try {
-        const messages = await ChatMessage.find({
-            $or: [
-                { sender: req.user._id, receiver: req.params.userId },
-                { sender: req.params.userId, receiver: req.user._id }
-            ]
-        }).sort({ createdAt: 1 });
-        res.json(messages);
+        const { room } = req.params;
+        const messages = await ChatMessage.find({ room })
+            .sort({ timestamp: -1 })
+            .limit(100)
+            .populate('sender', 'email');
+        res.json(messages.reverse());
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
