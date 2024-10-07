@@ -138,7 +138,12 @@ const App = () => {
 
     const generateProperty = async () => {
         if (!user) {
-            // openLogin();
+            toast({
+                title: 'Please log in to generate a property',
+                status: 'warning',
+                duration: 3000,
+                isClosable: true
+            });
             return;
         }
         openPropertySelector();
@@ -271,12 +276,12 @@ const App = () => {
                         </>
                     ) : (
                         <>
-                            <Button href='/login' size={isMobile ? 'sm' : 'md'}>
-                                Login
-                            </Button>
-                            <Button href='/register' size={isMobile ? 'sm' : 'md'}>
-                                Register
-                            </Button>
+                            <Link to="/login">
+                                <Button size={isMobile ? 'sm' : 'md'}>Login</Button>
+                            </Link>
+                            <Link to="/register">
+                                <Button size={isMobile ? 'sm' : 'md'}>Register</Button>
+                            </Link>
                         </>
                     )}
                 </HStack>
@@ -338,7 +343,6 @@ const App = () => {
                                 onClick={generateProperty}
                                 isLoading={isGenerating}
                                 loadingText="Generating..."
-                                isDisabled={!user}
                                 colorScheme="teal"
                                 size={isMobile ? 'md' : 'lg'}
                             >
