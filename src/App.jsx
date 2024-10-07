@@ -13,7 +13,6 @@ import {
     ModalHeader,
     ModalBody,
     ModalCloseButton,
-    Input,
     useDisclosure,
     useToast,
     Flex,
@@ -45,8 +44,6 @@ const App = () => {
     const [mapPosition, setMapPosition] = useState({ x: 0, y: 0 });
     const [isGenerating, setIsGenerating] = useState(false);
     const [socket, setSocket] = useState(null);
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
     const [isDarkMode, setIsDarkMode] = useState(false);
     const [isMuted, setIsMuted] = useState(false);
     const [goToX, setGoToX] = useState('0');
@@ -55,12 +52,6 @@ const App = () => {
     const [isMobile] = useMediaQuery('(max-width: 768px)');
     const audioRef = useRef(null);
 
-    const { isOpen: isLoginOpen, onOpen: openLogin, onClose: closeLogin } = useDisclosure();
-    const {
-        isOpen: isRegisterOpen,
-        onOpen: openRegister,
-        onClose: closeRegister
-    } = useDisclosure();
     const {
         isOpen: isPropertySelectorOpen,
         onOpen: openPropertySelector,
@@ -147,7 +138,7 @@ const App = () => {
 
     const generateProperty = async () => {
         if (!user) {
-            openLogin();
+            // openLogin();
             return;
         }
         openPropertySelector();
@@ -188,46 +179,9 @@ const App = () => {
         }
     };
 
-    const handleLogin = async () => {
-        try {
-            const response = await axios.post(`${API_URL}/api/login`, { email, password });
-            localStorage.setItem('token', response.data.accessToken);
-            setUser(response.data.user);
-            closeLogin();
-            setEmail('');
-            setPassword('');
-        } catch (error) {
-            console.error('Error logging in:', error);
-            toast({
-                title: 'Login failed',
-                description: 'Please check your credentials and try again.',
-                status: 'error',
-                duration: 3000,
-                isClosable: true
-            });
-        }
-    };
-
     const handleLogout = () => {
         localStorage.removeItem('token');
         setUser(null);
-    };
-
-    const handleRegister = async () => {
-        try {
-            await axios.post(`${API_URL}/api/register`, { email, password });
-            handleLogin();
-            closeRegister();
-        } catch (error) {
-            console.error('Error registering:', error);
-            toast({
-                title: 'Registration failed',
-                description: 'Please try again with a different email.',
-                status: 'error',
-                duration: 3000,
-                isClosable: true
-            });
-        }
     };
 
     const toggleDarkMode = () => {
@@ -317,10 +271,10 @@ const App = () => {
                         </>
                     ) : (
                         <>
-                            <Button onClick={openLogin} size={isMobile ? 'sm' : 'md'}>
+                            <Button href='/login' size={isMobile ? 'sm' : 'md'}>
                                 Login
                             </Button>
-                            <Button onClick={openRegister} size={isMobile ? 'sm' : 'md'}>
+                            <Button href='/register' size={isMobile ? 'sm' : 'md'}>
                                 Register
                             </Button>
                         </>
@@ -409,68 +363,6 @@ const App = () => {
                     </GridItem>
                 </Grid>
             </Container>
-
-            <Modal isOpen={isLoginOpen} onClose={closeLogin}>
-                <ModalOverlay />
-                <ModalContent>
-                    <ModalHeader>Login</ModalHeader>
-                    <ModalCloseButton />
-                    <ModalBody>
-                        <VStack spacing={4}>
-                            <FormControl>
-                                <FormLabel>Email</FormLabel>
-                                <Input
-                                    type="email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                />
-                            </FormControl>
-                            <FormControl>
-                                <FormLabel>Password</FormLabel>
-                                <Input
-                                    type="password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                />
-                            </FormControl>
-                            <Button onClick={handleLogin} width="100%" colorScheme="blue">
-                                Login
-                            </Button>
-                        </VStack>
-                    </ModalBody>
-                </ModalContent>
-            </Modal>
-
-            <Modal isOpen={isRegisterOpen} onClose={closeRegister}>
-                <ModalOverlay />
-                <ModalContent>
-                    <ModalHeader>Register</ModalHeader>
-                    <ModalCloseButton />
-                    <ModalBody>
-                        <VStack spacing={4}>
-                            <FormControl>
-                                <FormLabel>Email</FormLabel>
-                                <Input
-                                    type="email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                />
-                            </FormControl>
-                            <FormControl>
-                                <FormLabel>Password</FormLabel>
-                                <Input
-                                    type="password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                />
-                            </FormControl>
-                            <Button onClick={handleRegister} width="100%" colorScheme="green">
-                                Register
-                            </Button>
-                        </VStack>
-                    </ModalBody>
-                </ModalContent>
-            </Modal>
 
             <PropertySelector
                 isOpen={isPropertySelectorOpen}

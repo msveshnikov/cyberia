@@ -1,4 +1,3 @@
-/* eslint-disable react-refresh/only-export-components */
 import { ChakraProvider } from '@chakra-ui/react';
 import React, { lazy, Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
@@ -7,6 +6,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 const Landing = lazy(() => import('./Landing'));
 const App = lazy(() => import('./App'));
 const Profile = lazy(() => import('./Profile'));
+const Login = lazy(() => import('./Login'));
+const Register = lazy(() => import('./Register'));
 
 const LoadingFallback = () => <div>Loading...</div>;
 
@@ -19,6 +20,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                         <Route path="/" element={<Landing />} />
                         <Route path="/app" element={<App />} />
                         <Route path="/profile" element={<Profile />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/register" element={<Register />} />
                     </Routes>
                 </Suspense>
             </Router>
