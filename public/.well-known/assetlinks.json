@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "fun.cyberia.twa",
+        "sha256_cert_fingerprints": ["69:34:20:89:6D:49:DF:0E:73:94:6A:91:D0:03:C9:03:21:A3:D4:4A:40:36:E6:74:E7:2B:11:91:52:C5:BA:DE"]
+      }
+    }]

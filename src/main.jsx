@@ -9,6 +9,7 @@ const Profile = lazy(() => import('./Profile'));
 const Login = lazy(() => import('./Login'));
 const Register = lazy(() => import('./Register'));
 const Chat = lazy(() => import('./Chat'));
+const Privacy = lazy(() => import('./Privacy'));
 
 const LoadingFallback = () => <div>Loading...</div>;
 
@@ -23,6 +24,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/chat" element={<Chat />} />
+                    <Route path="/privacy" element={<Privacy />} />
                 </Routes>
             </Suspense>
         </Router>

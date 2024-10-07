@@ -115,3 +115,5 @@ Join our community on Discord: [Cyberia Discord Server](https://discord.gg/Cyber
 Follow us on Twitter: [@CyberiaGame](https://twitter.com/CyberiaGame)
 
 # TODO
+
+-   add /privacy route

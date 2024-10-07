@@ -10,8 +10,9 @@ export default defineConfig({
             manifest: {
                 name: 'Cyberia',
                 short_name: 'Cyberia',
-                description: 'AI-powered MMO property game with infinite 3D isometric map',
+                description: 'AI-powered MMO property game with infinite 3D map',
                 start_url: '/app',
+                scope: '/app',
                 display: 'standalone',
                 background_color: '#ffffff',
                 theme_color: '#1a237e',
