@@ -44,8 +44,14 @@ const App = () => {
     const [mapPosition, setMapPosition] = useState({ x: 0, y: 0 });
     const [isGenerating, setIsGenerating] = useState(false);
     const [socket, setSocket] = useState(null);
-    const [isDarkMode, setIsDarkMode] = useState(false);
-    const [isMuted, setIsMuted] = useState(false);
+    const [isDarkMode, setIsDarkMode] = useState(() => {
+        const savedMode = localStorage.getItem('isDarkMode');
+        return savedMode ? JSON.parse(savedMode) : false;
+    });
+    const [isMuted, setIsMuted] = useState(() => {
+        const savedMute = localStorage.getItem('isMuted');
+        return savedMute ? JSON.parse(savedMute) : false;
+    });
     const [goToX, setGoToX] = useState('0');
     const [goToY, setGoToY] = useState('0');
     const toast = useToast();
@@ -91,6 +97,14 @@ const App = () => {
                 audio.play().catch((error) => console.error('Audio playback failed:', error));
             }
         }
+    }, [isMuted]);
+
+    useEffect(() => {
+        localStorage.setItem('isDarkMode', JSON.stringify(isDarkMode));
+    }, [isDarkMode]);
+
+    useEffect(() => {
+        localStorage.setItem('isMuted', JSON.stringify(isMuted));
     }, [isMuted]);
 
     const checkUserAuth = async () => {

@@ -216,6 +216,7 @@ app.post('/api/chat', authenticateToken, async (req, res) => {
             room: room || 'global'
         });
         await newMessage.save();
+        io.to(newMessage.room).emit('newMessage', newMessage);
         res.status(201).json(newMessage);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -289,8 +290,8 @@ io.on('connection', (socket) => {
         socket.emit('mapUpdated', tiles);
     });
 
-    socket.on('joinChat', (userId) => {
-        socket.join(userId);
+    socket.on('joinChat', (room) => {
+        socket.join(room);
     });
 });
 
