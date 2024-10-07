@@ -115,8 +115,3 @@ Join our community on Discord: [Cyberia Discord Server](https://discord.gg/Cyber
 Follow us on Twitter: [@CyberiaGame](https://twitter.com/CyberiaGame)
 
 # TODO
-
--   add information about current tile owner (below position)
--   show owner name, not id
--   add nearby add to friends button (but  not for yourself)
-

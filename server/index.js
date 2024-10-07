@@ -120,7 +120,10 @@ app.get('/api/tiles', async (req, res) => {
 
 app.get('/api/tiles/:x/:y', async (req, res) => {
     try {
-        const tile = await Tile.findOne({ x: req.params.x, y: req.params.y });
+        const tile = await Tile.findOne({ x: req.params.x, y: req.params.y }).populate(
+            'owner',
+            'email'
+        );
         if (tile) {
             res.json(tile);
         } else {

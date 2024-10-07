@@ -6,6 +6,7 @@ import { dirname, join } from 'path';
 import { promises as fs } from 'fs';
 import Together from 'together-ai';
 import OpenAI from 'openai';
+import User from './User.js';
 
 dotenv.config();
 
@@ -76,7 +77,9 @@ tileSchema.statics.getChunk = async function (startX, startY, sizeX, sizeY) {
     const tiles = await this.find({
         x: { $gte: startX, $lt: startX + sizeX },
         y: { $gte: startY, $lt: startY + sizeY }
-    }).lean();
+    })
+        .populate('owner', 'email')
+        .lean();
 
     const chunk = [];
     for (let y = startY; y < startY + sizeY; y++) {
@@ -223,7 +226,13 @@ tileSchema.statics.generateAIContent = async function (
 };
 
 tileSchema.statics.updateTileOwnership = async function (x, y, userId) {
-    return this.findOneAndUpdate({ x, y }, { owner: userId }, { new: true, upsert: true });
+    const tile = await this.findOneAndUpdate(
+        { x, y },
+        { owner: userId },
+        { new: true, upsert: true }
+    );
+    await User.findByIdAndUpdate(userId, { $addToSet: { ownedTiles: tile._id } });
+    return tile;
 };
 
 tileSchema.statics.getOwnedTiles = async function (userId) {

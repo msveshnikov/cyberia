@@ -12,7 +12,7 @@ import {
     Select,
     Container,
     Center,
-    Avatar,
+    Avatar
 } from '@chakra-ui/react';
 import axios from 'axios';
 import md5 from 'md5';
@@ -60,7 +60,7 @@ const Chat = () => {
         fetchMessages();
         const intervalId = setInterval(fetchMessages, 5000);
         return () => clearInterval(intervalId);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentRoom]);
 
     useEffect(() => {
@@ -146,7 +146,13 @@ const Chat = () => {
                         {messages.map((message, index) => {
                             const userColor = getColorFromHash(md5(message.sender.email));
                             return (
-                                <HStack key={index} bg="gray.50" p={3} borderRadius="md" boxShadow="sm">
+                                <HStack
+                                    key={index}
+                                    bg="gray.50"
+                                    p={3}
+                                    borderRadius="md"
+                                    boxShadow="sm"
+                                >
                                     <Avatar size="sm" src={getGravatarUrl(message.sender.email)} />
                                     <Box flex={1}>
                                         <Text fontWeight="bold" color={`${userColor}.600`}>

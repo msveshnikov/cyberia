@@ -109,16 +109,12 @@ const App = () => {
     }, [isMuted]);
 
     const checkUserAuth = async () => {
-        try {
-            const token = localStorage.getItem('token');
-            if (token) {
-                const response = await axios.get(`${API_URL}/api/user`, {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
-                setUser(response.data);
-            }
-        } catch (error) {
-            console.error('Error checking user auth:', error);
+        const token = localStorage.getItem('token');
+        if (token) {
+            const response = await axios.get(`${API_URL}/api/user`, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            setUser(response.data);
         }
     };
 
@@ -140,19 +136,13 @@ const App = () => {
     }, []);
 
     const fetchMapChunk = async (startX, startY) => {
-        try {
-            const response = await axios.get(`${API_URL}/api/tiles`, {
-                params: { startX: startX - 2, startY: startY - 4, sizeX: 6, sizeY: 9 },
-                headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-            });
-            setMap(response?.data);
-            const currentTile = response?.data.find(
-                (tile) => tile.x === startX && tile.y === startY
-            );
-            setCurrentTileOwner(currentTile?.owner);
-        } catch (error) {
-            console.error('Error fetching map chunk:', error);
-        }
+        const response = await axios.get(`${API_URL}/api/tiles`, {
+            params: { startX: startX - 2, startY: startY - 4, sizeX: 6, sizeY: 9 },
+            headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+        });
+        setMap(response?.data);
+        const currentTile = response?.data.find((tile) => tile.x === startX && tile.y === startY);
+        setCurrentTileOwner(currentTile?.owner?.email);
     };
 
     const generateProperty = async () => {
@@ -222,10 +212,10 @@ const App = () => {
     };
 
     const handleAddFriend = async () => {
-        if (!user || !currentTileOwner) return;
+        if (!user || !currentTileOwner || currentTileOwner === user._id) return;
         try {
             await axios.post(
-                `${API_URL}/api/user/addFriend`,
+                `${API_URL}/api/user/friends`,
                 { friendId: currentTileOwner },
                 {
                     headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
@@ -237,8 +227,7 @@ const App = () => {
                 duration: 3000,
                 isClosable: true
             });
-        } catch (error) {
-            console.error('Error adding friend:', error);
+        } catch {
             toast({
                 title: 'Failed to send friend request',
                 status: 'error',
