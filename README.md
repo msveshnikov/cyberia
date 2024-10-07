@@ -116,4 +116,7 @@ Follow us on Twitter: [@CyberiaGame](https://twitter.com/CyberiaGame)
 
 # TODO
 
--   add /privacy route
+-   add information about current tile owner (below position)
+-   show owner name, not id
+-   add nearby add to friends button (but  not for yourself)
+

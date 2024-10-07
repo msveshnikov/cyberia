@@ -32,7 +32,7 @@ import {
     NumberDecrementStepper
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
-import { FaSun, FaMoon, FaVolumeMute, FaVolumeUp } from 'react-icons/fa';
+import { FaSun, FaMoon, FaVolumeMute, FaVolumeUp, FaUserPlus } from 'react-icons/fa';
 import PropertySelector from './PropertySelector';
 import { IsometricMap } from './IsometricMap';
 
@@ -54,6 +54,7 @@ const App = () => {
     });
     const [goToX, setGoToX] = useState('0');
     const [goToY, setGoToY] = useState('0');
+    const [currentTileOwner, setCurrentTileOwner] = useState(null);
     const toast = useToast();
     const [isMobile] = useMediaQuery('(max-width: 768px)');
     const audioRef = useRef(null);
@@ -145,6 +146,10 @@ const App = () => {
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
             });
             setMap(response?.data);
+            const currentTile = response?.data.find(
+                (tile) => tile.x === startX && tile.y === startY
+            );
+            setCurrentTileOwner(currentTile?.owner);
         } catch (error) {
             console.error('Error fetching map chunk:', error);
         }
@@ -214,6 +219,33 @@ const App = () => {
     const handleGoTo = () => {
         setMapPosition({ x: parseInt(goToX), y: parseInt(goToY) });
         closeGoTo();
+    };
+
+    const handleAddFriend = async () => {
+        if (!user || !currentTileOwner) return;
+        try {
+            await axios.post(
+                `${API_URL}/api/user/addFriend`,
+                { friendId: currentTileOwner },
+                {
+                    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+                }
+            );
+            toast({
+                title: 'Friend request sent',
+                status: 'success',
+                duration: 3000,
+                isClosable: true
+            });
+        } catch (error) {
+            console.error('Error adding friend:', error);
+            toast({
+                title: 'Failed to send friend request',
+                status: 'error',
+                duration: 3000,
+                isClosable: true
+            });
+        }
     };
 
     useEffect(() => {
@@ -372,6 +404,18 @@ const App = () => {
                                 <Text>
                                     X: {mapPosition.x}, Y: {mapPosition.y}
                                 </Text>
+                                {currentTileOwner && (
+                                    <HStack mt={2}>
+                                        <Text>Owner: {currentTileOwner}</Text>
+                                        {user && currentTileOwner !== user._id && (
+                                            <Tooltip label="Add to Friends">
+                                                <Button onClick={handleAddFriend} size="sm">
+                                                    <Icon as={FaUserPlus} />
+                                                </Button>
+                                            </Tooltip>
+                                        )}
+                                    </HStack>
+                                )}
                             </Box>
                             <Box borderWidth={1} borderRadius="md" p={4}>
                                 <Heading size="md" mb={2}>
