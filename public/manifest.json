@@ -1,7 +1,7 @@
 {
     "name": "Cyberia",
     "short_name": "Cyberia",
-    "description": "AI-powered MMO property game with infinite 3D isometric map",
+    "description": "AI-powered MMO game with infinite 3D isometric map and user-owned properties",
     "start_url": "/",
     "display": "standalone",
     "background_color": "#ffffff",
@@ -34,6 +34,17 @@
         "AI-powered property generation",
         "Infinite map scrolling",
         "User-owned properties",
-        "Multiplayer interaction"
-    ]
+        "Multiplayer interaction",
+        "Browser-based gameplay",
+        "Responsive design"
+    ],
+    "screenshots": [
+        {
+            "src": "/hero2.jpg",
+            "type": "image/jpeg",
+            "sizes": "1920x1080"
+        }
+    ],
+
+    "iarc_rating_id": "e84b072d-71b3-4d3e-86ae-31a8ce4e53b7"
 }
