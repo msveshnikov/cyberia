@@ -1,8 +1,13 @@
-[{
-      "relation": ["delegate_permission/common.handle_all_urls"],
-      "target": {
-        "namespace": "android_app",
-        "package_name": "fun.cyberia.twa",
-        "sha256_cert_fingerprints": ["69:34:20:89:6D:49:DF:0E:73:94:6A:91:D0:03:C9:03:21:A3:D4:4A:40:36:E6:74:E7:2B:11:91:52:C5:BA:DE"]
-      }
-    }]
+[
+    {
+        "relation": ["delegate_permission/common.handle_all_urls"],
+        "target": {
+            "namespace": "android_app",
+            "package_name": "fun.cyberia.twa",
+            "sha256_cert_fingerprints": [
+                "69:34:20:89:6D:49:DF:0E:73:94:6A:91:D0:03:C9:03:21:A3:D4:4A:40:36:E6:74:E7:2B:11:91:52:C5:BA:DE",
+                "60:C2:7E:79:9E:AC:F4:70:D6:F7:64:95:C8:5A:5A:B1:EE:EB:B2:A4:8B:68:7F:51:2C:C5:C4:AD:5A:22:1C:78"
+            ]
+        }
+    }
+]
