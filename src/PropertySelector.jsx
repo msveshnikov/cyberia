@@ -124,7 +124,7 @@ const PropertySelector = ({ isOpen, onClose, onGenerate }) => {
                 <ModalHeader>Generate Property</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
-                    <VStack spacing={4}>
+                    <VStack spacing={2}>
                         <FormControl>
                             <FormLabel>Property Type</FormLabel>
                             <Select

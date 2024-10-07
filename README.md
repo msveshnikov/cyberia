@@ -34,13 +34,9 @@ https://cyberia.fun
 5. Scalable backend architecture for growing user base
 6. Isometric rendering optimization for performance
 7. Progressive loading of map areas
-8. Microservices architecture for better scalability
-9. Caching strategies for frequently accessed data
-10. Serverless functions for specific AI-related tasks
-11. Websocket implementation for real-time updates
-12. Automated testing and continuous integration
-13. Localization support for multiple languages
-14. Accessibility features for inclusive gameplay
+8. Caching strategies for frequently accessed data
+9. Serverless functions for specific AI-related tasks
+10. Websocket implementation for real-time updates
 
 ## Planned Features
 
@@ -62,14 +58,14 @@ https://cyberia.fun
 ## Development Roadmap
 
 1. Core game engine and map rendering
-2. AI integration for property generation
+2. Mobile responsiveness and cross-platform support
 3. User authentication and basic profile management
-4. Property creation and placement system
-5. Multiplayer functionality and real-time updates
-6. Monetization features and premium content
-7. Community tools and social features
-8. Mobile responsiveness and cross-platform support
-9. Performance optimization and scalability improvements
+4. AI integration for property generation
+5. Property creation and placement system
+6. Performance optimization and scalability improvements
+7. Multiplayer functionality and real-time updates
+8. Monetization features and premium content
+9. Community tools and social features
 10. Advanced AI features for dynamic world generation
 11. Integration of VR and AR technologies
 12. Blockchain and NFT implementation
@@ -83,7 +79,8 @@ https://cyberia.fun
 2. Install dependencies: `npm install`
 3. Set up environment variables in server/.env (including STABILITY_KEY, MONGODB_URI, JWT_SECRET)
 4. Run the development server: `npm run dev` in server folder
-5. Open `http://localhost:3000` in your browser
+5. Run the development server: `npm run dev` in root folder
+6. Open `http://localhost:5173` in your browser
 
 ## Docker Setup
 
@@ -118,3 +115,5 @@ Join our community on Discord: [Cyberia Discord Server](https://discord.gg/Cyber
 Follow us on Twitter: [@CyberiaGame](https://twitter.com/CyberiaGame)
 
 # TODO
+
+-   add chat function
