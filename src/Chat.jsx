@@ -104,6 +104,12 @@ const Chat = () => {
         return `https://www.gravatar.com/avatar/${hash}?d=identicon&s=40`;
     };
 
+    const getColorFromHash = (hash) => {
+        const colors = ['red', 'blue', 'green', 'purple', 'orange', 'teal', 'pink'];
+        const index = parseInt(hash.substr(0, 8), 16) % colors.length;
+        return colors[index];
+    };
+
     return (
         <Center>
             <Container maxW="container.md" centerContent>
@@ -137,20 +143,23 @@ const Chat = () => {
                         borderRadius="md"
                         p={4}
                     >
-                        {messages.map((message, index) => (
-                            <HStack key={index} bg="gray.50" p={3} borderRadius="md" boxShadow="sm">
-                                <Avatar size="sm" src={getGravatarUrl(message.sender.email)} />
-                                <Box flex={1}>
-                                    <Text fontWeight="bold" color="blue.600">
-                                        {message.sender.email}
-                                    </Text>
-                                    <Text>{message.content}</Text>
-                                    <Text fontSize="xs" color="gray.500" mt={1}>
-                                        {new Date(message.timestamp).toLocaleString()}
-                                    </Text>
-                                </Box>
-                            </HStack>
-                        ))}
+                        {messages.map((message, index) => {
+                            const userColor = getColorFromHash(md5(message.sender.email));
+                            return (
+                                <HStack key={index} bg="gray.50" p={3} borderRadius="md" boxShadow="sm">
+                                    <Avatar size="sm" src={getGravatarUrl(message.sender.email)} />
+                                    <Box flex={1}>
+                                        <Text fontWeight="bold" color={`${userColor}.600`}>
+                                            {message.sender.email}
+                                        </Text>
+                                        <Text color={`${userColor}.800`}>{message.content}</Text>
+                                        <Text fontSize="xs" color="gray.500" mt={1}>
+                                            {new Date(message.timestamp).toLocaleString()}
+                                        </Text>
+                                    </Box>
+                                </HStack>
+                            );
+                        })}
                         <div ref={messagesEndRef} />
                     </VStack>
                     <Divider mb={6} />
