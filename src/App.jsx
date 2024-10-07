@@ -360,8 +360,10 @@ const App = () => {
                                 <Heading size="md" mb={2}>
                                     Game Stats
                                 </Heading>
-                                <Text>Properties Owned: {user ? user.ownedTiles?.length : 0}</Text>
-                                <Text>Total Players: 27{/* Add real-time player count */}</Text>
+                                <Text>
+                                    Properties Owned: {user ? user.ownedTiles?.length : 0}
+                                    {" "} Total Players: 27{/* Add real-time player count */}
+                                </Text>
                             </Box>
                         </VStack>
                     </GridItem>
