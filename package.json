@@ -12,7 +12,7 @@
         "copy": "copy.cmd"
     },
     "dependencies": {
-        "@chakra-ui/react": "^2.9.4",
+        "@chakra-ui/react": "^2.10.1",
         "@emotion/react": "^11.13.3",
         "@emotion/styled": "^11.13.0",
         "axios": "^1.7.7",
@@ -24,9 +24,9 @@
         "socket.io-client": "^4.8.0"
     },
     "devDependencies": {
-        "@eslint/js": "^9.11.1",
+        "@eslint/js": "^9.12.0",
         "@vitejs/plugin-react": "^4.3.2",
-        "eslint": "^9.11.1",
+        "eslint": "^9.12.0",
         "eslint-plugin-react": "^7.37.1",
         "eslint-plugin-react-hooks": "^5.1.0-rc.0",
         "eslint-plugin-react-refresh": "^0.4.12",

@@ -292,7 +292,7 @@ const App = () => {
                 padding={isMobile ? '1rem' : '1.5rem'}
                 bg={isDarkMode ? 'gray.700' : 'gray.200'}
             >
-                <Heading as="h1" size={isMobile ? 'md' : 'lg'}>
+                <Heading as="h1" size={isMobile ? 'sm' : 'lg'}>
                     Cyberia
                 </Heading>
                 <HStack spacing={isMobile ? 2 : 4}>
