@@ -195,6 +195,7 @@ app.post('/api/user/friends', authenticateToken, async (req, res) => {
         await user.addFriend(friendId);
         res.json(user);
     } catch (error) {
+        console.error(error);
         res.status(500).json({ message: error.message });
     }
 });

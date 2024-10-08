@@ -112,7 +112,7 @@ userSchema.methods.addAchievement = function (achievement) {
 
 userSchema.methods.addFriend = function (friendId) {
     if (!this.friends.includes(friendId)) {
-        this.friends.push(friendId);
+        this.friends.push(friendId); 
     }
     return this.save();
 };

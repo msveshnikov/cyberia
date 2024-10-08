@@ -181,6 +181,12 @@ const App = () => {
             );
             socket.emit('updateTile', response.data);
             fetchMapChunk(mapPosition.x, mapPosition.y);
+            toast({
+                title: 'Property generated successfully',
+                status: 'success',
+                duration: 3000,
+                isClosable: true
+            });
         } catch {
             toast({
                 title: 'You can build only on free tiles (landscape)',
@@ -196,6 +202,12 @@ const App = () => {
     const handleLogout = () => {
         localStorage.removeItem('token');
         setUser(null);
+        toast({
+            title: 'Logged out successfully',
+            status: 'info',
+            duration: 3000,
+            isClosable: true
+        });
     };
 
     const toggleDarkMode = () => {
@@ -216,7 +228,7 @@ const App = () => {
         try {
             await axios.post(
                 `${API_URL}/api/user/friends`,
-                { friendId: currentTileOwner },
+                { friendEmail: currentTileOwner._id },
                 {
                     headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
                 }
@@ -261,6 +273,8 @@ const App = () => {
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, [handleMapScroll]);
 
+    const music_no = Math.floor(Math.random() * 4) + 1;
+
     return (
         <Box
             minHeight="100vh"
@@ -268,10 +282,7 @@ const App = () => {
             color={isDarkMode ? 'white' : 'black'}
         >
             <audio ref={audioRef} loop>
-                <source
-                    src={Math.random() < 0.5 ? '/music1.mp3' : '/music2.mp3'}
-                    type="audio/mpeg"
-                />
+                <source src={`/music${music_no}.mp3`} type="audio/mpeg" />
             </audio>
             <Flex
                 as="header"
