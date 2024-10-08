@@ -29,7 +29,7 @@ const PropertySelector = ({ isOpen, onClose, onGenerate }) => {
     const [size, setSize] = useState(50);
     const [material, setMaterial] = useState('brick');
     const [additionalDetails, setAdditionalDetails] = useState('');
-    const [flux, setFlux] = useState(false);
+    const [flux, setFlux] = useState(true);
 
     const propertyTypes = [
         'house',
