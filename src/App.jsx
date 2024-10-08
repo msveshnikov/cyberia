@@ -228,7 +228,7 @@ const App = () => {
         try {
             await axios.post(
                 `${API_URL}/api/user/friends`,
-                { friendEmail: currentTileOwner._id },
+                { friendId: currentTileOwner._id },
                 {
                     headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
                 }
