@@ -37,7 +37,7 @@ export function IsometricMap({ map, mapPosition, setMapPosition }) {
 
         return map.filter((tile) => {
             const x = (tile.x - mapPosition.x - 1) * tileWidth + centerX + shift;
-            const y = ((tile.y - mapPosition.y - 3) * tileHeight) / 2 + centerY;
+            const y = ((tile.y - mapPosition.y - 2) * tileHeight) / 2 + centerY;
 
             return (
                 x > -tileWidth &&
