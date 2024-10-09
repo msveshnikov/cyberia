@@ -35,11 +35,6 @@ export default defineConfig({
                 ],
                 screenshots: [
                     {
-                        src: '/hero3.jpg',
-                        type: 'image/jpeg',
-                        sizes: '1920x1080'
-                    },
-                    {
                         src: '/hero4.jpg',
                         type: 'image/jpeg',
                         sizes: '1920x1080'
