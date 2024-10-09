@@ -28,6 +28,7 @@
                 line-height: 1.6;
                 color: var(--text-color);
                 background-color: var(--bg-color);
+                overflow-x: hidden;
             }
             .container {
                 max-width: 1200px;
@@ -91,6 +92,7 @@
                 margin-bottom: 20px;
                 color: var(--text-color);
                 text-shadow: 2px 2px 4px rgba(0, 229, 255, 0.5);
+                animation: fadeInUp 1s ease-out;
             }
             .hero p {
                 font-size: 1.3rem;
@@ -99,6 +101,9 @@
                 max-width: 600px;
                 margin-left: auto;
                 margin-right: auto;
+                animation: fadeInUp 1s ease-out 0.3s;
+                opacity: 0;
+                animation-fill-mode: forwards;
             }
             .btn {
                 display: inline-block;
@@ -113,6 +118,9 @@
                 text-transform: uppercase;
                 letter-spacing: 1px;
                 font-size: 1.1rem;
+                animation: fadeInUp 1s ease-out 0.6s;
+                opacity: 0;
+                animation-fill-mode: forwards;
             }
             .btn:hover {
                 background: var(--secondary-color);
@@ -130,6 +138,7 @@
                 color: var(--accent-color);
                 font-family: 'Orbitron', sans-serif;
                 font-weight: 700;
+                animation: fadeInUp 1s ease-out;
             }
             .feature-grid {
                 display: grid;
@@ -145,6 +154,18 @@
                     transform 0.3s,
                     box-shadow 0.3s;
                 border: 2px solid var(--primary-color);
+                animation: fadeInUp 1s ease-out;
+                opacity: 0;
+                animation-fill-mode: forwards;
+            }
+            .feature:nth-child(2) {
+                animation-delay: 0.2s;
+            }
+            .feature:nth-child(3) {
+                animation-delay: 0.4s;
+            }
+            .feature:nth-child(4) {
+                animation-delay: 0.6s;
             }
             .feature:hover {
                 transform: translateY(-15px);
@@ -172,6 +193,10 @@
                 border-radius: 15px;
                 box-shadow: 0 8px 20px rgba(0, 229, 255, 0.15);
                 border: 2px solid var(--secondary-color);
+                transition: transform 0.3s ease-out;
+            }
+            .roadmap-item:hover {
+                transform: scale(1.05);
             }
             .roadmap-item h3 {
                 color: var(--accent-color);
@@ -227,6 +252,7 @@
                 color: var(--primary-color);
                 font-family: 'Orbitron', sans-serif;
                 font-weight: 700;
+                animation: pulse 2s infinite;
             }
             .cta p {
                 font-size: 1.3rem;
@@ -261,6 +287,10 @@
                 width: 100%;
                 border-radius: 15px;
                 box-shadow: 0 10px 25px rgba(0, 229, 255, 0.25);
+                transition: transform 0.3s ease-out;
+            }
+            .info-image img:hover {
+                transform: scale(1.05);
             }
             .demo {
                 padding: 100px 0;
@@ -289,6 +319,33 @@
                 border: none;
                 border-radius: 15px;
             }
+            .parallax {
+                background-attachment: fixed;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            @keyframes pulse {
+                0% {
+                    transform: scale(1);
+                }
+                50% {
+                    transform: scale(1.05);
+                }
+                100% {
+                    transform: scale(1);
+                }
+            }
             @media (max-width: 768px) {
                 .hero h1 {
                     font-size: 3rem;
@@ -307,12 +364,15 @@
                 .cta h2 {
                     font-size: 2.5rem;
                 }
+                .parallax {
+                    background-attachment: scroll;
+                }
             }
         </style>
     </head>
     <body>
         <main>
-            <section class="hero">
+            <section class="hero parallax">
                 <div class="container hero-content">
                     <h1>Create Your AI-Powered 3D World</h1>
                     <p>
@@ -352,7 +412,7 @@
                 </div>
             </section>
 
-            <section class="info-section">
+            <section class="info-section parallax">
                 <div class="container">
                     <div class="info-grid">
                         <div class="info-content">
@@ -376,9 +436,7 @@
                 <div class="container">
                     <h2 class="section-title">Why Join Cyberia?</h2>
                     <ul class="benefits-list">
-                        <li>
-                            Claim your property while it is free
-                        </li>
+                        <li>Claim your property while it is free</li>
                         <li>
                             Connect with a Global Community: Make friends, trade, and collaborate
                             with players worldwide
@@ -391,14 +449,12 @@
                             Constantly Evolving: Regular updates, seasonal events, and new features
                             keep the game fresh and exciting
                         </li>
-                        <li>
-                            Free to Start: Begin your adventure without spending a dime
-                        </li>
+                        <li>Free to Start: Begin your adventure without spending a dime</li>
                     </ul>
                 </div>
             </section>
 
-            <section id="roadmap" class="roadmap">
+            <section id="roadmap" class="roadmap parallax">
                 <div class="container">
                     <h2 class="section-title">Development Roadmap</h2>
                     <div class="roadmap-grid">
@@ -472,7 +528,7 @@
                 </div>
             </section>
 
-            <section class="cta">
+            <section class="cta parallax">
                 <div class="container cta-content">
                     <h2>Ready to Shape Your Digital Destiny?</h2>
                     <p>
