@@ -15,7 +15,7 @@ export default defineConfig({
                 scope: '/app',
                 display: 'standalone',
                 background_color: '#ffffff',
-                theme_color: '#1a237e',
+                theme_color: '#000000',
                 icons: [
                     {
                         src: '/favicon.ico',

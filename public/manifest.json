@@ -5,7 +5,7 @@
     "start_url": "/",
     "display": "standalone",
     "background_color": "#ffffff",
-    "theme_color": "#1a237e",
+    "theme_color": "#000000",
     "icons": [
         {
             "src": "/favicon.ico",
@@ -35,8 +35,7 @@
         "Infinite map scrolling",
         "User-owned properties",
         "Multiplayer interaction",
-        "Browser-based gameplay",
-        "Responsive design"
+        "Browser-based gameplay"
     ],
     "screenshots": [
         {
@@ -45,6 +44,5 @@
             "sizes": "1920x1080"
         }
     ],
-
     "iarc_rating_id": "e84b072d-71b3-4d3e-86ae-31a8ce4e53b7"
 }
