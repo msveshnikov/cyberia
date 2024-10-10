@@ -23,30 +23,15 @@ export function IsometricMap({ map, mapPosition, setMapPosition }) {
 
     const centerX = windowSize.width / 2;
     const centerY = windowSize.height / 2;
-    const shift = windowSize.width < 600 ? 200 : -200;
+    const shift = windowSize.width < 850 ? 200 : -200;
 
     const handleTileClick = (x, y) => {
         setMapPosition({ x, y });
     };
 
     const visibleTiles = useMemo(() => {
-        const tileWidth = 350;
-        const tileHeight = 175;
-        const viewportWidth = windowSize.width;
-        const viewportHeight = windowSize.height;
-
-        return map.filter((tile) => {
-            const x = (tile.x - mapPosition.x - 1) * tileWidth + centerX + shift;
-            const y = ((tile.y - mapPosition.y - 2) * tileHeight) / 2 + centerY;
-
-            return (
-                x > -tileWidth &&
-                x < viewportWidth + tileWidth &&
-                y > -tileHeight &&
-                y < viewportHeight + tileHeight
-            );
-        });
-    }, [map, mapPosition, windowSize, centerX, centerY, shift]);
+        return map;
+    }, [map]);
 
     return (
         <Box className="isometric-map" position="relative" width="100%" height="100%">
