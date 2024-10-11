@@ -66,7 +66,8 @@ const tileSchema = new mongoose.Schema({
     events: [{ type: String }],
     interactions: [{ type: String }],
     npcPresence: { type: Boolean, default: false },
-    resourcesAvailable: [{ type: String }]
+    resourcesAvailable: [{ type: String }],
+    link: { type: String }
 });
 
 tileSchema.index({ x: 1, y: 1 }, { unique: true });
@@ -148,7 +149,8 @@ tileSchema.statics.generateAIContent = async function (
     material,
     customPrompt = '',
     landscape = false,
-    useFlux = false
+    useFlux = false,
+    link = ''
 ) {
     const basePrompt = `Create an isometric tile for a game map. The tile should be cohesive style that fits into an infinite, scrollable game world. ${
         landscape ? 'Landscape' : 'Property'
@@ -231,7 +233,8 @@ tileSchema.statics.generateAIContent = async function (
             weather: this.generateRandomWeather(),
             timeOfDay: this.generateRandomTimeOfDay(),
             season: this.generateRandomSeason(),
-            npcPresence: Math.random() < 0.2
+            npcPresence: Math.random() < 0.2,
+            link
         },
         { new: true, upsert: true }
     );
@@ -361,6 +364,11 @@ tileSchema.methods.addResource = function (resource) {
 
 tileSchema.methods.removeResource = function (resource) {
     this.resourcesAvailable = this.resourcesAvailable.filter((r) => r !== resource);
+    return this.save();
+};
+
+tileSchema.methods.setLink = function (link) {
+    this.link = link;
     return this.save();
 };
 

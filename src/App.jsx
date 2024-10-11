@@ -29,7 +29,8 @@ import {
     NumberInputField,
     NumberInputStepper,
     NumberIncrementStepper,
-    NumberDecrementStepper
+    NumberDecrementStepper,
+    Link as ChakraLink
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { FaSun, FaMoon, FaVolumeMute, FaVolumeUp, FaUserPlus } from 'react-icons/fa';
@@ -54,7 +55,7 @@ const App = () => {
     });
     const [goToX, setGoToX] = useState('0');
     const [goToY, setGoToY] = useState('0');
-    const [currentTileOwner, setCurrentTileOwner] = useState(null);
+    const [currentTile, setCurrentTile] = useState(null);
     const toast = useToast();
     const [isMobile] = useMediaQuery('(max-width: 768px)');
     const audioRef = useRef(null);
@@ -142,7 +143,7 @@ const App = () => {
         });
         setMap(response?.data);
         const currentTile = response?.data.find((tile) => tile.x === startX && tile.y === startY);
-        setCurrentTileOwner(currentTile?.owner?.email);
+        setCurrentTile(currentTile);
     };
 
     const generateProperty = async () => {
@@ -225,11 +226,11 @@ const App = () => {
     };
 
     const handleAddFriend = async () => {
-        if (!user || !currentTileOwner || currentTileOwner === user._id) return;
+        if (!user || !currentTile?.owner || currentTile?.owner === user._id) return;
         try {
             await axios.post(
                 `${API_URL}/api/user/friends`,
-                { friendId: currentTileOwner._id },
+                { friendId: currentTile?.owner?._id },
                 {
                     headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
                 }
@@ -406,10 +407,10 @@ const App = () => {
                                 <Text>
                                     X: {mapPosition.x}, Y: {mapPosition.y}
                                 </Text>
-                                {currentTileOwner && (
+                                {currentTile?.owner?.email && (
                                     <HStack mt={2}>
-                                        <Text>Owner: {currentTileOwner}</Text>
-                                        {user && currentTileOwner !== user._id && (
+                                        <Text>Owner: {currentTile?.owner?.email}</Text>
+                                        {user && currentTile?.owner?.email !== user.email && (
                                             <Tooltip label="Add to Friends">
                                                 <Button onClick={handleAddFriend} size="sm">
                                                     <Icon as={FaUserPlus} />
@@ -417,6 +418,19 @@ const App = () => {
                                             </Tooltip>
                                         )}
                                     </HStack>
+                                )}
+                                {currentTile?.link && (
+                                    <ChakraLink
+                                        as={Link}
+                                        to={`${currentTile?.link}`}
+                                        color="blue.500"
+                                        mt={2}
+                                        display="inline-block"
+                                        isExternal
+                                        rel="nofollow"
+                                    >
+                                        Enter Tile
+                                    </ChakraLink>
                                 )}
                             </Box>
                             <Box borderWidth={1} borderRadius="md" p={4}>

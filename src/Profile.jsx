@@ -156,22 +156,20 @@ const Profile = () => {
                     </Heading>
                     <Progress value={(user.achievements.length / 3) * 100} mb={2} />
                     <SimpleGrid columns={3} spacing={2}>
-                        {['first_property', 'ten_properties', 'master'].map(
-                            (achievement) => (
-                                <Badge
-                                    key={achievement}
-                                    colorScheme={
-                                        user.achievements.includes(achievement) ? 'green' : 'gray'
-                                    }
-                                    p={1}
-                                    borderRadius="md"
-                                    fontSize="xs"
-                                    textAlign="center"
-                                >
-                                    {achievement.replace(/_/g, ' ')}
-                                </Badge>
-                            )
-                        )}
+                        {['first_property', 'ten_properties', 'master'].map((achievement) => (
+                            <Badge
+                                key={achievement}
+                                colorScheme={
+                                    user.achievements.includes(achievement) ? 'green' : 'gray'
+                                }
+                                p={1}
+                                borderRadius="md"
+                                fontSize="xs"
+                                textAlign="center"
+                            >
+                                {achievement.replace(/_/g, ' ')}
+                            </Badge>
+                        ))}
                     </SimpleGrid>
                 </Box>
                 <Box>

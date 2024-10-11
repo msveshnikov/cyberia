@@ -19,7 +19,8 @@ import {
     SliderThumb,
     Text,
     Checkbox,
-    Textarea
+    Textarea,
+    Input
 } from '@chakra-ui/react';
 
 const PropertySelector = ({ isOpen, onClose, onGenerate }) => {
@@ -30,6 +31,7 @@ const PropertySelector = ({ isOpen, onClose, onGenerate }) => {
     const [material, setMaterial] = useState('brick');
     const [additionalDetails, setAdditionalDetails] = useState('');
     const [flux, setFlux] = useState(true);
+    const [link, setLink] = useState('');
 
     const propertyTypes = [
         'house',
@@ -111,7 +113,8 @@ const PropertySelector = ({ isOpen, onClose, onGenerate }) => {
             size,
             material,
             additionalDetails,
-            flux
+            flux,
+            link
         };
         onGenerate(propertyDetails);
         onClose();
@@ -193,6 +196,14 @@ const PropertySelector = ({ isOpen, onClose, onGenerate }) => {
                                 onChange={(e) => setAdditionalDetails(e.target.value)}
                                 placeholder="Any specific features or elements"
                                 rows={2}
+                            />
+                        </FormControl>
+                        <FormControl>
+                            <FormLabel>Link</FormLabel>
+                            <Input
+                                value={link}
+                                onChange={(e) => setLink(e.target.value)}
+                                placeholder="Link to your business (optional)"
                             />
                         </FormControl>
                         <FormControl>

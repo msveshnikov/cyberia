@@ -136,7 +136,7 @@ app.get('/api/tiles/:x/:y', async (req, res) => {
 
 app.post('/api/tiles/generate', authenticateToken, async (req, res) => {
     try {
-        const { x, y, flux, propertyType, color, style, size, material, additionalDetails } =
+        const { x, y, flux, propertyType, color, style, size, material, additionalDetails, link } =
             req.body;
         const existingTile = await Tile.findOne({ x, y });
         if (existingTile) {
@@ -155,7 +155,8 @@ app.post('/api/tiles/generate', authenticateToken, async (req, res) => {
             material,
             additionalDetails,
             false,
-            flux
+            flux,
+            link
         );
 
         await User.findByIdAndUpdate(req.user._id, { $push: { ownedTiles: generatedTile._id } });
