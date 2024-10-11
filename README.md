@@ -17,6 +17,8 @@ https://cyberia.fun
 -   User-owned 1024x1024 property tiles
 -   Multiplayer interaction in a shared world
 -   Browser-based gameplay (no downloads required)
+-   Real-time chat system
+-   User authentication and profiles
 
 ## Technology Stack
 
@@ -24,6 +26,7 @@ https://cyberia.fun
 -   Backend: ExpressJS + MongoDB, ES6 modules
 -   AI Generation: Stable Diffusion SDXL ^ Flux
 -   Containerization: Docker
+-   Real-time Communication: WebSockets
 
 ## Design Considerations
 
@@ -37,11 +40,16 @@ https://cyberia.fun
 8. Caching strategies for frequently accessed data
 9. Serverless functions for specific AI-related tasks
 10. Websocket implementation for real-time updates
+11. SEO optimization for landing page and public content
+12. Accessibility considerations for diverse user base
+13. Cross-browser compatibility
+14. Mobile-first design approach
+15. Security measures for user data protection
 
 ## Planned Features
 
 -   Property customization tools
--   Social features (chat, friends list, trading)
+-   Social features (friends list, trading)
 -   Economy system for in-game transactions
 -   Achievements and progression system
 -   Seasonal events and special limited-time properties
@@ -54,12 +62,14 @@ https://cyberia.fun
 -   Cross-platform account linking
 -   In-game NFT integration
 -   AI-powered NPCs and quests
+-   Advanced property search and filtering
+-   User-created mini-games within properties
 
 ## Development Roadmap
 
 1. Core game engine and map rendering
 2. Mobile responsiveness and cross-platform support
-3. User authentication and basic profile management
+3. User authentication and profile management
 4. AI integration for property generation
 5. Property creation and placement system
 6. Performance optimization and scalability improvements
@@ -72,6 +82,11 @@ https://cyberia.fun
 13. Expansion of AI-driven content and gameplay elements
 14. Launch of user-generated content marketplace
 15. Development of external API and developer tools
+16. Implementation of advanced security measures
+17. Localization and internationalization
+18. Integration with popular social media platforms
+19. Development of mobile companion app
+20. Implementation of advanced analytics and user behavior tracking
 
 ## Getting Started
 
@@ -96,6 +111,8 @@ https://cyberia.fun
 -   `docs/`: Documentation and marketing materials
 -   `Dockerfile` & `docker-compose.yml`: Docker configuration files
 -   `.prettierrc`: Code formatting configuration
+-   `public/`: Static assets and manifest files
+-   `vite.config.js`: Vite configuration
 
 ## Contributing
 
@@ -114,4 +131,6 @@ Join our community on Discord: [Cyberia Discord Server](https://discord.gg/Cyber
 
 Follow us on Twitter: [@CyberiaGame](https://twitter.com/CyberiaGame)
 
-# TODO
+## Privacy Policy
+
+For information about how we handle user data, please refer to our [Privacy Policy](/docs/privacy_policy.html).

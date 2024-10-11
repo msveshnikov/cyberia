@@ -12,7 +12,7 @@
         "copy": "copy.cmd"
     },
     "dependencies": {
-        "@chakra-ui/react": "^2.10.1",
+        "@chakra-ui/react": "^2.10.2",
         "@emotion/react": "^11.13.3",
         "@emotion/styled": "^11.13.0",
         "axios": "^1.7.7",
@@ -30,7 +30,7 @@
         "eslint-plugin-react": "^7.37.1",
         "eslint-plugin-react-hooks": "^5.1.0-rc.0",
         "eslint-plugin-react-refresh": "^0.4.12",
-        "globals": "^15.10.0",
+        "globals": "^15.11.0",
         "prettier": "^3.3.3",
         "vite": "^5.4.8",
         "vite-plugin-pwa": "^0.20.5"
