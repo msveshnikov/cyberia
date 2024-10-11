@@ -159,6 +159,14 @@ app.post('/api/tiles/generate', authenticateToken, async (req, res) => {
         );
 
         await User.findByIdAndUpdate(req.user._id, { $push: { ownedTiles: generatedTile._id } });
+
+        const user = await User.findById(req.user._id);
+        if (user.ownedTiles.length === 1) {
+            await user.addAchievement('first_property');
+        } else if (user.ownedTiles.length === 10) {
+            await user.addAchievement('ten_properties');
+        }
+
         res.status(201).json(generatedTile);
     } catch (error) {
         res.status(500).json({ message: error.message });
