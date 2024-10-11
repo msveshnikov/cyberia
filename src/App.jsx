@@ -187,9 +187,10 @@ const App = () => {
                 duration: 3000,
                 isClosable: true
             });
-        } catch {
+        } catch (error) {
             toast({
-                title: 'You can build only on free tiles (landscape)',
+                title: 'Error generating property',
+                description: error.response?.data?.message || 'An error occurred',
                 status: 'error',
                 duration: 3000,
                 isClosable: true
@@ -239,9 +240,10 @@ const App = () => {
                 duration: 3000,
                 isClosable: true
             });
-        } catch {
+        } catch (error) {
             toast({
                 title: 'Failed to send friend request',
+                description: error.response?.data?.message || 'An error occurred',
                 status: 'error',
                 duration: 3000,
                 isClosable: true
@@ -421,10 +423,7 @@ const App = () => {
                                 <Heading size="md" mb={2}>
                                     Game Stats
                                 </Heading>
-                                <Text>
-                                    Properties Owned: {user ? user.ownedTiles?.length : 0} Total
-                                    Players: 27
-                                </Text>
+                                <Text>Properties Owned: {user ? user.ownedTiles?.length : 0}</Text>
                             </Box>
                         </VStack>
                     </GridItem>

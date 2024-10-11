@@ -127,9 +127,6 @@ const Profile = () => {
                             </Badge>
                         </VStack>
                     </HStack>
-                    <Button colorScheme="blue" size="sm">
-                        Edit Profile
-                    </Button>
                 </Flex>
                 <StatGroup flexWrap="wrap" justifyContent="space-between">
                     <Stat flexBasis={{ base: '50%', md: '25%' }} textAlign="center" mb={4}>

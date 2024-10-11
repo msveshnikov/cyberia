@@ -11,7 +11,6 @@ import {
     FormControl,
     FormLabel,
     Select,
-    Input,
     VStack,
     HStack,
     Slider,
@@ -19,7 +18,8 @@ import {
     SliderFilledTrack,
     SliderThumb,
     Text,
-    Checkbox
+    Checkbox,
+    Textarea
 } from '@chakra-ui/react';
 
 const PropertySelector = ({ isOpen, onClose, onGenerate }) => {
@@ -118,7 +118,7 @@ const PropertySelector = ({ isOpen, onClose, onGenerate }) => {
     };
 
     return (
-        <Modal isOpen={isOpen} onClose={onClose}>
+        <Modal isOpen={isOpen} onClose={onClose} size="xl">
             <ModalOverlay />
             <ModalContent>
                 <ModalHeader>Generate Property</ModalHeader>
@@ -188,16 +188,16 @@ const PropertySelector = ({ isOpen, onClose, onGenerate }) => {
                         </FormControl>
                         <FormControl>
                             <FormLabel>Additional Details</FormLabel>
-                            <Input
-                                type="text"
+                            <Textarea
                                 value={additionalDetails}
                                 onChange={(e) => setAdditionalDetails(e.target.value)}
                                 placeholder="Any specific features or elements"
+                                rows={2}
                             />
                         </FormControl>
                         <FormControl>
                             <Checkbox isChecked={flux} onChange={(e) => setFlux(e.target.checked)}>
-                                Flux
+                                Use FLUX for generation (faster, less detailed)
                             </Checkbox>
                         </FormControl>
                     </VStack>

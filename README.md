@@ -133,4 +133,5 @@ Follow us on Twitter: [@CyberiaGame](https://twitter.com/CyberiaGame)
 
 ## Privacy Policy
 
-For information about how we handle user data, please refer to our [Privacy Policy](/docs/privacy_policy.html).
+For information about how we handle user data, please refer to our
+[Privacy Policy](/docs/privacy_policy.html).

@@ -11,11 +11,13 @@ import {
     Divider,
     Select,
     Container,
-    Center,
-    Avatar
+    Avatar,
+    Flex,
+    Spacer
 } from '@chakra-ui/react';
 import axios from 'axios';
 import md5 from 'md5';
+import { Link } from 'react-router-dom';
 
 const API_URL = import.meta.env.DEV ? 'http://localhost:3000' : 'https://cyberia.fun';
 
@@ -111,79 +113,73 @@ const Chat = () => {
     };
 
     return (
-        <Center>
-            <Container maxW="container.md" centerContent>
-                <Box
-                    width="100%"
-                    maxWidth="600px"
-                    borderWidth={1}
-                    borderRadius="lg"
-                    p={6}
-                    boxShadow="lg"
-                    bg="white"
-                >
-                    <Heading size="lg" mb={6} textAlign="center">
-                        Cyberia Chat
-                    </Heading>
-                    <Select
-                        value={currentRoom}
-                        onChange={(e) => setCurrentRoom(e.target.value)}
-                        mb={6}
-                    >
-                        <option value="global">Global</option>
-                        <option value="local">Local</option>
-                    </Select>
-                    <VStack
-                        height="400px"
-                        overflowY="auto"
-                        spacing={3}
-                        align="stretch"
-                        mb={6}
-                        borderWidth={1}
-                        borderRadius="md"
-                        p={4}
-                    >
-                        {messages.map((message, index) => {
-                            const userColor = getColorFromHash(md5(message.sender.email));
-                            return (
-                                <HStack
-                                    key={index}
-                                    bg="gray.50"
-                                    p={3}
-                                    borderRadius="md"
-                                    boxShadow="sm"
-                                >
-                                    <Avatar size="sm" src={getGravatarUrl(message.sender.email)} />
-                                    <Box flex={1}>
-                                        <Text fontWeight="bold" color={`${userColor}.600`}>
-                                            {message.sender.email}
-                                        </Text>
-                                        <Text color={`${userColor}.800`}>{message.content}</Text>
-                                        <Text fontSize="xs" color="gray.500" mt={1}>
-                                            {new Date(message.timestamp).toLocaleString()}
-                                        </Text>
-                                    </Box>
-                                </HStack>
-                            );
-                        })}
-                        <div ref={messagesEndRef} />
-                    </VStack>
-                    <Divider mb={6} />
-                    <HStack>
-                        <Input
-                            value={inputMessage}
-                            onChange={(e) => setInputMessage(e.target.value)}
-                            placeholder="Type a message..."
-                            onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-                            size="lg"
-                        />
-                        <Button onClick={handleSendMessage} colorScheme="blue" size="lg">
-                            Send
+        <Container maxW="container.xl" centerContent>
+            <Box
+                width="100%"
+                maxWidth="800px"
+                borderWidth={1}
+                borderRadius="lg"
+                p={6}
+                boxShadow="lg"
+                bg="white"
+            >
+                <Flex align="center" mb={6}>
+                    <Heading size="lg">Cyberia Chat</Heading>
+                    <Spacer />
+                    <Link to="/app">
+                        <Button colorScheme="blue" size="sm">
+                            Back to Game
                         </Button>
-                    </HStack>
-                </Box>
-            </Container>
-        </Center>
+                    </Link>
+                </Flex>
+                <Select value={currentRoom} onChange={(e) => setCurrentRoom(e.target.value)} mb={6}>
+                    <option value="global">Global</option>
+                    <option value="local">Local</option>
+                </Select>
+                <VStack
+                    height="400px"
+                    overflowY="auto"
+                    spacing={3}
+                    align="stretch"
+                    mb={6}
+                    borderWidth={1}
+                    borderRadius="md"
+                    p={4}
+                >
+                    {messages.map((message, index) => {
+                        const userColor = getColorFromHash(md5(message.sender.email));
+                        return (
+                            <HStack key={index} bg="gray.50" p={3} borderRadius="md" boxShadow="sm">
+                                <Avatar size="sm" src={getGravatarUrl(message.sender.email)} />
+                                <Box flex={1}>
+                                    <Text fontWeight="bold" color={`${userColor}.600`}>
+                                        {message.sender.email}
+                                    </Text>
+                                    <Text color={`${userColor}.800`}>{message.content}</Text>
+                                    <Text fontSize="xs" color="gray.500" mt={1}>
+                                        {new Date(message.timestamp).toLocaleString()}
+                                    </Text>
+                                </Box>
+                            </HStack>
+                        );
+                    })}
+                    <div ref={messagesEndRef} />
+                </VStack>
+                <Divider mb={6} />
+                <HStack>
+                    <Input
+                        value={inputMessage}
+                        onChange={(e) => setInputMessage(e.target.value)}
+                        placeholder="Type a message..."
+                        onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+                        size="lg"
+                    />
+                    <Button onClick={handleSendMessage} colorScheme="blue" size="lg">
+                        Send
+                    </Button>
+                </HStack>
+            </Box>
+        </Container>
     );
 };
 

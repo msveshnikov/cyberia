@@ -274,6 +274,7 @@ tileSchema.statics.takeFractalLandscapeTile = async function (x, y) {
     };
 
     const p = new Array(512);
+    // should be deterministic, no random!
     for (let i = 0; i < 256; i++) p[i] = p[i + 256] = Math.floor(0.1 * 256);
 
     let value = 0;
