@@ -1,4 +1,4 @@
-name: IsoCraft CI/CD
+name: Cyberia CI/CD
 
 on:
     push:
