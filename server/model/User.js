@@ -72,7 +72,29 @@ const userSchema = new mongoose.Schema({
             enum: ['light', 'dark'],
             default: 'light'
         }
-    }
+    },
+    socialLinks: {
+        twitter: String,
+        discord: String
+    },
+    gameStats: {
+        propertiesCreated: { type: Number, default: 0 },
+        totalVisitors: { type: Number, default: 0 },
+        timeSpent: { type: Number, default: 0 }
+    },
+    inventory: [
+        {
+            itemType: String,
+            quantity: Number
+        }
+    ],
+    questProgress: [
+        {
+            questId: String,
+            progress: Number,
+            completed: Boolean
+        }
+    ]
 });
 
 userSchema.pre('save', async function (next) {
@@ -152,6 +174,37 @@ userSchema.methods.setPreferences = function (preferences) {
     return this.save();
 };
 
+userSchema.methods.setSocialLinks = function (links) {
+    this.socialLinks = { ...this.socialLinks, ...links };
+    return this.save();
+};
+
+userSchema.methods.updateGameStats = function (stats) {
+    this.gameStats = { ...this.gameStats, ...stats };
+    return this.save();
+};
+
+userSchema.methods.addToInventory = function (itemType, quantity) {
+    const existingItem = this.inventory.find((item) => item.itemType === itemType);
+    if (existingItem) {
+        existingItem.quantity += quantity;
+    } else {
+        this.inventory.push({ itemType, quantity });
+    }
+    return this.save();
+};
+
+userSchema.methods.updateQuestProgress = function (questId, progress, completed) {
+    const existingQuest = this.questProgress.find((quest) => quest.questId === questId);
+    if (existingQuest) {
+        existingQuest.progress = progress;
+        existingQuest.completed = completed;
+    } else {
+        this.questProgress.push({ questId, progress, completed });
+    }
+    return this.save();
+};
+
 userSchema.statics.findActiveUsers = function (threshold) {
     const thresholdDate = new Date(Date.now() - threshold);
     return this.find({ lastActiveAt: { $gte: thresholdDate } });
@@ -159,6 +212,14 @@ userSchema.statics.findActiveUsers = function (threshold) {
 
 userSchema.statics.findPremiumUsers = function () {
     return this.find({ premium: true });
+};
+
+userSchema.statics.findTopPropertyOwners = function (limit = 10) {
+    return this.aggregate([
+        { $project: { email: 1, ownedTilesCount: { $size: '$ownedTiles' } } },
+        { $sort: { ownedTilesCount: -1 } },
+        { $limit: limit }
+    ]);
 };
 
 const User = mongoose.model('User', userSchema);

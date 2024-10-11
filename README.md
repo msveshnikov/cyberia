@@ -135,3 +135,7 @@ Follow us on Twitter: [@CyberiaGame](https://twitter.com/CyberiaGame)
 
 For information about how we handle user data, please refer to our
 [Privacy Policy](/docs/privacy_policy.html).
+
+# TODO
+
+-   implement achievments:  first_property, ten_properties

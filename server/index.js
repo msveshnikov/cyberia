@@ -176,10 +176,13 @@ app.get('/api/user/tiles', authenticateToken, async (req, res) => {
 
 app.put('/api/user/profile', authenticateToken, async (req, res) => {
     try {
-        const { profilePicture } = req.body;
+        const { profilePicture, preferences } = req.body;
         const user = await User.findById(req.user._id);
         if (profilePicture) {
             user.profilePicture = profilePicture;
+        }
+        if (preferences) {
+            user.setPreferences(preferences);
         }
         await user.save();
         res.json(user);

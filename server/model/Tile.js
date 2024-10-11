@@ -59,7 +59,14 @@ const tileSchema = new mongoose.Schema({
     propertyType: { type: String },
     color: { type: String },
     size: { type: String },
-    material: { type: String }
+    material: { type: String },
+    weather: { type: String },
+    timeOfDay: { type: String },
+    season: { type: String },
+    events: [{ type: String }],
+    interactions: [{ type: String }],
+    npcPresence: { type: Boolean, default: false },
+    resourcesAvailable: [{ type: String }]
 });
 
 tileSchema.index({ x: 1, y: 1 }, { unique: true });
@@ -122,6 +129,7 @@ export const openai = new OpenAI({
 
 const getTextGpt = async (prompt) => {
     const completion = await openai.chat.completions.create({
+        // dont change the model!!
         model: 'gpt-4o-mini',
         messages: [{ role: 'user', content: prompt }],
         temperature: 0.7
@@ -142,7 +150,9 @@ tileSchema.statics.generateAIContent = async function (
     landscape = false,
     useFlux = false
 ) {
-    const basePrompt = `Create an isometric tile for a game map. The tile should be cohesive style that fits into an infinite, scrollable game world. ${landscape ? 'Landscape' : 'Property'} type: ${propertyType}, Style:${style}, Color: ${color}, Size: ${size}, Material: ${material}.  ${customPrompt}`;
+    const basePrompt = `Create an isometric tile for a game map. The tile should be cohesive style that fits into an infinite, scrollable game world. ${
+        landscape ? 'Landscape' : 'Property'
+    } type: ${propertyType}, Style:${style}, Color: ${color}, Size: ${size}, Material: ${material}. ${customPrompt}`;
 
     const scenePrompt = `Pretend you are a graphic designer generating creative images for midjourney. 
     Midjourney is an app that can generate AI art from simple prompts. 
@@ -217,7 +227,11 @@ tileSchema.statics.generateAIContent = async function (
             style,
             size,
             material,
-            owner
+            owner,
+            weather: this.generateRandomWeather(),
+            timeOfDay: this.generateRandomTimeOfDay(),
+            season: this.generateRandomSeason(),
+            npcPresence: Math.random() < 0.2
         },
         { new: true, upsert: true }
     );
@@ -292,6 +306,62 @@ tileSchema.statics.takeFractalLandscapeTile = async function (x, y) {
     const landscapeType = landscapeTypes[landscapeTypeIndex];
 
     return this.findOne({ propertyType: landscapeType });
+};
+
+tileSchema.statics.generateRandomWeather = function () {
+    const weathers = ['sunny', 'rainy', 'cloudy', 'snowy', 'foggy', 'windy'];
+    return weathers[Math.floor(Math.random() * weathers.length)];
+};
+
+tileSchema.statics.generateRandomTimeOfDay = function () {
+    const times = ['dawn', 'morning', 'noon', 'afternoon', 'evening', 'night'];
+    return times[Math.floor(Math.random() * times.length)];
+};
+
+tileSchema.statics.generateRandomSeason = function () {
+    const seasons = ['spring', 'summer', 'autumn', 'winter'];
+    return seasons[Math.floor(Math.random() * seasons.length)];
+};
+
+tileSchema.methods.addEvent = function (event) {
+    if (!this.events.includes(event)) {
+        this.events.push(event);
+    }
+    return this.save();
+};
+
+tileSchema.methods.removeEvent = function (event) {
+    this.events = this.events.filter((e) => e !== event);
+    return this.save();
+};
+
+tileSchema.methods.addInteraction = function (interaction) {
+    if (!this.interactions.includes(interaction)) {
+        this.interactions.push(interaction);
+    }
+    return this.save();
+};
+
+tileSchema.methods.removeInteraction = function (interaction) {
+    this.interactions = this.interactions.filter((i) => i !== interaction);
+    return this.save();
+};
+
+tileSchema.methods.toggleNPCPresence = function () {
+    this.npcPresence = !this.npcPresence;
+    return this.save();
+};
+
+tileSchema.methods.addResource = function (resource) {
+    if (!this.resourcesAvailable.includes(resource)) {
+        this.resourcesAvailable.push(resource);
+    }
+    return this.save();
+};
+
+tileSchema.methods.removeResource = function (resource) {
+    this.resourcesAvailable = this.resourcesAvailable.filter((r) => r !== resource);
+    return this.save();
 };
 
 const Tile = mongoose.model('Tile', tileSchema);
