@@ -138,4 +138,4 @@ For information about how we handle user data, please refer to our
 
 # TODO
 
--   implement achievments:  first_property, ten_properties
+-   add link to Tile, allow user to enter it and show in App for other users

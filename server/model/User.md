@@ -20,8 +20,7 @@ The `userSchema` defines the structure of a user document in the MongoDB databas
 -   `lastLogin`: Date
 -   `isAdmin`: Boolean (default: false)
 -   `ownedTiles`: Array of ObjectIds referencing 'Tile' documents
--   `achievements`: Array of Strings (enum: 'first_property', 'ten_properties',
-    'customization_master')
+-   `achievements`: Array of Strings (enum: 'first_property', 'ten_properties', 'master')
 -   `friends`: Array of ObjectIds referencing other 'User' documents
 -   `balance`: Number (default: 0)
 -   `premium`: Boolean (default: false)

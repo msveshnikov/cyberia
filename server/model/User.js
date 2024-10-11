@@ -33,7 +33,7 @@ const userSchema = new mongoose.Schema({
     achievements: [
         {
             type: String,
-            enum: ['first_property', 'ten_properties', 'customization_master']
+            enum: ['first_property', 'ten_properties', 'master']
         }
     ],
     friends: [

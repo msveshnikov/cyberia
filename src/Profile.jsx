@@ -119,7 +119,7 @@ const Profile = () => {
                     <HStack mb={{ base: 4, md: 0 }}>
                         <Avatar size="xl" name={user.email} src={user.profilePicture} />
                         <VStack align="start" spacing={0}>
-                            <Heading as="h1" size="xl">
+                            <Heading as="h3" size="lg">
                                 {user.email}
                             </Heading>
                             <Badge colorScheme={user.premium ? 'purple' : 'gray'}>
@@ -156,7 +156,7 @@ const Profile = () => {
                     </Heading>
                     <Progress value={(user.achievements.length / 3) * 100} mb={2} />
                     <SimpleGrid columns={3} spacing={2}>
-                        {['first_property', 'ten_properties', 'customization_master'].map(
+                        {['first_property', 'ten_properties', 'master'].map(
                             (achievement) => (
                                 <Badge
                                     key={achievement}
