@@ -429,7 +429,7 @@ const App = () => {
                                         isExternal
                                         rel="nofollow"
                                     >
-                                        Enter Tile
+                                        Enter Property
                                     </ChakraLink>
                                 )}
                             </Box>
