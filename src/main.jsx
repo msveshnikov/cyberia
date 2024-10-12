@@ -24,6 +24,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/chat" element={<Chat />} />
+                    <Route path="/chat/:tileid" element={<Chat />} />
                     <Route path="/privacy" element={<Privacy />} />
                 </Routes>
             </Suspense>

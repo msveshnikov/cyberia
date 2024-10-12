@@ -333,7 +333,7 @@ const App = () => {
                             </Link>
                         </>
                     )}
-                    <Link to="/chat">
+                    <Link to={`/chat/${currentTile?.x},${currentTile?.y}`}>
                         <Button size={isMobile ? 'sm' : 'md'}>Chat</Button>
                     </Link>
                 </HStack>

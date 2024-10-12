@@ -17,7 +17,7 @@ import {
 } from '@chakra-ui/react';
 import axios from 'axios';
 import md5 from 'md5';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 const API_URL = import.meta.env.DEV ? 'http://localhost:3000' : 'https://cyberia.fun';
 
@@ -28,6 +28,7 @@ const Chat = () => {
     const [currentRoom, setCurrentRoom] = useState('global');
     const messagesEndRef = useRef(null);
     const toast = useToast();
+    const { tileid } = useParams();
 
     const checkUserAuth = async () => {
         try {
@@ -49,7 +50,8 @@ const Chat = () => {
 
     const fetchMessages = async () => {
         try {
-            const response = await axios.get(`${API_URL}/api/chat/${currentRoom}`, {
+            const room = currentRoom === 'local' ? tileid : currentRoom;
+            const response = await axios.get(`${API_URL}/api/chat/${room}`, {
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
             });
             setMessages(response.data);
@@ -63,7 +65,7 @@ const Chat = () => {
         const intervalId = setInterval(fetchMessages, 5000);
         return () => clearInterval(intervalId);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentRoom]);
+    }, [currentRoom, tileid]);
 
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -82,9 +84,10 @@ const Chat = () => {
 
         if (inputMessage.trim() !== '') {
             try {
+                const room = currentRoom === 'local' ? tileid : currentRoom;
                 await axios.post(
                     `${API_URL}/api/chat`,
-                    { message: inputMessage, room: currentRoom },
+                    { message: inputMessage, room },
                     { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
                 );
                 setInputMessage('');
