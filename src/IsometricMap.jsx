@@ -26,7 +26,7 @@ export function IsometricMap({ map, mapPosition, setMapPosition }) {
 
     const centerX = windowSize.width / 2;
     const centerY = windowSize.height / 2;
-    const shift = windowSize.width < 850 ? 200 : -200;
+    const shift = windowSize.width < 850 ? TILE_SIZE * 0.8 : -TILE_SIZE * 0.8;
 
     const handleTileClick = (x, y) => {
         setMapPosition({ x, y });

@@ -208,7 +208,7 @@ const PropertySelector = ({ isOpen, onClose, onGenerate }) => {
                         </FormControl>
                         <FormControl>
                             <Checkbox isChecked={flux} onChange={(e) => setFlux(e.target.checked)}>
-                                Use FLUX for generation (faster, less detailed)
+                                Use FLUX for generation
                             </Checkbox>
                         </FormControl>
                     </VStack>
