@@ -36,9 +36,10 @@ import {
     StatNumber
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
-import { FaSun, FaMoon, FaVolumeMute, FaVolumeUp, FaUserPlus } from 'react-icons/fa';
+import { FaSun, FaMoon, FaVolumeMute, FaVolumeUp, FaUserPlus, FaQuestion } from 'react-icons/fa';
 import PropertySelector from './PropertySelector';
 import { IsometricMap } from './IsometricMap';
+import Onboarding from './Onboarding';
 
 const API_URL = import.meta.env.DEV ? 'http://localhost:3000' : 'https://cyberia.fun';
 
@@ -61,6 +62,10 @@ const App = () => {
     const [currentTile, setCurrentTile] = useState(null);
     const [totalUsers, setTotalUsers] = useState(0);
     const [totalNonLandscapeTiles, setTotalNonLandscapeTiles] = useState(0);
+    const [isOnboardingComplete, setIsOnboardingComplete] = useState(() => {
+        return localStorage.getItem('onboardingComplete') === 'true';
+    });
+    const [onboardingStep, setOnboardingStep] = useState(0);
     const toast = useToast();
     const [isMobile] = useMediaQuery('(max-width: 768px)');
     const audioRef = useRef(null);
@@ -71,14 +76,22 @@ const App = () => {
         onClose: closePropertySelector
     } = useDisclosure();
     const { isOpen: isGoToOpen, onOpen: openGoTo, onClose: closeGoTo } = useDisclosure();
+    const {
+        isOpen: isOnboardingOpen,
+        onOpen: openOnboarding,
+        onClose: closeOnboarding
+    } = useDisclosure();
 
     useEffect(() => {
         checkUserAuth();
         const newSocket = io(API_URL);
         setSocket(newSocket);
         fetchGameStats();
+        if (!isOnboardingComplete) {
+            openOnboarding();
+        }
         return () => newSocket.close();
-    }, []);
+    }, [isOnboardingComplete, openOnboarding]);
 
     useEffect(() => {
         fetchMapChunk(mapPosition.x, mapPosition.y);
@@ -267,6 +280,16 @@ const App = () => {
                 isClosable: true
             });
         }
+    };
+
+    const handleOnboardingComplete = () => {
+        setIsOnboardingComplete(true);
+        localStorage.setItem('onboardingComplete', 'true');
+        closeOnboarding();
+    };
+
+    const handleOnboardingNext = () => {
+        setOnboardingStep((prev) => prev + 1);
     };
 
     useEffect(() => {
@@ -512,6 +535,14 @@ const App = () => {
                     </ModalBody>
                 </ModalContent>
             </Modal>
+
+            <Onboarding
+                isOpen={isOnboardingOpen}
+                onClose={closeOnboarding}
+                step={onboardingStep}
+                onNext={handleOnboardingNext}
+                onComplete={handleOnboardingComplete}
+            />
         </Box>
     );
 };

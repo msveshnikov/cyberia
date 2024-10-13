@@ -11,6 +11,7 @@ const Login = lazy(() => import('./Login'));
 const Register = lazy(() => import('./Register'));
 const Chat = lazy(() => import('./Chat'));
 const Privacy = lazy(() => import('./Privacy'));
+const Onboarding = lazy(() => import('./Onboarding'));
 
 const LoadingFallback = () => <div>Loading...</div>;
 
@@ -32,6 +33,7 @@ const AppWithAnalytics = () => {
                         <Route path="/chat" element={<Chat />} />
                         <Route path="/chat/:tileid" element={<Chat />} />
                         <Route path="/privacy" element={<Privacy />} />
+                        <Route path="/onboarding" element={<Onboarding />} />
                     </Routes>
                 </Suspense>
             </Router>
