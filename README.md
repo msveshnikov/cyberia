@@ -137,5 +137,3 @@ For information about how we handle user data, please refer to our
 [Privacy Policy](/docs/privacy_policy.html).
 
 # TODO
-
--   Local chat is actually Tile chat, use route /chat/:tileid and send it if Local selected

@@ -146,7 +146,7 @@ const Profile = () => {
                         <StatNumber fontSize="sm">{user.balance} coins</StatNumber>
                     </Stat>
                     <Stat flexBasis={{ base: '50%', md: '25%' }} textAlign="center" mb={4}>
-                        <StatLabel>Owned Tiles</StatLabel>
+                        <StatLabel>Owned Properties</StatLabel>
                         <StatNumber fontSize="sm">{ownedTiles.length}</StatNumber>
                     </Stat>
                 </StatGroup>
@@ -174,7 +174,7 @@ const Profile = () => {
                 </Box>
                 <Box>
                     <Heading as="h2" size="md" mb={4}>
-                        Owned Tiles
+                        Owned Properties
                     </Heading>
                     {ownedTiles.length === 0 ? (
                         <Text>You dont own any tiles yet.</Text>

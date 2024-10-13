@@ -30,7 +30,10 @@ import {
     NumberInputStepper,
     NumberIncrementStepper,
     NumberDecrementStepper,
-    Link as ChakraLink
+    Link as ChakraLink,
+    Stat,
+    StatLabel,
+    StatNumber
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { FaSun, FaMoon, FaVolumeMute, FaVolumeUp, FaUserPlus } from 'react-icons/fa';
@@ -56,6 +59,8 @@ const App = () => {
     const [goToX, setGoToX] = useState('0');
     const [goToY, setGoToY] = useState('0');
     const [currentTile, setCurrentTile] = useState(null);
+    const [totalUsers, setTotalUsers] = useState(0);
+    const [totalNonLandscapeTiles, setTotalNonLandscapeTiles] = useState(0);
     const toast = useToast();
     const [isMobile] = useMediaQuery('(max-width: 768px)');
     const audioRef = useRef(null);
@@ -71,6 +76,7 @@ const App = () => {
         checkUserAuth();
         const newSocket = io(API_URL);
         setSocket(newSocket);
+        fetchGameStats();
         return () => newSocket.close();
     }, []);
 
@@ -116,6 +122,16 @@ const App = () => {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setUser(response.data);
+        }
+    };
+
+    const fetchGameStats = async () => {
+        try {
+            const response = await axios.get(`${API_URL}/api/game-stats`);
+            setTotalUsers(response.data.totalUsers);
+            setTotalNonLandscapeTiles(response.data.totalNonLandscapeTiles);
+        } catch (error) {
+            console.error('Error fetching game stats:', error);
         }
     };
 
@@ -182,6 +198,7 @@ const App = () => {
             );
             socket.emit('updateTile', response.data);
             fetchMapChunk(mapPosition.x, mapPosition.y);
+            fetchGameStats();
             toast({
                 title: 'Property generated successfully',
                 status: 'success',
@@ -437,7 +454,18 @@ const App = () => {
                                 <Heading size="md" mb={2}>
                                     Game Stats
                                 </Heading>
-                                <Text>Properties Owned: {user ? user.ownedTiles?.length : 0}</Text>
+                                <Stat>
+                                    <StatLabel>Properties Owned</StatLabel>
+                                    <StatNumber>{user ? user.ownedTiles?.length : 0}</StatNumber>
+                                </Stat>
+                                <Stat>
+                                    <StatLabel>Total Users</StatLabel>
+                                    <StatNumber>{totalUsers}</StatNumber>
+                                </Stat>
+                                <Stat>
+                                    <StatLabel>Total Properties</StatLabel>
+                                    <StatNumber>{totalNonLandscapeTiles}</StatNumber>
+                                </Stat>
                             </Box>
                         </VStack>
                     </GridItem>

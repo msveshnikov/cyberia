@@ -252,6 +252,16 @@ app.get('/api/chat/:room', async (req, res) => {
     }
 });
 
+app.get('/api/game-stats', async (req, res) => {
+    try {
+        const totalUsers = await User.countDocuments();
+        const totalNonLandscapeTiles = await Tile.countDocuments({  x: { $gt: -9000000 } });
+        res.json({ totalUsers, totalNonLandscapeTiles });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
 const generateLandscapeElements = async () => {
     const startCoord = -10000000;
     const elements = [];
