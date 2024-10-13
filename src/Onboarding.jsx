@@ -27,33 +27,37 @@ const Onboarding = () => {
         {
             title: 'Welcome to Cyberia',
             content:
-                'Cyberia is an innovative MMO game where you can create your own virtual property on an infinite map.',
+                'Embark on a journey in Cyberia, an innovative MMO game where you can create and explore virtual properties on an infinite, AI-generated map.',
             image: '/hero2.jpg'
         },
         {
             title: 'Create Your Property',
-            content: 'Use AI-powered tools to generate unique 1024x1024 tile properties.',
+            content:
+                'Harness the power of AI to generate unique 1024x1024 tile properties. Design your dream space with cutting-edge Stable Diffusion SDXL & Flux technology.',
             image: '/1_0.jpg'
         },
         {
             title: 'Explore the World',
             content:
-                'Navigate the infinite isometric map and discover properties created by other players.',
+                'Navigate the vast, infinite isometric map and discover incredible properties created by players from around the globe. Uncover hidden gems and find inspiration for your own creations.',
             image: '/hero4.jpg'
         },
         {
-            title: 'Build your property',
-            content: 'Build your property.',
+            title: 'Build Your Legacy',
+            content:
+                'Transform your property into a masterpiece. Use intuitive tools to construct, decorate, and personalize your space. Let your creativity run wild in this boundless digital realm.',
             image: '/build.png'
         },
         {
-            title: 'Interact with Others',
-            content: 'Chat with players, make friends, and collaborate on projects.',
+            title: 'Connect with Others',
+            content:
+                'Engage in real-time conversations, forge new friendships, and collaborate on ambitious projects. Experience a truly social virtual world where ideas and creativity flourish.',
             image: '/chat.png'
         },
         {
-            title: 'Ready to Start?',
-            content: 'Join Cyberia now and begin your adventure!',
+            title: 'Your Adventure Awaits',
+            content:
+                'Are you ready to shape the future of Cyberia? Join now and become part of a revolutionary virtual experience!',
             image: '/start.jpg'
         }
     ];
@@ -98,10 +102,16 @@ const Onboarding = () => {
                             <Box>
                                 <Text fontWeight="bold">Key Features:</Text>
                                 <UnorderedList>
-                                    <ListItem>AI-powered property generation</ListItem>
-                                    <ListItem>Infinite map exploration</ListItem>
-                                    <ListItem>Multiplayer interaction</ListItem>
-                                    <ListItem>Real-time chat system</ListItem>
+                                    <ListItem>
+                                        AI-powered property generation using Stable Diffusion SDXL &
+                                        Flux
+                                    </ListItem>
+                                    <ListItem>Infinite isometric map exploration</ListItem>
+                                    <ListItem>Real-time multiplayer interaction</ListItem>
+                                    <ListItem>
+                                        Browser-based gameplay - no downloads required
+                                    </ListItem>
+                                    <ListItem>Customizable 1024x1024 property tiles</ListItem>
                                 </UnorderedList>
                             </Box>
                         )}
@@ -113,7 +123,7 @@ const Onboarding = () => {
                             Skip
                         </Button>
                         <Button colorScheme="blue" onClick={handleNext}>
-                            {step === steps.length - 1 ? 'Get Started' : 'Next'}
+                            {step === steps.length - 1 ? 'Start Your Adventure' : 'Next'}
                         </Button>
                     </Flex>
                 </ModalFooter>
