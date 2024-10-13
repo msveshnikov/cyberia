@@ -40,7 +40,7 @@ app.use(limiter);
 app.use(cors());
 app.use(express.json());
 app.use(compression());
-app.use(express.static(join(__dirname, '../dist'), { maxAge: '1y' }));
+app.use(express.static(join(__dirname, '../dist'), { maxAge: '3d' }));
 app.use(morgan('dev'));
 
 mongoose.connect(process.env.MONGODB_URI, {});
