@@ -22,6 +22,8 @@ services:
         volumes:
             - mongodb_data:/data/db
         restart: unless-stopped
+        logging:
+            driver: none
 
 volumes:
     mongodb_data:
